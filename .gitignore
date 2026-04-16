@@ -1,0 +1,20 @@
+# Default deny — ignore everything
+*
+
+# Whitelisted files
+!.gitignore
+!README.md
+!CLAUDE.md
+!thinking-check-rubric.md
+!settings.json
+
+# Whitelisted directories (need both dir and contents)
+!commands/
+!commands/**
+!agents/
+!agents/**
+!plugins/
+!plugins/local/
+!plugins/local/**
+!skills/
+!skills/**
