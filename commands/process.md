@@ -11,7 +11,7 @@ When triggered, do the following silently (do not show the concept list to the u
 
 1. **Re-read the full conversation.** Identify every distinct concept, term, architectural pattern, trade-off, and decision that was discussed.
 
-2. **Read the skills tracker** at `/Users/devinat1/.claude/projects/-Users-devinat1--claude/memory/skills_tracker.md`. Note any domains with red or yellow status.
+2. **Read the skills tracker** at `/Users/devinat1/.claude/projects/-Users-devinat1--claude/memory/skills_tracker.md`. Note any domains with red or yellow status. If the tracker has no domains or does not exist, skip tracker gap prioritization and treat all concepts as either misconceptions or new concepts.
 
 3. **Build a ranked concept list.** Each item has: concept name, correct understanding (kept internal), and source category. Rank by priority:
    - **Misconceptions** (highest) — Statements the user made that were corrected during the conversation. These are the most important to re-test.
@@ -90,10 +90,10 @@ Display this table:
 > |---|---|
 > | Total concepts | N |
 > | 🟢 Passed | X |
-> | 🟡 Needed re-test | Y |
+> | 🟡 Passed after re-test | Y |
 > | 🔴 Persistent gaps | Z |
 >
-> **Persistent gaps (concepts that failed 2+ re-tests):**
+> **Persistent gaps (concepts that failed 3 total attempts):**
 > - [Concept name]: [One-line description of the gap]
 > - ...
 
@@ -115,7 +115,7 @@ The agent prompt must instruct it to:
      - Some concepts needed re-test but eventually passed → yellow
      - Any persistent gaps in domain → red
 
-3. **Write domain-specific diagnostics** — not generic assessments. Each domain gets a diagnostic label appropriate to that domain. Every domain entry must end with a concrete **Actionable Gap** — a specific exercise, study item, or thinking practice.
+3. **Write domain-specific diagnostics** — not generic assessments. Each domain gets a diagnostic label appropriate to that domain. Use concrete labels like: System Design → "Scale Blind Spots" / "Tradeoff Analysis"; Databases → "Query Reasoning" / "Data Modeling Assumptions"; Networking → "Mental Model Gaps" / "Protocol Understanding"; General Reasoning → "First Principles Gaps" / "Pattern-Matching Errors". For new domains, choose the most useful diagnostic lens from context. Every domain entry must end with a concrete **Actionable Gap** — a specific exercise, study item, or thinking practice.
 
 4. **Update blind spots:**
    - Add persistent gaps to `## Current Blind Spots` if they reveal a systematic gap
@@ -145,3 +145,4 @@ Output to user: "Updating skills tracker and creating study tasks in the backgro
 - NEVER move to wrap-up while untested or re-testable concepts remain.
 - If the conversation had no meaningful technical content (only greetings, confirmations, or slash commands), say "No concepts to process in this conversation." and stop.
 - Include ALL quiz result data in the background agent prompt — the agent cannot see this conversation.
+- If the user asks to stop early, move to Phase 4 immediately with results from completed batches only. Do not penalize untested concepts.
