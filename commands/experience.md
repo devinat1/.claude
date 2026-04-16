@@ -7,6 +7,8 @@ description: Update the skills tracker with diagnostic feedback from the current
 
 ## When triggered
 
+If the user provided additional text with the command (e.g., `/experience focus on my system design thinking`), treat it as a focus directive. Prioritize that area in your signal extraction and include the directive verbatim in the background agent prompt so it shapes the tracker update.
+
 ### Step 1: Summarize session signals
 
 Re-read the full conversation. For each domain touched (e.g., React, System Design, SQL, General Reasoning), extract:
