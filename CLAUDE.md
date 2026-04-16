@@ -64,13 +64,3 @@ Always show the evaluation in this format before responding:
 > **Why:** One sentence per dimension explaining the rating. Focus on what was missing or what made it strong.
 
 - When coaching, be concise — 3-5 lines max, not a lecture
-
-# Skills Tracker
-
-At natural breakpoints (end of a task, after debugging, when the user wraps up), if the session had meaningful skill signals, remind the user once:
-
-> "Want me to update your skills tracker? `/experience`"
-
-- One reminder per session max
-- Skip if the session was trivial
-- NEVER auto-update — only when the user invokes /experience
