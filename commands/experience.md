@@ -51,10 +51,13 @@ The agent prompt must instruct it to:
 
 7. **Todoist integration** — ONLY if a new blind spot was added or a domain was newly rated as red:
    - Use `find-projects` to find the project named "claude"
-   - Use `add-tasks` to create a task with:
-     - `content`: A specific, actionable practice item (e.g., "Design a connection pooling strategy for a 100K-user app — start with pgBouncer docs and calculate max connections per instance given 4 app server replicas")
-     - `description`: Context from the session — what the blind spot is, why it matters, what evidence triggered it
-     - `projectId`: the "claude" project ID
+   - Use `find-tasks` with the "claude" project ID to fetch all existing tasks in the project
+   - Before creating any task, compare the new task against existing ones:
+     - If an existing task covers the same domain and blind spot: use `update-tasks` to enhance it with new evidence and sharpen the actionable item, rather than creating a duplicate
+     - If no existing task matches: use `add-tasks` to create a new task with:
+       - `content`: A specific, actionable practice item (e.g., "Design a connection pooling strategy for a 100K-user app — start with pgBouncer docs and calculate max connections per instance given 4 app server replicas")
+       - `description`: Context from the session — what the blind spot is, why it matters, what evidence triggered it
+       - `projectId`: the "claude" project ID
    - Do NOT create tasks for yellow items, existing entries, or resolved blind spots
 
 ### Step 3: Confirm to user
