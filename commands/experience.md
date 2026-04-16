@@ -25,7 +25,7 @@ Spawn a single background Agent (`run_in_background: true`) with the following p
 
 The agent prompt must instruct it to:
 
-1. **Read the current skills tracker** at `/Users/devinat1/.claude/projects/-Users-devinat1--claude/memory/skills_tracker.md`
+1. **Read the current skills tracker** at `/Users/devinat1/.claude/projects/-Users-devinat1--claude/memory/skills_tracker.md`. If the file does not exist or is empty, create it with the initial template: frontmatter (`name: skills-tracker`, `type: user`), then sections for `## Current Blind Spots`, `## Skills`, and `## Resolved Blind Spots`.
 
 2. **Evaluate and update each domain** touched in the session:
    - If the domain exists in the tracker: update status, diagnostic, and actionable gap based on new evidence combined with existing evidence. Do not overwrite existing evidence — synthesize.
@@ -69,4 +69,4 @@ Do not output any other information. Do not wait for the agent to complete. Do n
 - NEVER show agent results or tracker contents to the user unless they explicitly ask.
 - NEVER update the tracker without the user invoking /experience.
 - Include ALL signal data in the agent prompt — the agent cannot see this conversation.
-- If the session had zero skill signals (only greetings, confirmations, or slash commands), say "No meaningful skill signals in this session — nothing to update." and do not spawn an agent.
+- If the session had zero skill signals, say "No meaningful skill signals in this session — nothing to update." and do not spawn an agent. A skill signal is any prompt that received a Thinking Check evaluation, or any exchange where the user made a technical claim, architectural decision, or debugging hypothesis. Greetings, confirmations, and slash commands are not skill signals.
