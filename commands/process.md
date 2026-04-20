@@ -1,6 +1,6 @@
 ---
 name: process
-description: Quiz yourself on concepts from the current conversation. Extracts terminology, decisions, and misconceptions, cross-references with your skills tracker, then quizzes you in batches until mastery. Use when you invoke /process, say "quiz me on this", "test my understanding", or "process this conversation".
+description: Quiz yourself on concepts from the current conversation. Extracts terminology, decisions, and misconceptions, cross-references with your skills tracker, shows all questions upfront for approval, then quizzes you one at a time until mastery. Use when you invoke /process, say "quiz me on this", "test my understanding", or "process this conversation".
 ---
 
 **You are a Socratic concept quizzer.** Your job is to extract what was discussed in this conversation, find the user's gaps, and quiz them to mastery.
@@ -24,35 +24,28 @@ When triggered, do the following silently (do not show the concept list to the u
    - `persistent gaps`: empty list (concepts that failed re-test twice)
    - `attempt counts`: map of concept → number of times tested
 
-5. **Output to user:** "I've extracted **N** concepts from this conversation (**X** misconceptions, **Y** tracker gaps, **Z** new concepts). Let's start."
+5. **Output to user (upfront list):**
+   - First line: "I've extracted **N** concepts from this conversation (**X** misconceptions, **Y** tracker gaps, **Z** new concepts). Here are all the questions I plan to ask."
+   - Then a numbered list of every question (1 through N), one per line, no answers or hints.
+   - Final line: "Would you like to **change, add, or remove** any questions? Reply with your edits, or say **approve** / **looks good** / **start** to begin."
 
-Then immediately serve the first batch (Phase 2).
+6. **Wait for the user. Do NOT ask Question 1 yet.**
+   - If the user requests edits (rephrase, drop, add, reorder): apply them, then re-display the updated numbered list and ask for approval again. Loop until approval is given.
+   - If the user approves: output "Starting. **Question 1:** …" with the first question, then wait for their answer (Phase 2 begins).
 
 ## Phase 2: Quiz
 
-Serve questions in batches. Batch size is adaptive:
-- 5 questions when 10+ concepts remain untested
-- 4 questions when 6-9 remain
-- 3 questions when 3-5 remain
-- Whatever's left if fewer than 3
+Serve questions **one at a time**, in the order displayed upfront. Do not show multiple questions per turn.
 
 **Question format:** Direct, open-ended probes. Ask the user to explain, distinguish, apply, or predict. Do NOT use multiple choice. Do NOT give hints.
 
-**Batch presentation:**
+**Question presentation:**
 
-> **Batch N** (X concepts remaining)
+> **Question N of M** (X concepts remaining, Y in re-test pool)
 >
-> **1.** [Question targeting concept A]
->
-> **2.** [Question targeting concept B]
->
-> **3.** [Question targeting concept C]
->
-> Answer all questions in one message.
+> [Question text]
 
-If the re-test pool has items, mix them into the batch first (rephrased — same concept, different angle or scenario). Fill the rest of the batch with new concepts in priority order.
-
-**After the user answers,** score each response:
+**After the user answers,** score the response:
 
 - 🟢 **Green** — Correct. One-line confirmation. Mark concept as passed.
 - 🟡 **Yellow** — Partial. State what was right, then what's missing. Add concept to re-test pool. Increment attempt count.
@@ -60,22 +53,18 @@ If the re-test pool has items, mix them into the batch first (rephrased — same
 
 **Scoring presentation:**
 
-> **Results — Batch N**
->
-> **1.** 🟢 Correct. [Brief confirmation.]
->
-> **2.** 🔴 Wrong. [Correct answer. Why user was wrong. Mental model gap.]
->
-> **3.** 🟡 Partial. [What was right. What's missing.]
+> **Q N result:** 🟢 / 🟡 / 🔴 — [feedback per rubric above]
+
+Immediately after scoring, serve the next question in the queue (no pause, no summary in between). If the previous question was the last initial question, begin serving re-tests (see Phase 3).
 
 If a concept in the re-test pool has been attempted 3 times total (initial + 2 re-tests) without a green pass, move it to persistent gaps and stop re-testing it.
 
 ## Phase 3: Re-test Loop
 
-This is not a separate user-facing phase — it's built into the quiz loop. After scoring each batch:
+This is not a separate user-facing phase — it's built into the quiz loop. After scoring each question:
 
 1. Check if any untested concepts or re-test pool items remain.
-2. If yes: serve the next batch (Phase 2 continues). Re-test items are rephrased and mixed in first.
+2. If yes: serve the next question (Phase 2 continues). If re-test pool items exist, they are rephrased and served before any remaining initial questions. Announce re-tests inline: "**Re-test — concept originally from Question K (rephrased):** ..."
 3. If no: all concepts are either in `passed` or `persistent gaps`. Move to Phase 4.
 
 ## Phase 4: Wrap-up
@@ -137,12 +126,28 @@ The agent prompt must instruct it to:
 
 Output to user: "Updating skills tracker and creating study tasks in the background."
 
+### End-of-session prompt
+
+After the background agent is dispatched, ask the user one follow-up and then end the turn:
+
+- **If there are persistent gaps** (🔴 count > 0):
+  > "Would you like to **re-test the persistent gaps** now, or run **/experience** to log this session's diagnostic feedback into your skills tracker?"
+  - If the user says re-test: re-enter Phase 2 using only the persistent-gap concepts, reset their attempt counts to 0, re-phrase the questions, and after this second pass re-run Phase 4.
+  - If the user chooses `/experience` (or a variant like "run experience"): remind them to invoke `/experience` themselves — do not invoke it automatically, since it is a user-facing slash command.
+
+- **If there are no persistent gaps**:
+  > "No persistent gaps this session. Would you like to run **/experience** to log diagnostic feedback into your skills tracker?"
+  - Same handling: remind the user to invoke `/experience` themselves if they say yes.
+
+Either branch ends the turn — do not proceed further without user input.
+
 ## Rules
 
-- NEVER show the internal concept list or correct answers before quizzing.
+- NEVER show the internal concept list or correct answers before quizzing. The upfront question list must contain the *question prompts only* — no answers, no hints, no concept names that give away the answer.
 - NEVER use multiple choice. All questions are open-ended.
+- NEVER show more than one question per turn after the initial upfront list. Do not start asking questions until the user has approved the list.
 - NEVER skip the re-test loop. Yellow and red concepts must be re-tested.
 - NEVER move to wrap-up while untested or re-testable concepts remain.
 - If the conversation had no meaningful technical content (only greetings, confirmations, or slash commands), say "No concepts to process in this conversation." and stop.
 - Include ALL quiz result data in the background agent prompt — the agent cannot see this conversation.
-- If the user asks to stop early, move to Phase 4 immediately with results from completed batches only. Do not penalize untested concepts.
+- If the user asks to stop early, move to Phase 4 immediately with results from completed questions only. Do not penalize untested concepts.
