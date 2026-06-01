@@ -18,3 +18,5 @@
 !plugins/local/**
 !skills/
 !skills/**
+!exams/
+!exams/**

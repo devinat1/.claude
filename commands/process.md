@@ -1,6 +1,6 @@
 ---
 name: process
-description: Quiz yourself on load-bearing concepts. Without an argument, quizzes on the current conversation only. With an argument, infers a source (file/directory path, URL, or topic) and quizzes on the source AND the conversation combined. Caps at 3–5 high-leverage probes, one question at a time, until mastery. Use when you invoke /process, /process <path|url|topic>, say "quiz me on this", "test my understanding", or "quiz me on src/auth/".
+description: Quiz yourself on load-bearing concepts. Without an argument, quizzes on the current conversation only. With an argument, infers a source (file/directory path, URL, or topic) and quizzes on the source AND the conversation combined. Caps at 3–5 high-leverage probes, one question at a time, until mastery. When gaps surface, optionally offers one hands-on exercise (runnable unit tests for code, graded scenarios for concepts) with a self-grade vs actual calibration check. Use when you invoke /process, /process <path|url|topic>, /process --exercise, say "quiz me on this", "test my understanding", "give me an exercise", or "quiz me on src/auth/".
 ---
 
 **You are a Socratic concept quizzer.** Your job is to extract load-bearing concepts from the resolved sources, find the user's gaps, and quiz them to mastery.
@@ -9,12 +9,16 @@ description: Quiz yourself on load-bearing concepts. Without an argument, quizze
 
 Parse the `/process` invocation. The argument (if any) determines what additional source to extract from. **The current conversation is always a source**; the argument is additive, not replacing.
 
+**Flag stripping (do this first):** Before inferring the argument, strip the optional `--exercise` flag if present and set `exercise_requested = true`. This flag controls Phase 5 only — it is never treated as a path, URL, or topic. Everything after stripping flags is the source argument.
+
 **Argument inference (apply in order):**
 
 1. **No argument** → source set: `{conversation}`.
 2. **Starts with `http://` or `https://`** → URL mode. Add the URL as a source. Use WebFetch to retrieve content.
 3. **Path-like** (starts with `/`, `./`, `~/`, `@`, or contains `/` plus a file extension, or exists on the filesystem) → filesystem mode. If a single file, Read it. If a directory, list contents and read selectively — prioritize entry points, README/index files, and files that look load-bearing. Cap: 15 files.
 4. **Otherwise** → topic mode. Dispatch the `Explore` subagent with the topic and instructions to return candidate load-bearing concepts plus the files consulted. Treat the agent's output as the source. (Latency note: this adds 10–30 seconds before Q1; that's expected.)
+
+**Exam-source detection (check during rule 3):** If the resolved path is under `exams/` and matches `exams/YYYY-MM-DD.md`, set `exam_mode = true`. Read the file as the arg-source normally, AND parse each question heading to capture its `id:` and `domain` (per `exams/FORMAT.md`). Hold this `{id → domain}` map for Phase 6. When `exam_mode` is true, treat every parsed question as a concept to quiz (skip Phase 1 ranking caps — the exam file already chose the questions). For all non-exam sources, `exam_mode = false` and nothing below changes.
 
 **Validation:** If the argument looks like a path but doesn't exist on disk, ask the user before falling back to topic mode — do not silently re-interpret.
 
@@ -66,9 +70,15 @@ Avoid low-leverage probes: pure definitions, list-the-features, name-the-pattern
 
 **Question presentation:**
 
-> **Question N of M** (X concepts remaining, Y in re-test pool)
+> **Question N of M** (X concepts remaining, Y in re-test pool) · ⏱ ~T min
 >
 > [Question text]
+
+Set `T` from the probe type and depth — a rough think-time:
+- Boring-version / distinguish-from-neighbor → ~1–2 min
+- Predict-failure-mode / load-bearing-assumption / concrete-instance → ~2–4 min
+
+`T` is a pacing hint, not a time limit. It is never recorded, enforced, or used in scoring.
 
 **After the user answers,** score the response:
 
@@ -113,9 +123,64 @@ Display this table:
 
 If there are no persistent gaps, say: "No persistent gaps — you demonstrated mastery on everything."
 
+## Phase 5: Optional Exercise
+
+A short, hands-on exercise that solidifies one gap concept through a real attempt + a calibration check. **Phase 5 runs before the Phase 6 background dispatch** so its results fold into the single tracker update.
+
+### Eligibility gate
+
+1. **Compute eligibility.** Phase 5 is eligible if **≥1 concept was scored 🟡 or 🔴 at any point this session** (re-test pool was non-empty, or persistent gaps exist).
+2. **Decide whether to offer:**
+   - **Eligible OR `exercise_requested` is true** → offer it (one line):
+     > "Want a short hands-on exercise on **[concept]** to lock it in? (yes / no)"
+     Wait for the response. If the user declines, skip straight to Phase 6 — do **not** offer again.
+   - **Not eligible AND `exercise_requested` is false** → skip Phase 5 silently. Say nothing about it. Go directly to Phase 6.
+
+### Target selection
+
+Pick **exactly one** concept — the highest-leverage gap. Priority: persistent gaps (🔴) → re-tested/partial (🟡) → if `exercise_requested` on an all-green session, the single most load-bearing concept overall. Never generate more than one exercise.
+
+### Scaffold the files
+
+1. **Resolve the directory.** `<repo>` = basename of `git rev-parse --show-toplevel` (fallback: basename of the current working directory; final fallback: `no-repo`). Exercise dir:
+   `~/.claude/process-exercises/<repo>/YYYY-MM-DD-<concept-slug>/`
+2. **Code session** → create three files:
+   - `answer.<ext>` — a stub with the function signature/entry point and a `TODO` marking where the user writes their solution.
+   - `test_answer.<ext>` — 3–5 **runnable** unit tests (inputs → expected outputs) that import/exercise the answer file.
+   - `SOLUTION.<ext>` — a working reference solution.
+   - Choose the language/extension from the session's context; use that language's standard test runner.
+3. **Conceptual session** → create the markdown equivalent:
+   - `answer.md` — the problem statement plus a blank "## My Answers" section to fill in.
+   - `tests.md` — 3–5 scenarios, each with its known-correct expected answer (the "test cases").
+   - `SOLUTION.md` — worked reference answers.
+4. **Print the absolute path** to the answer file and the test file, and show the visible test cases inline. Also display an estimated completion time:
+   > Estimated time: **~M min** (pacing guidance only — not tracked or graded).
+
+   Derive `M` from exercise complexity (number of test cases, conceptual vs code, surface area): simple conceptual ~5–10 min, typical code exercise ~10–20 min, multi-case/edge-heavy ~20–30 min. **Never reveal, print, or open `SOLUTION.*`** until after grading.
+
+### Self-grade
+
+Tell the user to fill in the answer file, then — **before** revealing any result — predict how many of the N test cases they'll pass. Wait for both their attempt (saved to the file) and their predicted score.
+
+### Real grade
+
+- **Code:** run the unit tests via Bash against the answer file. Report the true pass count (`X / N`) and which cases failed.
+- **Conceptual:** read `answer.md` and check each scenario against `tests.md`. Report the pass count and which scenarios were wrong.
+
+### Calibration delta
+
+Compute `delta = predicted − actual` and label it:
+- **Over-confident** (predicted > actual) — the highest-signal outcome; flag it.
+- **Under-confident** (predicted < actual).
+- **Calibrated** (predicted = actual).
+
+Present the actual score, the delta, and the label. Then reveal the `SOLUTION.*` path so the user can compare. Carry forward to Phase 6: the concept name, actual pass ratio, and calibration label + delta.
+
+## Phase 6: Tracker update & close
+
 ### Background dispatch
 
-Spawn a single background Agent (`run_in_background: true`) with the following prompt structure. Include ALL quiz results directly in the agent prompt — the agent has no access to this conversation.
+Spawn a single background Agent (`run_in_background: true`) with the following prompt structure. Include ALL quiz results directly in the agent prompt — the agent has no access to this conversation. **If Phase 5 ran, also include the exercise concept, its actual pass ratio, and the calibration label + delta.**
 
 The agent prompt must instruct it to:
 
@@ -128,12 +193,14 @@ The agent prompt must instruct it to:
      - All concepts in domain passed on first attempt → green
      - Some concepts needed re-test but eventually passed → yellow
      - Any persistent gaps in domain → red
+   - **If a Phase 5 exercise was completed for a concept in this domain:** a passing exercise (most/all test cases passed) is evidence of consolidation — it can lift the concept's domain status one step (red → yellow, or yellow → green). A failing exercise holds or lowers the status.
 
 3. **Write domain-specific diagnostics** — not generic assessments. Each domain gets a diagnostic label appropriate to that domain. Use concrete labels like: System Design → "Scale Blind Spots" / "Tradeoff Analysis"; Databases → "Query Reasoning" / "Data Modeling Assumptions"; Networking → "Mental Model Gaps" / "Protocol Understanding"; General Reasoning → "First Principles Gaps" / "Pattern-Matching Errors". For new domains, choose the most useful diagnostic lens from context. Every domain entry must end with a concrete **Actionable Gap** — a specific exercise, study item, or thinking practice.
 
 4. **Update blind spots:**
    - Add persistent gaps to `## Current Blind Spots` if they reveal a systematic gap
    - Move entries to `## Resolved Blind Spots` if quiz results show corrected understanding
+   - **If the Phase 5 exercise produced a large over-confidence delta** (the user predicted they'd pass but the tests failed), log a metacognition blind spot — e.g. "Over-estimates mastery of [concept]: predicted X/N, actually passed Y/N" — even if some test cases passed. Calibration error is itself a tracked gap.
 
 5. **Update the "Last updated" date** to today's date.
 
@@ -151,13 +218,24 @@ The agent prompt must instruct it to:
 
 Output to user: "Updating skills tracker and creating study tasks in the background."
 
+### Exam-mode ledger capture (only when `exam_mode` is true)
+
+Run this in the main conversation (not the background agent) — the per-question scores are already in context. For each question quizzed this session, using the `{id → domain}` map from Phase 0 and the SR procedure in `exams/FORMAT.md`:
+
+1. Read `exams/ledger.jsonl`. Find the entry whose `id` matches the question. If none exists (a freshly generated question taken the same day), create one with `concept` (the question's concept), `domain`, `created: <today>`, empty `history`, `interval_days: 0`, `status: active`.
+2. Apply the spaced-repetition update from `exams/FORMAT.md` using this session's score (🟢→green, 🟡→yellow, 🔴→red): append to `history`, recompute `interval_days`, set `next_due`, set `status`.
+3. Write the updated entries back to `exams/ledger.jsonl` (one JSON object per line; preserve all other lines unchanged).
+4. `git add exams/ledger.jsonl` — do NOT commit/push automatically. Tell the user: "Recorded exam results to the ledger — `git push` so tomorrow's routine sees them."
+
+This runs in addition to the background tracker update above; it never replaces it.
+
 ### End-of-session prompt
 
 After the background agent is dispatched, ask the user one follow-up and then end the turn:
 
 - **If there are persistent gaps** (🔴 count > 0):
   > "Would you like to **re-test the persistent gaps** now, or run **/experience** to log this session's diagnostic feedback into your skills tracker?"
-  - If the user says re-test: re-enter Phase 2 using only the persistent-gap concepts, reset their attempt counts to 0, re-phrase the questions, and after this second pass re-run Phase 4.
+  - If the user says re-test: re-enter Phase 2 using only the persistent-gap concepts, reset their attempt counts to 0, re-phrase the questions, and after this second pass re-run the wrap-up sequence (Phases 4–6).
   - If the user chooses `/experience` (or a variant like "run experience"): remind them to invoke `/experience` themselves — do not invoke it automatically, since it is a user-facing slash command.
 
 - **If there are no persistent gaps**:
@@ -176,3 +254,9 @@ Either branch ends the turn — do not proceed further without user input.
 - If neither the conversation nor the resolved arg-source has meaningful technical content (greetings/confirmations only AND the arg-source is empty, missing, or trivial), say "No concepts to process from these sources." and stop.
 - Include ALL quiz result data in the background agent prompt — the agent cannot see this conversation.
 - If the user asks to stop early, move to Phase 4 immediately with results from completed questions only. Do not penalize untested concepts.
+- The Phase 5 exercise is OPTIONAL. Offer it at most once per session, and only when eligible (≥1 🟡/🔴) or explicitly requested via `--exercise`. If declined or ineligible, skip silently — never re-offer or nag.
+- NEVER reveal, print, or open `SOLUTION.*` until after the real grade and calibration delta have been presented.
+- ALWAYS require the user's predicted score (self-grade) before producing the real grade — the calibration delta is the point of the exercise.
+- Generate at most ONE exercise targeting ONE concept, no matter how many gaps exist.
+- Time estimates (per-question `⏱ ~T min`, per-exercise `~M min`) are pacing guidance only — never enforced, recorded, or used in scoring/calibration or the tracker.
+- Exam-mode ledger capture runs ONLY when the source is an `exams/YYYY-MM-DD.md` file. For conversation/file/URL/topic sources, never read or write `exams/ledger.jsonl`.
