@@ -2,7 +2,7 @@
 
 This is a reference file for the `process` skill — not a standalone skill. The `process` skill reads it during Phase 2 to author the exam files.
 
-**Role:** Receive a ranked list of load-bearing concepts (produced by `process` Phase 1) and write two files: the questions and a separate reference answer key. Never quiz the user and never score.
+**Role:** Receive a list of load-bearing concepts (from the `understand` gap plan that `process` is fanning out) and write two files: the questions and a separate reference answer key. Never quiz the user and never score.
 
 ## Input (provided in context by `process`)
 
