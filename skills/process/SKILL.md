@@ -1,66 +1,43 @@
 ---
 name: process
-description: Extracts load-bearing concepts from the conversation (plus an optional file/URL/topic) and writes a standalone exam (QUESTIONS.md + ANSWER.md) via the exam-creator reference. Does NOT quiz or grade — take the exam later with the grader skill. Use when the user says "process x", "process this", "quiz me on x", "make me an exam on x", or invokes /process, /process <path|url|topic>, /process --exercise.
+description: Use when the user wants to act on what they don't understand about some code or topic — "process x", "process this", "help me learn x", "quiz me on x", "make me an exam on x", or /process, /process <path|url|topic>, /process --exercise. Orchestrates the understand skill (discovery) then fans out to walkthroughs, labs, exams, and the skills tracker.
 ---
 
-**You are a concept extractor and exam orchestrator.** Your job is to find the user's load-bearing concepts and gaps from the resolved sources, rank them, and use the `exam-creator.md` reference (in this skill directory) to write an exam. You do NOT quiz, score, or update any tracker — that all happens later in the grader skill ("grade me").
+**You are the orchestrator.** You turn confusion into action. The `understand` skill finds *what* the user doesn't grasp and *how* they want to learn it; you make each of those things happen — by walking through their code, building labs (`lab-creator`), authoring exams (`exam-creator.md`), and logging blind spots to the skills tracker. You do NOT diagnose gaps yourself (that's `understand`) and you do NOT quiz or score (that's `grader`).
 
-## Phase 0: Source resolution
+## Phase 0: Parse the invocation
 
-Parse the invocation. The argument (if any) determines what additional source to extract from. **The current conversation is always a source**; the argument is additive, not replacing.
+Strip the optional `--exercise` flag if present and set `force_lab = true` (it makes the highest-leverage gap default to a **lab** modality without asking). Everything after stripping flags is the source argument (a path, URL, topic, or nothing).
 
-**Flag stripping (do this first):** Before inferring the argument, strip the optional `--exercise` flag if present and set `force_lab = true`. This flag no longer creates a lab here (labs are built at grade time); it is passed through as a `force_lab` hint so the grader auto-confirms the lab. It is never treated as a path, URL, or topic. Everything after stripping flags is the source argument.
+## Phase 1: Get the gap plan
 
-**Argument inference (apply in order):**
+**If an `understand` gap plan already exists in this session's context** (the user just ran `understand` / "understand this"), reuse it — do not re-interview.
 
-1. **No argument** → source set: `{conversation}`.
-2. **Starts with `http://` or `https://`** → URL mode. Add the URL as a source. Use WebFetch to retrieve content.
-3. **Path-like** (starts with `/`, `./`, `~/`, `@`, or contains `/` plus a file extension, or exists on the filesystem) → filesystem mode. If a single file, Read it. If a directory, list contents and read selectively — prioritize entry points, README/index files, and files that look load-bearing. Cap: 15 files.
-4. **Otherwise** → topic mode. Dispatch the `Explore` subagent with the topic and instructions to return candidate load-bearing concepts plus the files consulted. Treat the agent's output as the source. (Latency note: this adds 10–30 seconds; that's expected.)
+**Otherwise, invoke the `understand` skill**, passing the source argument and the `force_lab` hint. It resolves the source, builds the dependency-ordered concept stack, probes the user to find where their understanding actually bottoms out, and asks per gap how they want to learn it. It returns a **gap plan** in context:
 
-**Validation:** If the argument looks like a path but doesn't exist on disk, ask the user before falling back to topic mode — do not silently re-interpret.
+- `concept`, `domain`, `status` (`gap`/`shaky`), `confirmed gap` (one line), `modality` (`walkthrough`/`lab`/`exam`/`log`), `code refs` (`file:line`).
 
-**Source set is always conversation + arg-derived (if any).** Extract concepts from both. Conversation contributes misconceptions and decisions; the arg-source contributes domain content.
+If `understand` reports nothing load-bearing, say so and stop. Never fabricate gaps.
 
-## Phase 1: Extraction
+## Phase 2: Fan out by modality
 
-Do the following silently (do not show the concept list to the user):
+Work the gap plan **in learning order** (foundational gaps first — the order `understand` returned). For each entry, dispatch on `modality`:
 
-1. **Gather concepts from all Phase 0 sources.** Re-read the full conversation, and read the arg-derived source if one was resolved. Identify **load-bearing concepts** across both — the ideas where a gap would break the user's grasp of downstream material. Skip cosmetic vocabulary, pattern names, and feature lists unless they reveal a structural misunderstanding. Quality over coverage.
+- **walkthrough** → Explain, inline, how this concept actually shows up in *the user's* code. Use the `code refs` from the plan as code-reference citations. Connect the concept to the concrete lines: what the code does, why, and the mechanism the user was missing. Tie it back to the `confirmed gap`.
+- **lab** → Invoke the `lab-creator` skill, passing the concept and its gap context (the `confirmed gap`, the `domain`, and whether it's code or conceptual). `lab-creator` scaffolds the files and returns the lab path + visible cases. Tell the user to fill in the answer file, then: *"Say 'grade me' with this lab path to score it (the grader skill)."* Do NOT grade here — that's `grader`. **Generate at most ONE lab per run** (if multiple gaps chose `lab`, build it for the highest-leverage one and `log` the rest).
+- **exam** → Read `exam-creator.md` (in this skill's directory) and follow it for the concepts the user wants tested, passing the concept list, the `source` label, and `force_lab`. It writes `QUESTIONS.md` + `ANSWER.md` and prints the paths. Tell the user to say "grade me" with that directory later.
+- **log** → Append the gap to the skills tracker at `/Users/devinat1/.claude/projects/-Users-devinat1--claude/memory/skills_tracker.md` under `## Current Blind Spots`, with the concept, domain, and the one-line confirmed gap. If the tracker is missing, create it with frontmatter (`name: skills-tracker`, `type: user`) and the sections `## Current Blind Spots`, `## Skills`, `## Resolved Blind Spots`. Update the "Last updated" date.
 
-2. **Read the skills tracker** at `/Users/devinat1/.claude/projects/-Users-devinat1--claude/memory/skills_tracker.md`. Note any domains with red or yellow status. If the tracker has no domains or does not exist, skip tracker gap prioritization and treat all concepts as either misconceptions or new concepts.
+## Phase 3: Report
 
-3. **Build a ranked concept list.** Each item has: concept name, correct understanding (for the answer key), source category, domain, and a suggested probe type. **Hard cap: 5 concepts total. Soft target: 3.** Within each tier, select by *leverage* — pick the concepts that reveal the most about the user's mental model, not the ones that complete coverage. Rank by priority:
-   - **Misconceptions** (highest) — statements the user made that were corrected during the conversation.
-   - **Tracker gaps** — concepts that overlap with red/yellow domains in the skills tracker.
-   - **New concepts** — only the structurally important ones, never exhaustive terminology.
-
-4. **Output a one-line header (no question preview):**
-   - **Conversation only:** `Extracted **N** concepts from conversation (**X** misconceptions, **Y** tracker gaps, **Z** new).`
-   - **File/directory + conversation:** `Read <path> (N files) + conversation. Extracted **M** load-bearing concepts.`
-   - **URL + conversation:** `Fetched <url> + conversation. Extracted **M** load-bearing concepts.`
-   - **Topic + conversation:** `Explored "<topic>" (consulted N files) + conversation. Extracted **M** load-bearing concepts.`
-   - Do NOT list the concepts or any probe text — that would prime answers.
-
-## Phase 2: Write the exam
-
-Read `exam-creator.md` (in this skill's directory) and follow it, passing:
-- the ranked concept list (concept, correct understanding, source category, domain, suggested probe type),
-- the `source` label (conversation / `<path>` / `<url>` / `<topic>`),
-- the `force_lab` hint.
-
-`exam-creator` writes `QUESTIONS.md` + `ANSWER.md` into `~/.claude/exams/<repo>/YYYY-MM-DD-<topic-slug>/` and prints the paths.
-
-After it returns, tell the user:
-
-> Exam ready at `<exam-dir>`. Take it by saying "grade me" with that path (the grader skill) whenever you're ready.
-
-Do NOT quiz, score, scaffold a lab, or write to the skills tracker — the grader does all of that.
+Summarize what you did per gap: which got walkthroughs (inline), which lab was scaffolded (path), which exam was written (path), which were logged. For anything that produced a "do later" artifact (lab/exam), remind the user of the `grade me` handoff.
 
 ## Rules
 
-- NEVER quiz, score, or reveal concepts/answers — this skill only extracts and authors via `exam-creator.md`.
-- NEVER write to the skills tracker, the exam ledger, or Todoist.
-- The header reveals counts and source scope only — never concept names, probe text, or anything that primes an answer.
-- If neither the conversation nor the resolved arg-source has meaningful technical content (greetings/confirmations only AND the arg-source is empty, missing, or trivial), say "No concepts to build an exam from these sources." and stop — do not write any files.
-- `--exercise` does not create a lab here; it only sets `force_lab` so the grader auto-confirms the optional lab later.
+- You orchestrate and fan out; you do NOT diagnose (that's `understand`) and you do NOT quiz or score (that's `grader`).
+- Always drive from a gap plan — reuse an in-context one, else invoke `understand`. Never invent concepts the user didn't get diagnosed on.
+- Fan out in learning order (foundational first).
+- At most ONE lab per run; surplus `lab` gaps get logged instead.
+- Walkthroughs cite real `file:line` from the user's code, never generic explanations.
+- Exams are authored only via `exam-creator.md`; never quiz or score here.
+- This is the standalone exam format — do NOT touch `exams/FORMAT.md`, `exams/ledger.jsonl`, or the daily routine.
