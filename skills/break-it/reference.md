@@ -18,6 +18,10 @@ naive/patched Go+k6 lab that breaks cleanly under load.
    `http_req_failed: ['rate<0.01']`. Naive breaches (k6 exits non-zero) = the wall.
    Patched passes = the fix.
 5. **Ramp to where naive breaks but patched holds.** Pick peak VUs so the contrast is unmistakable.
+6. **Make the prediction derivable.** The lab must expose the two numbers a user can reason a
+   capacity ceiling from: the count of the finite resource and how long each unit of work holds it
+   (pool 5 × 40ms → 125 req/s). The predict step asks them to derive that ceiling and the shape
+   past it — never to guess a VU number, which is math they don't have yet.
 
 ## Concept catalog (naive → patched)
 
