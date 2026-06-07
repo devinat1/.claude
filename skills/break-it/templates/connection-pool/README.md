@@ -4,8 +4,11 @@ A handler checks out a DB connection (simulated: a semaphore + a 40ms query) for
 - **naive:** pool of 5, no acquire timeout — requests queue unboundedly under load
 - **patched:** pool of 100 + a 250ms fail-fast acquire timeout
 
-## 1. Predict first
-At how many concurrent users (k6 VUs) do you think p99 crosses 500ms? Write the number down now.
+## 1. Predict first (reason it out — don't guess a VU number)
+You can see both numbers: pool of **5** connections, each query holds one for **40ms**.
+- **Capacity:** what's the most requests/second this can serve? (5 ÷ 0.04s = ___)
+- **Shape:** when the test pushes well past that, does p99 plateau, climb linearly, or blow up — why?
+Write your two answers down now.
 
 ## 2. Run naive — watch it break
     MODE=naive go run . &

@@ -20,10 +20,19 @@ Check tooling once: `command -v k6` and `command -v go`. If k6 is missing, print
 
 ## Phase 1: Frame + predict (beats 1–2)
 
-Name the scenario in the user's terms in ONE sentence (e.g. *"a handler that checks out a DB
-connection for every request — pool of 5, no timeout"*). Then make the user commit ONE number:
-the concurrency (k6 VUs) at which p99 crosses 500ms or errors begin. Reveal nothing yet. Wait for
-their number.
+Name the scenario in ONE sentence AND surface the two numbers the user can reason from: the count
+of the finite resource and how long each request holds it (e.g. *"a handler checks out a DB
+connection per request — pool of 5, each query holds it for 40ms"*).
+
+Then ask a prediction they can **derive**, never a blind dart:
+1. **Capacity** — from those two numbers, the most requests/second this can serve.
+   (resource ÷ hold-time → 5 / 0.04s = 125 req/s.) Let them do the arithmetic themselves.
+2. **Shape past capacity** — when the load test pushes well past that ceiling, does p99 latency
+   plateau, climb linearly, or blow up — and why?
+
+NEVER ask "at what VU count does it break?" — that requires queueing math they don't have, so it's
+a guess, not reasoning. Every prediction must be derivable from the visible parameters. Reveal
+nothing yet; wait for their answer.
 
 ## Phase 2: Scaffold (beat 2)
 
@@ -38,8 +47,9 @@ Give the user the two run commands. No walls of text.
 
 Have the USER run the naive load test so they watch it live:
 `MODE=naive go run . &` then `k6 run load.js`, then free the port with `lsof -ti:8081 | xargs kill`.
-k6 reports the p99 threshold breached — the wall. Put their prediction next to the measured number
-in ONE line. The gap is the lesson; do not pad it.
+k6 breaches the p99 threshold — the wall. In ONE line, put their derived ceiling and predicted
+shape next to the measured throughput (k6's `http_reqs` rate) and p99. The gap between "I reasoned
+125 req/s" and the measured plateau is the lesson; do not pad it.
 
 ## Phase 4: Patch + re-run (beat 4)
 
