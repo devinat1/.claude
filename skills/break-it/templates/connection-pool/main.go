@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"time"
@@ -43,9 +44,11 @@ func main() {
 		if acquireTimeout == 0 {
 			<-pool // block until a connection frees up, however long that takes
 		} else {
+			timer := time.NewTimer(acquireTimeout)
 			select {
 			case <-pool:
-			case <-time.After(acquireTimeout):
+				timer.Stop() // got a connection — stop the timer so it doesn't leak
+			case <-timer.C:
 				http.Error(w, "pool exhausted", http.StatusServiceUnavailable)
 				return
 			}
@@ -57,5 +60,5 @@ func main() {
 	})
 
 	fmt.Printf("listening on :8081 mode=%s pool=%d\n", mode, poolSize)
-	http.ListenAndServe(":8081", nil)
+	log.Fatal(http.ListenAndServe(":8081", nil)) // loud failure if the port is taken
 }
