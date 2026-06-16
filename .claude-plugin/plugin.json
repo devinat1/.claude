@@ -1,0 +1,28 @@
+{
+  "name": "devinat1-skills",
+  "skills": [
+    "./skills/learning/break-it",
+    "./skills/learning/grader",
+    "./skills/learning/lab-creator",
+    "./skills/learning/learn",
+    "./skills/engineering/clean",
+    "./skills/engineering/ddd",
+    "./skills/engineering/graphite",
+    "./skills/engineering/onboard",
+    "./skills/engineering/oop",
+    "./skills/engineering/rate",
+    "./skills/engineering/scale",
+    "./skills/engineering/thermo-nuclear-code-quality-review",
+    "./skills/interview/interviewer",
+    "./skills/interview/system",
+    "./skills/productivity/clarify",
+    "./skills/productivity/experience",
+    "./skills/productivity/meeting-feedback",
+    "./skills/productivity/momtest",
+    "./skills/productivity/overwhelmed",
+    "./skills/productivity/ramble",
+    "./skills/setup/setup-devinat1-skills",
+    "./skills/writing/blog",
+    "./skills/writing/update-blog-refs"
+  ]
+}

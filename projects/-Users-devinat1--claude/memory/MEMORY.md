@@ -1,2 +1,0 @@
-- [Skills Tracker](skills_tracker.md) — Living diagnostic of technical/reasoning skills, blind spots, and growth
-- [Predictions Must Be Derivable](predictions-must-be-derivable.md) — learning-skill predict steps reason from visible facts, never blind guesses

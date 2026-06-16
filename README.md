@@ -1,154 +1,95 @@
-# My Claude Code Setup
+# devinat1 Skills
 
-A catalog of every skill, plugin, agent, command, MCP integration, and CLAUDE.md behavior configured in this environment.
+Agent skills for learning loops, code review, interview practice, and productivity workflows.
 
----
+## Quickstart (30-second setup)
 
-## Plugins
+1. Run the skills.sh installer:
 
-### superpowers (v5.0.7)
-Official plugin providing structured development workflows. Includes skills for:
+```bash
+npx skills@latest add devinat1/.claude
+```
 
-| Skill | Purpose |
-|-------|---------|
-| `brainstorming` | Explores intent, requirements, and design before any creative/implementation work |
-| `writing-plans` | Produces step-by-step implementation plans from specs or requirements |
-| `executing-plans` | Executes written plans in sessions with review checkpoints |
-| `test-driven-development` | Enforces TDD — write tests before implementation code |
-| `systematic-debugging` | Structured debugging before proposing fixes |
-| `subagent-driven-development` | Executes plan tasks via independent parallel subagents |
-| `dispatching-parallel-agents` | Runs 2+ independent tasks concurrently |
-| `using-git-worktrees` | Creates isolated git worktrees for feature work |
-| `finishing-a-development-branch` | Guides merge/PR/cleanup decisions when work is done |
-| `verification-before-completion` | Requires running verification commands before claiming success |
-| `requesting-code-review` | Validates work against requirements before merging |
-| `receiving-code-review` | Handles incoming review feedback with technical rigor |
-| `writing-skills` | Creates and verifies new skills before deployment |
-| `using-superpowers` | Session startup — establishes how to discover and invoke skills |
+2. Pick the skills you want and which coding agents to install them on. **Include `setup-devinat1-skills`.**
 
-### frontend-design
-Official plugin for building distinctive, production-grade frontend interfaces. Generates creative, polished UI code that avoids generic AI aesthetics. Use when building web components, pages, or applications.
+3. Run `/setup-devinat1-skills` in your agent. It will ask for:
+   - Skills tracker path (for the learning loop)
+   - Blog content directory (for `/blog` and `/update-blog-refs`)
+   - MCP integrations (Granola, Todoist)
 
-### claude-md-management (v1.0.0)
-Official plugin for maintaining CLAUDE.md files:
+4. For Claude Code users who clone this repo directly:
 
-| Skill | Purpose |
-|-------|---------|
-| `revise-claude-md` | Updates CLAUDE.md with learnings from the current session |
-| `claude-md-improver` | Audits and improves CLAUDE.md files across repositories |
+```bash
+git clone git@github.com:devinat1/.claude.git ~/.claude
+./scripts/link-skills.sh
+```
 
-### vercel-plugin (v0.32.5)
-Vercel platform plugin with extensive skill coverage:
+## Dependencies (optional)
 
-| Skill | Purpose |
-|-------|---------|
-| `ai-architect` | Architect AI-powered apps on Vercel (AI SDK, providers, agents, MCP) |
-| `ai-gateway` | Configure model routing, provider failover, cost tracking |
-| `ai-sdk` | Build AI features — chat, text gen, tool calling, streaming, embeddings |
-| `auth` | Authentication integration (Clerk, Descope, Auth0) |
-| `bootstrap` | Bootstrap repos with Vercel-linked resources |
-| `chat-sdk` | Build multi-platform chat bots (Slack, Telegram, Discord, etc.) |
-| `deploy` | Deploy to Vercel (preview or production) |
-| `deployments-cicd` | Deployment strategies, CI/CD, rollbacks |
-| `env` / `env-vars` | Manage Vercel environment variables |
-| `marketplace` | Discover and install Vercel Marketplace integrations |
-| `next-cache-components` | Next.js 16 Cache Components, PPR, `use cache` |
-| `next-forge` | next-forge monorepo SaaS starter guidance |
-| `next-upgrade` | Upgrade Next.js versions with codemods |
-| `nextjs` | Next.js App Router expert guidance |
-| `performance-optimizer` | Core Web Vitals, caching, image/font optimization |
-| `react-best-practices` | TSX quality checklist (hooks, a11y, performance, TS) |
-| `routing-middleware` | Framework-agnostic request interception |
-| `runtime-cache` | Per-region key-value cache with tag-based invalidation |
-| `shadcn` | shadcn/ui CLI, components, theming, Tailwind |
-| `status` | Show Vercel project status and recent deployments |
-| `turbopack` | Turbopack bundler configuration and debugging |
-| `vercel-agent` | AI-powered code review and incident investigation |
-| `vercel-cli` | Vercel CLI expert guidance |
-| `vercel-functions` | Serverless, Edge, Fluid Compute, Cron Jobs |
-| `vercel-sandbox` | Sandboxed code execution in Firecracker microVMs |
-| `vercel-storage` | Blob, Edge Config, Neon Postgres, Upstash Redis |
-| `verification` | End-to-end flow verification (browser to data to response) |
-| `workflow` | Durable workflows with pause/resume, retries, step-based execution |
+These skills are **not** bundled. Install separately if you want them:
 
----
+```bash
+npx skills@latest add mattpocock/skills
+./scripts/link-external-skills.sh   # symlinks into ~/.claude/skills for Claude Code
+```
 
-## Custom Commands (Slash Commands)
+Recommended from [mattpocock/skills](https://github.com/mattpocock/skills): `tdd`, `diagnose`, `grill-with-docs`, `grill-me`, `handoff`, `to-issues`, `to-prd`, `triage`, `improve-codebase-architecture`, `prototype`, `teach`, `write-a-skill`, `zoom-out`, `caveman`.
 
-| Command | Purpose |
-|---------|---------|
-| `/blog` | Converts the current conversation into a blog post, studying existing writing style from your blog directory |
-| `/bob` | Reviews/writes code against Robert C. Martin's Clean Code, Clean Architecture, and SOLID principles |
-| `/branch` | Shows the git diff of the current branch against main |
-| `/capacity-planning-dimensions` | Question bank for the capacity planning phase of system design interviews (used by `/system`) |
-| `/clean` | Reviews code for clean naming conventions — descriptive, intention-revealing names |
-| `/ddd` | Reviews code against Domain-Driven Design aggregate rules (identity references, single-aggregate transactions) |
-| `/experience` | Updates your skills tracker with diagnostic feedback from the current session (background agent) |
-| `/idiomatic` | Reviews code for idiomatic violations, citing relevant style guides and specs |
-| `/interviewer` | Simulates a brutal mock interviewer — adapts to system design, behavioral, coding, or knowledge topics |
-| `/oop` | Reviews code against principles from _Elegant Objects_ by Yegor Bugayenko |
-| `/overwhelmed` | Decomposes overwhelming Todoist tasks using Socratic questioning |
-| `/ramble` | Extracts actionable items from the conversation and creates them as Todoist tasks |
-| `/rate` | Rates your branch diff (1-5) against `/bob`, `/clean`, `/ddd`, `/oop`, and `/idiomatic` principles |
-| `/scale` | Analyzes your branch code for scale limits, upgrade paths, system design diagrams, and learning resources |
-| `/system` | Full system design interview simulator with Socratic method, structured phases, and a final scorecard |
+Also commonly used: `find-skills`, `postiz`, `design-an-interface`.
 
----
+## Personal config
 
-## Skills
+[`settings.json`](settings.json) in this repo is the author's personal Claude Code config. Do not copy it blindly when installing skills elsewhere.
 
-Auto-invoked from natural language (no slash needed); they trigger on the phrases below.
+## Reference
 
-These four form the learning loop. `learn` diagnoses and fans out, `lab-creator` and `grader` are invoked along the way, and `break-it` is a standalone variant for load-measurable concepts. All of them write to your skills tracker (`projects/.../memory/skills_tracker.md`).
+### Learning
 
-| Skill | Triggers | Purpose |
-|-------|----------|---------|
-| `learn` | "understand x", "help me learn x", "process x", "quiz me on x", "make me an exam on x" | Diagnoses where your understanding of a target (code / URL / topic) bottoms out, shows you the gap plan, and — after you OK it — fans out: inline walkthroughs of your own code, a hands-on lab (via `lab-creator`), an exam (via the bundled `exam-creator.md`), or a logged blind spot. Does not quiz or grade. |
-| `lab-creator` | "create a lab on x", "give me an exercise on x" | Scaffolds a single hands-on lab targeting one concept. Runs standalone, or is invoked by `learn` with gap context. Scaffolds files only — it does not grade. |
-| `grader` | "grade me", "grade my exam", "grade this lab", "take the exam at \<path\>" | Administers an exam one question at a time (🟢🟡🔴, re-tests to mastery), or grades a `lab-creator` lab with a predict-your-score calibration check, then updates your skills tracker. Does not create labs. |
-| `break-it` | "break it", "load test this", "where does this fall over" | Standalone learning loop for load-measurable system-design concepts: scaffolds a disposable Go + k6 lab, you predict the breaking point, watch it break, patch in the pattern, re-run. Logs the measured threshold to your skills tracker. |
-| `clarify` | "clarify this", "help me figure out what I want", "what should I build" | Extensive one-at-a-time interview until purpose/constraints/success criteria are clear; stops with a single copy-pasteable prompt — no design doc or code |
+Skills that diagnose gaps, scaffold labs, grade exams, and log progress.
 
----
+- **[learn](./skills/learning/learn/SKILL.md)** — Diagnose where understanding bottoms out, then fan out to walkthroughs, labs, exams, or blind-spot logging.
+- **[lab-creator](./skills/learning/lab-creator/SKILL.md)** — Scaffold a single hands-on lab targeting one concept.
+- **[grader](./skills/learning/grader/SKILL.md)** — Administer exams or grade labs; update the skills tracker.
+- **[break-it](./skills/learning/break-it/SKILL.md)** — Load-test a system-design concept until it breaks; patch in the pattern.
 
-## MCP Integrations
+### Engineering
 
-Connected services available via MCP servers:
+Code review slash commands and repo tooling.
 
-| Service | Capabilities |
-|---------|-------------|
-| **Excalidraw** | Create/export diagrams, save/read checkpoints |
-| **Gmail** | Search, read, draft emails |
-| **Google Calendar** | List, create, update, delete events; suggest meeting times |
-| **Google Drive** | Search, read, create, download files |
-| **Granola** | Fetch meeting notes and transcripts |
-| **Linear** | Full project management — issues, projects, documents, comments, milestones, labels, teams |
-| **Todoist** | Task management (used by `/overwhelmed` and `/ramble`) |
-| **Vercel** | Deployment and project management |
+- **[onboard](./skills/engineering/onboard/SKILL.md)** — Produce a concise onboarding doc for the current codebase.
+- **[clean](./skills/engineering/clean/SKILL.md)** — Review code for clean naming conventions.
+- **[ddd](./skills/engineering/ddd/SKILL.md)** — Review code against DDD aggregate rules.
+- **[oop](./skills/engineering/oop/SKILL.md)** — Review code against _Elegant Objects_ principles.
+- **[rate](./skills/engineering/rate/SKILL.md)** — Rate branch diff against multiple review principles.
+- **[scale](./skills/engineering/scale/SKILL.md)** — Analyze scale limits and upgrade paths.
+- **[graphite](./skills/engineering/graphite/SKILL.md)** — Split branch work into a Graphite PR stack.
+- **[thermo-nuclear-code-quality-review](./skills/engineering/thermo-nuclear-code-quality-review/SKILL.md)** — Extremely strict maintainability review.
 
----
+### Interview
 
-## CLAUDE.md Behaviors
+Mock interview practice.
 
-### Thinking Check
-Every prompt is scored on three dimensions (1-5 each) before responding:
-- **Specificity of Intent** — How precisely the prompt describes what/where
-- **Decision Ownership** — Whether the user has made key decisions
-- **Diagnostic Effort** — Whether the user has investigated and formed a hypothesis
+- **[system](./skills/interview/system/SKILL.md)** — System design interview simulator with Socratic probing.
+- **[interviewer](./skills/interview/interviewer/SKILL.md)** — Brutal mock interviewer on any topic.
 
-If the average is below 3, Claude coaches via the Socratic method instead of answering directly. Skipped for slash commands.
+### Productivity
 
-### Skills Tracker
-At natural breakpoints in sessions with meaningful skill signals, a one-time reminder is offered to update the skills tracker via `/experience`.
+Workflow tools beyond code review.
 
----
+- **[clarify](./skills/productivity/clarify/SKILL.md)** — Interview until purpose and constraints are clear.
+- **[meeting-feedback](./skills/productivity/meeting-feedback/SKILL.md)** — Evaluate meeting communication via Granola.
+- **[overwhelmed](./skills/productivity/overwhelmed/SKILL.md)** — Decompose Todoist tasks tagged `overwhelmed`.
+- **[ramble](./skills/productivity/ramble/SKILL.md)** — Extract conversation items into Todoist tasks.
+- **[experience](./skills/productivity/experience/SKILL.md)** — Update skills tracker from session signals.
+- **[momtest](./skills/productivity/momtest/SKILL.md)** — Audit customer calls against The Mom Test.
 
-## Memory System
+### Writing
 
-Persistent file-based memory at `~/.claude/projects/-Users-devinat1--claude/memory/` with types:
-- **user** — Role, goals, preferences
-- **feedback** — Corrections and confirmed approaches
-- **project** — Ongoing work context, decisions, deadlines
-- **reference** — Pointers to external systems
+Blog workflow.
 
-Indexed via `MEMORY.md`, currently tracking a skills tracker diagnostic.
+- **[blog](./skills/writing/blog/SKILL.md)** — Turn a conversation into a blog post.
+- **[update-blog-refs](./skills/writing/update-blog-refs/SKILL.md)** — Suggest related links between blog posts.
+
+### Setup
+
+- **[setup-devinat1-skills](./skills/setup/setup-devinat1-skills/SKILL.md)** — Scaffold per-repo config (`docs/agents/`) for tracker path, blog directory, and MCP integrations. Run once per repo.
