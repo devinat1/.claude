@@ -1,6 +1,6 @@
-# devinat1 Skills
+# Skills
 
-Agent skills for learning loops, code review, interview practice, and productivity workflows.
+Original agent skills for learning loops, code review, interview practice, and productivity workflows.
 
 ## Quickstart (30-second setup)
 
@@ -10,38 +10,19 @@ Agent skills for learning loops, code review, interview practice, and productivi
 npx skills@latest add devinat1/.claude
 ```
 
-2. Pick the skills you want and which coding agents to install them on. **Include `setup-devinat1-skills`.**
-
-3. Run `/setup-devinat1-skills` in your agent. It will ask for:
-   - Skills tracker path (for the learning loop)
-   - Blog content directory (for `/blog` and `/update-blog-refs`)
-   - MCP integrations (Granola, Todoist)
-
-4. For Claude Code users who clone this repo directly:
+1. Pick the skills you want and which coding agents to install them on. **Include `setup-devinat1-skills`.**
+2. Run `/setup-devinat1-skills` in your agent. It will ask for:
+  - Skills tracker path (for the learning loop)
+  - Blog content directory (for `/blog` and `/update-blog-refs`)
+  - MCP integrations (Granola, Todoist)
+3. For Claude Code users who clone this repo directly:
 
 ```bash
 git clone git@github.com:devinat1/.claude.git ~/.claude
 ./scripts/link-skills.sh
 ```
 
-## Dependencies (optional)
-
-These skills are **not** bundled. Install separately if you want them:
-
-```bash
-npx skills@latest add mattpocock/skills
-./scripts/link-external-skills.sh   # symlinks into ~/.claude/skills for Claude Code
-```
-
-Recommended from [mattpocock/skills](https://github.com/mattpocock/skills): `tdd`, `diagnose`, `grill-with-docs`, `grill-me`, `handoff`, `to-issues`, `to-prd`, `triage`, `improve-codebase-architecture`, `prototype`, `teach`, `write-a-skill`, `zoom-out`, `caveman`.
-
-Also commonly used: `find-skills`, `postiz`, `design-an-interface`.
-
-## Personal config
-
-[`settings.json`](settings.json) in this repo is the author's personal Claude Code config. Do not copy it blindly when installing skills elsewhere.
-
-## Reference
+## Skills
 
 ### Learning
 
@@ -59,7 +40,7 @@ Code review slash commands and repo tooling.
 - **[onboard](./skills/engineering/onboard/SKILL.md)** — Produce a concise onboarding doc for the current codebase.
 - **[clean](./skills/engineering/clean/SKILL.md)** — Review code for clean naming conventions.
 - **[ddd](./skills/engineering/ddd/SKILL.md)** — Review code against DDD aggregate rules.
-- **[oop](./skills/engineering/oop/SKILL.md)** — Review code against _Elegant Objects_ principles.
+- **[oop](./skills/engineering/oop/SKILL.md)** — Review code against *Elegant Objects* principles.
 - **[rate](./skills/engineering/rate/SKILL.md)** — Rate branch diff against multiple review principles.
 - **[scale](./skills/engineering/scale/SKILL.md)** — Analyze scale limits and upgrade paths.
 - **[graphite](./skills/engineering/graphite/SKILL.md)** — Split branch work into a Graphite PR stack.
@@ -93,3 +74,4 @@ Blog workflow.
 ### Setup
 
 - **[setup-devinat1-skills](./skills/setup/setup-devinat1-skills/SKILL.md)** — Scaffold per-repo config (`docs/agents/`) for tracker path, blog directory, and MCP integrations. Run once per repo.
+
