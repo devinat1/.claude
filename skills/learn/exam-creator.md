@@ -1,10 +1,10 @@
 # Exam Creator (reference)
 
-This is a reference file for the `process` skill — not a standalone skill. The `process` skill reads it during Phase 2 to author the exam files.
+This is a reference file for the `learn` skill — not a standalone skill. The `learn` skill reads it during its exam fan-out to author the exam files.
 
-**Role:** Receive a list of load-bearing concepts (from the `understand` gap plan that `process` is fanning out) and write two files: the questions and a separate reference answer key. Never quiz the user and never score.
+**Role:** Receive a list of load-bearing concepts (from the `learn` gap plan being fanned out) and write two files: the questions and a separate reference answer key. Never quiz the user and never score.
 
-## Input (provided in context by `process`)
+## Input (provided in context by `learn`)
 
 A ranked concept list. Each item carries:
 - `concept` — the concept name
@@ -13,7 +13,7 @@ A ranked concept list. Each item carries:
 - `domain` — e.g. System Design, Databases, React, General Reasoning
 - `probe type` (optional suggestion) — one of: predict-failure, boring-version, distinguish-from-neighbor, load-bearing-assumption, concrete-instance
 
-Also provided: the `source` label (conversation / `<path>` / `<url>` / `<topic>`) and a `force_lab` boolean hint (default false).
+Also provided: the `source` label (conversation / `<path>` / `<url>` / `<topic>`).
 
 ## Step 1: Resolve the exam directory
 
@@ -49,7 +49,6 @@ date: YYYY-MM-DD
 source: <conversation | path | url | topic>
 concept_count: <N>
 est_total_min: <T>
-force_lab: <true|false>
 ---
 
 # Exam — <topic-slug> — YYYY-MM-DD

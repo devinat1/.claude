@@ -1,21 +1,20 @@
 ---
 name: skills-tracker
-description: Living diagnostic of user's technical and reasoning skills — strengths, weaknesses, blind spots, and growth over time
 type: user
-originSessionId: fbf46bbc-ce48-4b69-a442-b2f6f844063e
 ---
-# Skills Tracker
 
-Last updated: 2026-04-15
+# Skills tracker
+
+Last updated: 2026-06-07
 
 ## Current Blind Spots
 
-_No blind spots identified yet._
+- **Resource lifecycle vs process lifecycle** (System Design / Go concurrency) — Treating DI frameworks (especially FX) as if they should replace the whole `run()` lifecycle, when they only cover connection open/close; long-running supervision stays with `errgroup` + `context`.
 
 ## Skills
 
-_No domains tracked yet. Domains are added as they emerge from conversations._
+_(none yet)_
 
 ## Resolved Blind Spots
 
-_No resolved blind spots yet._
+_(none yet)_

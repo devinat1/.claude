@@ -37,14 +37,6 @@ Official plugin for maintaining CLAUDE.md files:
 | `revise-claude-md` | Updates CLAUDE.md with learnings from the current session |
 | `claude-md-improver` | Audits and improves CLAUDE.md files across repositories |
 
-### learning-toolkit (local, v1.0.0)
-Local plugin for guided learning through code. Provides a unified `/learn` skill with four modes:
-
-- **Socratic** — Probing questions rated 1-5, one at a time
-- **Chunking** — Breaks topics into concept lists with implementation challenges
-- **Gap Analysis** — Diagnostic questions to map knowledge gaps with targeted exercises
-- **Syntax Hints** — Brief syntax examples, progressively more specific
-
 ### vercel-plugin (v0.32.5)
 Vercel platform plugin with extensive skill coverage:
 
@@ -107,19 +99,15 @@ Vercel platform plugin with extensive skill coverage:
 
 Auto-invoked from natural language (no slash needed); they trigger on the phrases below.
 
+These four form the learning loop. `learn` diagnoses and fans out, `lab-creator` and `grader` are invoked along the way, and `break-it` is a standalone variant for load-measurable concepts. All of them write to your skills tracker (`projects/.../memory/skills_tracker.md`).
+
 | Skill | Triggers | Purpose |
 |-------|----------|---------|
-| `process` | "process x", "quiz me on x", "make me an exam on x" | Extracts load-bearing concepts from the conversation (plus an optional file/URL/topic) and writes a standalone exam (`QUESTIONS.md` + `ANSWER.md`). Does not quiz or grade. Uses the internal `exam-creator.md` reference file. |
-| `grader` | "grade me", "grade my exam", "take the exam at \<path\>" | Administers an exam: serves questions one at a time, scores against `ANSWER.md`, re-tests gaps, optionally builds (via `lab-creator`) and grades a lab, then updates your skills tracker. |
-| `lab-creator` | "create a lab on x", "give me an exercise on x" | Scaffolds a single hands-on lab targeting one concept. Runs standalone from your request, or is invoked by `grader` with gap context. Scaffolds files only — it does not grade. |
-
----
-
-## Agents
-
-| Agent | Purpose |
-|-------|---------|
-| `socratic-code-teacher` | Guides understanding of code, architecture, and implementation through Socratic questioning — never explains directly, always asks |
+| `learn` | "understand x", "help me learn x", "process x", "quiz me on x", "make me an exam on x" | Diagnoses where your understanding of a target (code / URL / topic) bottoms out, shows you the gap plan, and — after you OK it — fans out: inline walkthroughs of your own code, a hands-on lab (via `lab-creator`), an exam (via the bundled `exam-creator.md`), or a logged blind spot. Does not quiz or grade. |
+| `lab-creator` | "create a lab on x", "give me an exercise on x" | Scaffolds a single hands-on lab targeting one concept. Runs standalone, or is invoked by `learn` with gap context. Scaffolds files only — it does not grade. |
+| `grader` | "grade me", "grade my exam", "grade this lab", "take the exam at \<path\>" | Administers an exam one question at a time (🟢🟡🔴, re-tests to mastery), or grades a `lab-creator` lab with a predict-your-score calibration check, then updates your skills tracker. Does not create labs. |
+| `break-it` | "break it", "load test this", "where does this fall over" | Standalone learning loop for load-measurable system-design concepts: scaffolds a disposable Go + k6 lab, you predict the breaking point, watch it break, patch in the pattern, re-run. Logs the measured threshold to your skills tracker. |
+| `clarify` | "clarify this", "help me figure out what I want", "what should I build" | Extensive one-at-a-time interview until purpose/constraints/success criteria are clear; stops with a single copy-pasteable prompt — no design doc or code |
 
 ---
 
