@@ -1,6 +1,6 @@
 ---
 name: lab-creator
-description: Scaffolds a single hands-on lab (runnable unit tests for code, graded scenarios for concepts) targeting one concept. Use when the user says "create a lab on x", "give me an exercise on x", "make me a hands-on exercise", and when the process skill requests a gap-targeted lab. Scaffolds files only — it does NOT grade or run the calibration check.
+description: Scaffolds a single hands-on lab (runnable unit tests for code, graded scenarios for concepts) targeting one concept. Use when the user says "create a lab on x", "give me an exercise on x", "make me a hands-on exercise", and when the learn skill requests a gap-targeted lab. Scaffolds files only — it does NOT grade or run the calibration check.
 ---
 
 # Lab creator
@@ -17,7 +17,7 @@ Confirm the target concept and entry path, then scaffold from the shapes in [EXA
 
 There are two ways this skill runs — determine which applies:
 
-- **Invoked by the process skill:** the target `concept` and `gap context` (the confirmed gap, the domain, whether it's code or conceptual) are supplied in context. Use them directly.
+- **Invoked by the learn skill:** the target `concept` and `gap context` (the confirmed gap, the domain, whether it's code or conceptual) are supplied in context. Use them directly.
 - **Standalone (user asked directly):** there is no grading session. The target concept comes from the user's request (e.g. "create a lab on consistent hashing", "give me an exercise on Python generators").
   - If the concept/topic is ambiguous or missing, ask ONE clarifying question to pin it down, then proceed.
   - Infer code-vs-conceptual and the language from the named topic and surrounding context (e.g. a Python topic → code lab in Python; a system-design topic → conceptual lab).
@@ -45,7 +45,7 @@ Do not include the answer, private grading notes, or solution hints in the gener
 
 Follow [EXAMPLE.md](EXAMPLE.md) for exact shapes.
 
-- **Code concept** → `answer.<ext>`, `test_answer.<ext>`, `SOLUTION.<ext>` (language from process gap context or standalone inference; standard test runner).
+- **Code concept** → `answer.<ext>`, `test_answer.<ext>`, `SOLUTION.<ext>` (language from learn gap context or standalone inference; standard test runner).
 - **Conceptual concept** → `answer.md`, `tests.md`, `SOLUTION.md` (numbered scenarios; each test case has checkable **Expected**).
 
 ## Step 4: Report
@@ -57,7 +57,7 @@ Print:
 
 Then hand off depending on entry path:
 
-- **Invoked by the process skill:** return the lab path and visible test cases to process. process tells the user to fill in the answer file and then say "grade me" with the lab path — the grader skill grades it (prediction + calibration). Do NOT grade here.
+- **Invoked by the learn skill:** return the lab path and visible test cases to learn. learn tells the user to fill in the answer file and then say "grade me" with the lab path — the grader skill grades it (prediction + calibration). Do NOT grade here.
 - **Standalone:** tell the user to fill in the answer file, then say: "When you're done, say 'grade me' with this lab path to score it and get a calibration check." Do NOT grade here.
 
 Do NOT print, open, or reveal `SOLUTION.*` in either case.

@@ -1,5 +1,15 @@
 {
   "permissions": {
+    "allow": [
+      "mcp__codegraph__codegraph_explore",
+      "mcp__codegraph__codegraph_search",
+      "mcp__codegraph__codegraph_node",
+      "mcp__codegraph__codegraph_callers",
+      "mcp__codegraph__codegraph_callees",
+      "mcp__codegraph__codegraph_impact",
+      "mcp__codegraph__codegraph_files",
+      "mcp__codegraph__codegraph_status"
+    ],
     "defaultMode": "auto"
   },
   "hooks": {
@@ -21,7 +31,16 @@
     "claude-md-management@claude-plugins-official": true,
     "vercel-plugin@vercel": false,
     "gopls-lsp@claude-plugins-official": true,
-    "context7@claude-plugins-official": true
+    "context7@claude-plugins-official": true,
+    "resyndeo@resyndeo": true
+  },
+  "extraKnownMarketplaces": {
+    "resyndeo": {
+      "source": {
+        "source": "github",
+        "repo": "Syndeo-AI/resyndeo-claude-plugin"
+      }
+    }
   },
   "alwaysThinkingEnabled": true,
   "effortLevel": "xhigh",
