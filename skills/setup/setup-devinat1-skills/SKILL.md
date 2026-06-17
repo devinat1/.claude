@@ -47,7 +47,7 @@ Default: ask the user for their blog content directory (no default assumed).
 
 > Explainer: Some skills use MCP servers. Record which you have so skills know what's available.
 
-Ask about Granola (meeting-feedback, momtest) and Todoist (overwhelmed, ramble). Options: configured / not configured / not needed.
+Ask about Granola (meeting-feedback, momtest) and Todoist (focus, ramble). Options: configured / not configured / not needed.
 
 ### 3. Confirm and edit
 

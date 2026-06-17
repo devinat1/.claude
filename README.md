@@ -59,7 +59,7 @@ Workflow tools beyond code review.
 
 - **[clarify](./skills/productivity/clarify/SKILL.md)** — Interview until purpose and constraints are clear.
 - **[meeting-feedback](./skills/productivity/meeting-feedback/SKILL.md)** — Evaluate meeting communication via Granola.
-- **[overwhelmed](./skills/productivity/overwhelmed/SKILL.md)** — Decompose Todoist tasks tagged `overwhelmed`.
+- **[focus](./skills/productivity/focus/SKILL.md)** — ADHD work assistant: stuck sessions, Focusmate timeboxing, overcommitment guard via Todoist.
 - **[ramble](./skills/productivity/ramble/SKILL.md)** — Extract conversation items into Todoist tasks.
 - **[experience](./skills/productivity/experience/SKILL.md)** — Update skills tracker from session signals.
 - **[momtest](./skills/productivity/momtest/SKILL.md)** — Audit customer calls against The Mom Test.
