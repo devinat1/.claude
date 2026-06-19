@@ -62,9 +62,7 @@ the timeout — why is that worthless?"*
 
 ## Phase 5: Log the line (beat 5)
 
-Append ONE line to the skills tracker (path from `docs/agents/skills-tracker.md` in the current repo, or run `/setup-devinat1-skills` first) under
-`## Current Blind Spots`: concept, domain (System Design), and the measured threshold + trigger.
-Update the "Last updated" date.
+Read [`agent-memory-logging.md`](../agent-memory-logging.md). `memory_save` one `load-threshold:` entry with concept, measured throughput, p99, trigger, and predicted ceiling. Silent — one line in the final report if MCP fails.
 
 ## Rules
 

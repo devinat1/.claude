@@ -1,6 +1,6 @@
 ---
 name: setup-devinat1-skills
-description: Sets up an `## Agent skills` block in AGENTS.md/CLAUDE.md and `docs/agents/` so devinat1's skills know the skills tracker path, blog directory, and MCP integrations. Run before first use of `learn`, `grader`, `break-it`, `experience`, `blog`, or `update-blog-refs`.
+description: Sets up an `## Agent skills` block in AGENTS.md/CLAUDE.md and `docs/agents/` so devinat1's skills know the agent memory project ID, blog directory, and MCP integrations. Run before first use of `learn`, `grader`, `break-it`, `experience`, `blog`, or `update-blog-refs`.
 disable-model-invocation: true
 ---
 
@@ -8,9 +8,9 @@ disable-model-invocation: true
 
 Scaffold the per-repo configuration that these skills assume:
 
-- **Skills tracker** — where learning skills log blind spots and diagnostics
+- **Agent memory** — stable project ID for learning-loop skills to scope MCP memories
 - **Blog directory** — where `/blog` and `/update-blog-refs` read existing posts
-- **MCP integrations** — which optional MCP servers you use (Granola, Todoist)
+- **MCP integrations** — which optional MCP servers you use (agentmemory, Granola, Todoist)
 
 This is a prompt-driven skill, not a deterministic script. Explore, present what you found, confirm with the user, then write.
 
@@ -20,22 +20,21 @@ This is a prompt-driven skill, not a deterministic script. Explore, present what
 
 Look at the current repo to understand its starting state:
 
-- `git remote -v` — identify the repo
+- `git remote -v` — identify the repo and derive a default project slug (`owner-repo`)
 - `AGENTS.md` and `CLAUDE.md` at the repo root — does either exist? Is there already an `## Agent skills` section?
 - `docs/agents/` — does prior setup output already exist?
-- `~/.claude/projects/` — note existing project memory directories if relevant
 
 ### 2. Present findings and ask
 
 Summarise what's present and what's missing. Walk the user through three decisions **one at a time**.
 
-**Section A — Skills tracker path.**
+**Section A — Agent memory project ID.**
 
-> Explainer: The learning loop skills (`learn`, `grader`, `break-it`, `experience`) read and write a markdown skills tracker. They need to know where that file lives on your machine.
+> Explainer: The learning loop skills (`learn`, `grader`, `break-it`, `experience`) log blind spots and diagnostics to agent memory via the `user-agentmemory` MCP server. They need a stable project slug to scope memories.
 
-Default: `~/.claude/projects/<project-slug>/memory/skills_tracker.md` where `<project-slug>` matches the current workspace.
+Default: `owner-repo` from `git remote get-url origin` (e.g. `devinat1-claude`).
 
-Ask if they want to override the path.
+Ask if they want to override the project ID.
 
 **Section B — Blog content directory.**
 
@@ -47,14 +46,14 @@ Default: ask the user for their blog content directory (no default assumed).
 
 > Explainer: Some skills use MCP servers. Record which you have so skills know what's available.
 
-Ask about Granola (meeting-feedback, momtest) and Todoist (focus, ramble). Options: configured / not configured / not needed.
+Ask about agentmemory (learn, grader, break-it, experience), Granola (meeting-feedback, momtest), and Todoist (focus, ramble). Options: configured / not configured / not needed.
 
 ### 3. Confirm and edit
 
 Show drafts of:
 
 - The `## Agent skills` block for `CLAUDE.md` or `AGENTS.md`
-- `docs/agents/skills-tracker.md`, `docs/agents/blog-directory.md`, `docs/agents/mcp-integrations.md`
+- `docs/agents/agent-memory.md`, `docs/agents/blog-directory.md`, `docs/agents/mcp-integrations.md`
 
 Let the user edit before writing.
 
@@ -73,9 +72,9 @@ The block:
 ```markdown
 ## Agent skills
 
-### Skills tracker
+### Agent memory
 
-[one-line summary of tracker path]. See `docs/agents/skills-tracker.md`.
+[one-line summary of project ID]. See `docs/agents/agent-memory.md`.
 
 ### Blog directory
 
@@ -88,12 +87,12 @@ The block:
 
 Write `docs/agents/*.md` using the seed templates in this skill folder as starting points:
 
-- [skills-tracker.md](./skills-tracker.md)
+- [agent-memory.md](./agent-memory.md)
 - [blog-directory.md](./blog-directory.md)
 - [mcp-integrations.md](./mcp-integrations.md)
 
-Substitute the user's chosen paths into the written files.
+Substitute the user's chosen values into the written files.
 
 ### 5. Done
 
-Tell the user setup is complete and which skills now read from `docs/agents/*.md`. They can edit those files directly later.
+Tell the user setup is complete and which skills now read from `docs/agents/*.md`. They can edit those files directly later. Remind them that agentmemory requires `npx @agentmemory/agentmemory` running at `AGENTMEMORY_URL`.

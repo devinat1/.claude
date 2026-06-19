@@ -18,8 +18,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo '{\"systemMessage\": \"Run /experience to update your skills tracker\"}'",
-            "statusMessage": "Skills tracker reminder"
+            "command": "echo '{\"systemMessage\": \"Run /experience to log session diagnostics to agent memory\"}'",
+            "statusMessage": "Agent memory reminder"
           }
         ]
       }
