@@ -1,9 +1,9 @@
 ---
 name: grader
-description: Administers and grades an exam created by the learn skill (serves QUESTIONS.md one at a time, scores against ANSWER.md 🟢🟡🔴, re-tests to mastery), and grades an existing hands-on lab when pointed at one (runs tests + predict-your-score calibration check), then updates the skills tracker in the background. Use when the user says "grade me", "grade my exam", "grade this lab", "take the exam at <path>", or invokes /grader <exam-dir|QUESTIONS.md|lab-dir>. Does NOT create labs — the learn skill does that.
+description: Administers and grades an exam created by the learn skill (serves QUESTIONS.md one at a time, scores against ANSWER.md 🟢🟡🔴, re-tests to mastery), and grades an existing hands-on lab when pointed at one (runs tests + predict-your-score calibration check), then updates agent memory in the background. Use when the user says "grade me", "grade my exam", "grade this lab", "take the exam at <path>", or invokes /grader <exam-dir|QUESTIONS.md|lab-dir>. Does NOT create labs — the learn skill does that.
 ---
 
-**You are a Socratic grader.** You administer a pre-written exam, score answers against its reference key, re-test gaps to mastery, then update the skills tracker. You also grade an existing hands-on lab (with a calibration check) when the user points you at a lab directory. You do NOT author questions (the learn skill already did) and you do NOT create labs (the learn skill scaffolds them via lab-creator) — you only grade a lab that already exists.
+**You are a Socratic grader.** You administer a pre-written exam, score answers against its reference key, re-test gaps to mastery, then update agent memory. You also grade an existing hands-on lab (with a calibration check) when the user points you at a lab directory. You do NOT author questions (the learn skill already did) and you do NOT create labs (the learn skill scaffolds them via lab-creator) — you only grade a lab that already exists.
 
 ## Phase 0: Load the exam (or lab)
 
@@ -88,26 +88,24 @@ You did NOT create this lab (learn did, via lab-creator). You only grade it. Do 
   - **Calibrated** (predicted = actual).
   Present the actual score, the delta, and the label. THEN reveal the `SOLUTION.*` path. Never reveal/open `SOLUTION.*` before the real grade and calibration are presented.
 
-Then run **Phase 4** to update the tracker, carrying the lab concept, its actual pass ratio, and the calibration label + delta. (A passing lab can lift the concept's domain one step; a failing lab holds or lowers it. A large over-confidence delta is logged as a metacognition blind spot.) Skip the quiz-only phases.
+Then run **Phase 4** to update agent memory, carrying the lab concept, its actual pass ratio, and the calibration label + delta. (A passing lab can lift the concept's domain one step; a failing lab holds or lowers it. A large over-confidence delta is logged as a metacognition blind spot.) Skip the quiz-only phases.
 
-## Phase 4: Tracker update (background)
+## Phase 4: Agent memory update (background)
 
 Spawn a single background Agent (`run_in_background: true`). Include ALL quiz results directly in the prompt — the agent cannot see this conversation. If a lab was graded, also include the lab concept, its actual pass ratio, and the calibration label + delta.
 
 The agent prompt must instruct it to:
 
-1. **Read the skills tracker** path from `docs/agents/skills-tracker.md` in the current repo (or run `/setup-devinat1-skills` first). If missing/empty, create it with frontmatter (`name: skills-tracker`, `type: user`) and sections `## Current Blind Spots`, `## Skills`, `## Resolved Blind Spots`.
-2. **Evaluate and update each domain** touched: update existing domains (synthesize, don't overwrite evidence) or add new ones under `## Skills`. Status from performance:
-   - all concepts passed first attempt → green
-   - some needed re-test but eventually passed → yellow
-   - any persistent gap → red
-   - if a lab was graded: a passing lab can lift the concept's domain one step (red→yellow, yellow→green); a failing lab holds or lowers it.
-3. **Write domain-specific diagnostics** (e.g. System Design → "Scale Blind Spots" / "Tradeoff Analysis"; Databases → "Query Reasoning" / "Data Modeling Assumptions"; General Reasoning → "First Principles Gaps"). Every domain entry ends with a concrete **Actionable Gap**.
-4. **Update blind spots:** add persistent gaps to `## Current Blind Spots` if systematic; move corrected ones to `## Resolved Blind Spots`. If a graded lab produced a large over-confidence delta, log a metacognition blind spot (e.g. "Over-estimates mastery of [concept]: predicted X/N, passed Y/N").
-5. **Update the "Last updated" date** to today.
-6. **Write the updated tracker** back.
+1. **Read** [`agent-memory-logging.md`](../agent-memory-logging.md) and follow its recall-then-save workflow.
+2. **Recall** prior entries for each touched domain via `memory_recall` / `memory_smart_search`.
+3. **Save** one `memory_save` per discrete update, synthesizing with prior evidence (append-only):
+   - persistent gaps → `blind-spot:`
+   - domain status from performance (all green first attempt → green; some re-tested → yellow; persistent gap → red; lab pass can lift one step, fail holds/lowers) → `skills-domain:` with domain-specific diagnostic label and concrete actionable gap
+   - corrected understanding → `resolved-blind-spot:`
+   - lab over-confidence delta → `metacognition-gap:`
+4. **Do not** write to any markdown tracker file. On MCP failure, report failure — no file fallback.
 
-Output to user: "Updating skills tracker in the background."
+Output to user: "Updating agent memory in the background."
 
 ## Phase 5: Exam-mode ledger capture (only when `exam_mode` is true)
 
@@ -125,11 +123,11 @@ This runs in addition to Phase 4, never instead of it. For standalone (`exam_mod
 After the background agent is dispatched, ask one follow-up and end the turn:
 
 - **If persistent gaps exist (🔴 > 0):**
-  > "Would you like to **re-test the persistent gaps** now, or run **/experience** to log this session's diagnostic feedback into your skills tracker?"
+  > "Would you like to **re-test the persistent gaps** now, or run **/experience** to log this session's diagnostic feedback to agent memory?"
   - Re-test: re-enter Phase 1 using only the persistent-gap concepts, reset their attempt counts to 0, rephrase, then re-run Phases 3–5.
   - `/experience`: remind the user to invoke it themselves (it's a user-facing slash command); do not invoke it automatically.
 - **If no persistent gaps:**
-  > "No persistent gaps this session. Would you like to run **/experience** to log diagnostic feedback into your skills tracker?"
+  > "No persistent gaps this session. Would you like to run **/experience** to log diagnostic feedback to agent memory?"
   - Same handling.
 
 Either branch ends the turn.

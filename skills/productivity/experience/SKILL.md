@@ -1,14 +1,14 @@
 ---
 name: experience
-description: Update the skills tracker with diagnostic feedback from the current session. Use when the user invokes /experience.
+description: Update agent memory with diagnostic feedback from the current session. Use when the user invokes /experience.
 disable-model-invocation: true
 ---
 
-**You are a skills assessment dispatcher.** Your job is to summarize the session's skill signals and hand them to a background agent for tracker updates.
+**You are a skills assessment dispatcher.** Your job is to summarize the session's skill signals and hand them to a background agent for agent memory updates.
 
 ## When triggered
 
-If the user provided additional text with the command (e.g., `/experience focus on my system design thinking`), treat it as a focus directive. Prioritize that area in your signal extraction and include the directive verbatim in the background agent prompt so it shapes the tracker update.
+If the user provided additional text with the command (e.g., `/experience focus on my system design thinking`), treat it as a focus directive. Prioritize that area in your signal extraction and include the directive verbatim in the background agent prompt so it shapes the agent memory update.
 
 ### Step 1: Summarize session signals
 
@@ -28,31 +28,19 @@ Spawn a single background Agent (`run_in_background: true`) with the following p
 
 The agent prompt must instruct it to:
 
-1. **Read the current skills tracker** path from `docs/agents/skills-tracker.md` in the current repo (or run `/setup-devinat1-skills` first). If the file does not exist or is empty, create it with the initial template: frontmatter (`name: skills-tracker`, `type: user`), then sections for `## Current Blind Spots`, `## Skills`, and `## Resolved Blind Spots`.
+1. **Read** [`agent-memory-logging.md`](../../learning/agent-memory-logging.md) and follow its recall-then-save workflow.
 
-2. **Evaluate and update each domain** touched in the session:
-   - If the domain exists in the tracker: update status, diagnostic, and actionable gap based on new evidence combined with existing evidence. Do not overwrite existing evidence — synthesize.
-   - If the domain is new: create a new `### Domain` section under `## Skills`.
-   - If a broad domain now has 3+ interactions across distinct sub-topics: split into sub-domain headers (e.g., `### React` becomes `### React` with `#### React Hooks`, `#### React State Management`).
-   - Adjust status (green/yellow/red) based on accumulated evidence, not single interactions.
+2. **Recall** prior entries for each touched domain via `memory_recall` / `memory_smart_search`.
 
-3. **Write domain-specific diagnostics** — not generic assessments. Each domain gets a diagnostic label appropriate to that domain:
-   - System Design: **Scale Blind Spots**, **Tradeoff Analysis**
-   - React / Frontend: **Thinking Mistakes**, **Mental Model Gaps**
-   - General Reasoning: **First Principles Gaps**, **Pattern-Matching Errors**
-   - Databases: **Query Reasoning**, **Data Modeling Assumptions**
-   - Any new domain: choose the most useful diagnostic lens from context
-   - Every domain entry must end with a concrete **Actionable Gap** — a specific exercise, study item, or thinking practice. Not "learn more about X" but "do Y with Z constraint."
+3. **Save** one `memory_save` per discrete update, synthesizing with prior evidence (append-only):
+   - domain status changes → `skills-domain:` with domain-specific diagnostic label and concrete actionable gap (System Design → Scale Blind Spots / Tradeoff Analysis; React → Thinking Mistakes / Mental Model Gaps; General Reasoning → First Principles Gaps; Databases → Query Reasoning / Data Modeling Assumptions; choose appropriately for new domains)
+   - new systematic gaps → `blind-spot:`
+   - corrected understanding → `resolved-blind-spot:` with identified date, resolved date, and evidence
+   - adjust status (green/yellow/red) based on accumulated evidence, not single interactions
 
-4. **Update blind spots:**
-   - Add new entries to `## Current Blind Spots` if incorrect assumptions reveal a systematic gap (not a one-off mistake)
-   - Move entries to `## Resolved Blind Spots` if the session shows corrected understanding. Include the identified date, resolved date, and evidence of resolution.
+4. **Do not** write to any markdown tracker file. On MCP failure, report failure — no file fallback.
 
-5. **Update the "Last updated" date** to today's date.
-
-6. **Write the updated tracker** back to the file.
-
-7. **Todoist integration** — ONLY if a new blind spot was added or a domain was newly rated as red:
+5. **Todoist integration** — ONLY if a new blind spot was added or a domain was newly rated as red:
    - Use `find-projects` to find the project named "claude"
    - Use `find-tasks` with the "claude" project ID to fetch all existing tasks in the project
    - Before creating any task, compare the new task against existing ones:
@@ -65,14 +53,14 @@ The agent prompt must instruct it to:
 
 ### Step 3: Confirm to user
 
-Output only: "Updating skills tracker in the background."
+Output only: "Updating agent memory in the background."
 
 Do not output any other information. Do not wait for the agent to complete. Do not show agent results.
 
 ## Rules
 
 - NEVER block the main conversation. The agent runs in the background.
-- NEVER show agent results or tracker contents to the user unless they explicitly ask.
-- NEVER update the tracker without the user invoking /experience.
+- NEVER show agent results or agent memory contents to the user unless they explicitly ask.
+- NEVER update agent memory without the user invoking /experience.
 - Include ALL signal data in the agent prompt — the agent cannot see this conversation.
 - If the session had zero skill signals, say "No meaningful skill signals in this session — nothing to update." and do not spawn an agent. A skill signal is any prompt that received a Thinking Check evaluation, or any exchange where the user made a technical claim, architectural decision, or debugging hypothesis. Greetings, confirmations, and slash commands are not skill signals.

@@ -12,9 +12,9 @@ npx skills@latest add devinat1/.claude
 
 1. Pick the skills you want and which coding agents to install them on. **Include `setup-devinat1-skills`.**
 2. Run `/setup-devinat1-skills` in your agent. It will ask for:
-  - Skills tracker path (for the learning loop)
+  - Agent memory project ID (for the learning loop)
   - Blog content directory (for `/blog` and `/update-blog-refs`)
-  - MCP integrations (Granola, Todoist)
+  - MCP integrations (agentmemory, Granola, Todoist)
 3. For Claude Code users who clone this repo directly:
 
 ```bash
@@ -28,10 +28,10 @@ git clone git@github.com:devinat1/.claude.git ~/.claude
 
 Skills that diagnose gaps, scaffold labs, grade exams, and log progress.
 
-- **[learn](./skills/learning/learn/SKILL.md)** — Diagnose where understanding bottoms out, then fan out to walkthroughs, labs, exams, or blind-spot logging.
+- **[learn](./skills/learning/learn/SKILL.md)** — Diagnose where understanding bottoms out, then fan out to walkthroughs, labs, exams, or agent memory logging.
 - **[lab-creator](./skills/learning/lab-creator/SKILL.md)** — Scaffold a single hands-on lab targeting one concept.
-- **[grader](./skills/learning/grader/SKILL.md)** — Administer exams or grade labs; update the skills tracker.
-- **[break-it](./skills/learning/break-it/SKILL.md)** — Load-test a system-design concept until it breaks; patch in the pattern.
+- **[grader](./skills/learning/grader/SKILL.md)** — Administer exams or grade labs; update agent memory.
+- **[break-it](./skills/learning/break-it/SKILL.md)** — Load-test a system-design concept until it breaks; log thresholds to agent memory.
 
 ### Engineering
 
@@ -61,17 +61,20 @@ Workflow tools beyond code review.
 - **[meeting-feedback](./skills/productivity/meeting-feedback/SKILL.md)** — Evaluate meeting communication via Granola.
 - **[focus](./skills/productivity/focus/SKILL.md)** — ADHD work assistant: stuck sessions, Focusmate timeboxing, overcommitment guard via Todoist.
 - **[ramble](./skills/productivity/ramble/SKILL.md)** — Extract conversation items into Todoist tasks.
-- **[experience](./skills/productivity/experience/SKILL.md)** — Update skills tracker from session signals.
+- **[experience](./skills/productivity/experience/SKILL.md)** — Log session diagnostics to agent memory.
 - **[momtest](./skills/productivity/momtest/SKILL.md)** — Audit customer calls against The Mom Test.
+- **[research](./skills/productivity/research/SKILL.md)** — Prior-art literature review to compare an idea against existing papers and products.
 
 ### Writing
 
 Blog workflow.
 
 - **[blog](./skills/writing/blog/SKILL.md)** — Turn a conversation into a blog post.
+- **[update-blog-on-leetcode](./skills/writing/update-blog-on-leetcode/SKILL.md)** — Sync LeetCode notes from State vault to the public blog.
 - **[update-blog-refs](./skills/writing/update-blog-refs/SKILL.md)** — Suggest related links between blog posts.
+- **[youtube](./skills/writing/youtube/SKILL.md)** — Context → YouTube teleprompter script with hook, CTA, and paced line breaks.
 
 ### Setup
 
-- **[setup-devinat1-skills](./skills/setup/setup-devinat1-skills/SKILL.md)** — Scaffold per-repo config (`docs/agents/`) for tracker path, blog directory, and MCP integrations. Run once per repo.
+- **[setup-devinat1-skills](./skills/setup/setup-devinat1-skills/SKILL.md)** — Scaffold per-repo config (`docs/agents/`) for agent memory project ID, blog directory, and MCP integrations. Run once per repo.
 

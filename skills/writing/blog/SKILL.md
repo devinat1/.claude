@@ -1,12 +1,40 @@
 ---
 name: blog
-description: Convert the current conversation into a blog post matching the user's writing style. Use when the user invokes /blog.
+description: Convert the current conversation into a focused blog post (clarify scope first, then distill). Use when the user invokes /blog.
 disable-model-invocation: true
 ---
 
 Turn this conversation into a blog post. Follow these steps exactly:
 
-## Step 1: Study existing writing style
+## Step 1: Clarify post scope
+
+Read and follow [`skills/productivity/clarify/SKILL.md`](../productivity/clarify/SKILL.md) to interview the user before drafting.
+
+### Clarify adaptation
+
+Follow clarify's **interview discipline** only:
+
+1. Explore project context — check files, docs, recent commits
+2. Scope check — if the conversation spans multiple independent threads, flag it and clarify one slice at a time
+3. Ask clarifying questions — extensively, one at a time — purpose, constraints, success criteria, non-goals, audience, what "done" looks like
+4. Stop when thorough — all three pillars are specific enough to act on
+
+**Do not** follow clarify's HARD-GATE or end artifact. Do not output a copy-paste prompt. Do not stop after clarify. Do not draft during this phase.
+
+Focus questions on: the single narrative thread, audience, angle, and what to include vs exclude from the conversation.
+
+## Step 2: Summarize and gate
+
+When clarify is thorough, present a brief summary:
+
+- **Topic** — the one thing this post is about
+- **Include** — what belongs in the post
+- **Exclude** — what to leave out (even if it appeared in the conversation)
+- **Shape** — intended structure or angle
+
+Wait for explicit yes/no before proceeding. If the user says no, revise the summary or return to Step 1.
+
+## Step 3: Study existing writing style
 
 Read 3-5 existing posts in the blog content directory from `docs/agents/blog-directory.md` in the current repo (or run `/setup-devinat1-skills` first) to learn the user's writing style. Pay attention to:
 - Tone (casual vs formal, use of humor, directness)
@@ -15,11 +43,11 @@ Read 3-5 existing posts in the blog content directory from `docs/agents/blog-dir
 - Vocabulary and voice
 - Use of code blocks, links, lists, and other formatting
 
-## Step 2: Draft the post
+## Step 4: Draft the post
 
-Analyze the conversation and write a blog post draft in markdown **matching the writing style you observed in Step 1**. The post should:
+Write a blog post draft in markdown **matching the writing style you observed in Step 3** and **the scope agreed in Steps 1–2**. The post should:
 - Sound like the user wrote it, not an AI
-- Extract the key insights, learnings, or story from the conversation
+- Follow one narrative thread — do not dump the full conversation
 - Use proper markdown formatting (headings, code blocks, lists as appropriate)
 - Include this frontmatter at the top:
 
@@ -29,7 +57,21 @@ draft: "false"
 ---
 ```
 
-## Step 3: Show the draft for review
+### Distill rules
+
+Structure comes from existing posts (style-adaptive), but length and completeness do not mirror the conversation. A good post tells one story — e.g. the problem, the key design choice, one concrete example — not a transcript.
+
+**Include:**
+- One narrative thread agreed in clarify
+- Core insight or story and key design decisions
+- At most one concrete illustration where it earns its keep
+
+**Exclude (even if in the conversation):**
+- Implementation minutiae (file paths, configs, exact commands, full code listings)
+- Side threads and tangents
+- Step-by-step replay of how the chat unfolded
+
+## Step 5: Show the draft for review
 
 Present the full draft to the user. Ask:
 - Does the content look good? Any sections to add, remove, or rewrite?
@@ -37,11 +79,11 @@ Present the full draft to the user. Ask:
 
 Incorporate all feedback. Repeat this step until the user approves.
 
-## Step 4: Save the file
+## Step 6: Save the file
 
 Save the final post to `<blog-content-dir>/<title>.md` where `<blog-content-dir>` comes from `docs/agents/blog-directory.md` in the current repo (or run `/setup-devinat1-skills` first) and `<title>` is the approved post title.
 
-## Step 5: Update related links
+## Step 7: Update related links
 
 After saving the new post, suggest related links:
 
@@ -61,7 +103,7 @@ After saving the new post, suggest related links:
 
 If an existing post already has a `## Related` section, add the new link to it rather than creating a duplicate section.
 
-## Step 6: Publish (with confirmation)
+## Step 8: Publish (with confirmation)
 
 Ask the user: "Ready to publish with `npx quartz sync`?"
 

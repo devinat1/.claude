@@ -1,6 +1,6 @@
 ---
 name: learn
-description: Use when you're confused by code (often vibe-coded) and want to act on what you don't understand — "understand x", "what is this code doing", "help me learn x", "process x", "quiz me on x", "make me an exam on x", or /learn <path|url|topic>. Diagnoses where your understanding bottoms out, then fans out to walkthroughs, labs, exams, and the skills tracker. Every turn is brief — one setup line, one focused block, one question at a time.
+description: Use when you're confused by code (often vibe-coded) and want to act on what you don't understand — "understand x", "what is this code doing", "help me learn x", "process x", "quiz me on x", "make me an exam on x", or /learn <path|url|topic>. Diagnoses where your understanding bottoms out, then fans out to walkthroughs, labs, exams, and agent memory logging. Every turn is brief — one setup line, one focused block, one question at a time.
 ---
 
 **You diagnose, then act.** You take a confusing target (usually code), find the *stack* of concepts under it, locate the layer where the user's understanding actually bottoms out, and then — once they OK it — teach each gap the way they chose: a walkthrough of their own code, a hands-on lab, an exam, or a logged blind spot. You do NOT quiz or score (that's `grader`).
@@ -87,7 +87,7 @@ For each gap, dispatch on `modality`:
 - **walkthrough** → one short setup line, then one focused explanation block tied to real `file:line` refs from `code refs`. Connect the concept to the concrete lines — what the code does, why, and the mechanism they missed — and tie it back to the `confirmed gap`. Never a generic explanation, no multi-paragraph lectures.
 - **lab** → invoke the `lab-creator` skill with the concept + gap context (the `confirmed gap`, the `domain`, code-vs-conceptual). It scaffolds the files and returns the path + visible cases. **Generate at most ONE lab per run** — if several gaps chose `lab`, build it for the highest-leverage one and `log` the rest. Do not narrate scaffolding — save the path for Phase 6.
 - **exam** → read `exam-creator.md` (this skill's directory) and follow it, passing the concept list and the `source` label. It writes `QUESTIONS.md` + `ANSWER.md` and prints the paths. Do not narrate authoring — save the path for Phase 6.
-- **log** → read the skills tracker path from `docs/agents/skills-tracker.md` in the current repo (or run `/setup-devinat1-skills` first). Append under `## Current Blind Spots` (concept, domain, one-line confirmed gap). If missing, create it with frontmatter (`name: skills-tracker`, `type: user`) and sections `## Current Blind Spots`, `## Skills`, `## Resolved Blind Spots`. Update the "Last updated" date.
+- **log** → read `agent-memory-logging.md` (this skill's directory). For each gap: `memory_smart_search` for dedup, then `memory_save` with `blind-spot:` content. Silent — report only in Phase 6.
 
 ## Phase 6: Report
 
@@ -107,6 +107,6 @@ For each gap, dispatch on `modality`:
 - **Phase 5 walkthroughs:** one short setup line + one focused block with real `file:line` refs — no generic lectures.
 - **Phase 5 lab/exam:** invoke silently; report path only in Phase 6.
 - **Phase 6:** one line per gap outcome; one short `grader` reminder if lab/exam was created.
-- Fan out in learning order (foundational first). At most ONE lab per run; surplus `lab` gaps get logged instead.
+- Fan out in learning order (foundational first). At most ONE lab per run; surplus `lab` gaps get logged to agent memory instead.
 - Walkthroughs cite real `file:line`, never generic explanations. You do NOT quiz or score — that's `grader`.
 - Exams are authored only via `exam-creator.md`; never quiz or score here. This is the standalone exam format — do NOT touch `exams/FORMAT.md`, `exams/ledger.jsonl`, or the daily routine.

@@ -21,8 +21,11 @@
     "./skills/productivity/momtest",
     "./skills/productivity/focus",
     "./skills/productivity/ramble",
+    "./skills/productivity/research",
     "./skills/setup/setup-devinat1-skills",
     "./skills/writing/blog",
-    "./skills/writing/update-blog-refs"
+    "./skills/writing/update-blog-on-leetcode",
+    "./skills/writing/update-blog-refs",
+    "./skills/writing/youtube"
   ]
 }
