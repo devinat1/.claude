@@ -52,6 +52,7 @@ Mock interview practice.
 
 - **[system](./skills/interview/system/SKILL.md)** — System design interview simulator with Socratic probing.
 - **[interviewer](./skills/interview/interviewer/SKILL.md)** — Brutal mock interviewer on any topic.
+- **[vc-pitch-drill](./skills/interview/vc-pitch-drill/SKILL.md)** — Pre-seed VC pitch practice with direct investor-style drills.
 
 ### Productivity
 
