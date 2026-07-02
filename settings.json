@@ -1,50 +1,101 @@
 {
-  "permissions": {
-    "allow": [
-      "mcp__codegraph__codegraph_explore",
-      "mcp__codegraph__codegraph_search",
-      "mcp__codegraph__codegraph_node",
-      "mcp__codegraph__codegraph_callers",
-      "mcp__codegraph__codegraph_callees",
-      "mcp__codegraph__codegraph_impact",
-      "mcp__codegraph__codegraph_files",
-      "mcp__codegraph__codegraph_status"
-    ],
-    "defaultMode": "auto"
-  },
-  "hooks": {
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "echo '{\"systemMessage\": \"Run /experience to log session diagnostics to agent memory\"}'",
-            "statusMessage": "Agent memory reminder"
-          }
-        ]
-      }
-    ]
-  },
-  "enabledPlugins": {
-    "frontend-design@claude-plugins-official": true,
-    "superpowers@claude-plugins-official": true,
-    "claude-md-management@claude-plugins-official": true,
-    "vercel-plugin@vercel": false,
-    "gopls-lsp@claude-plugins-official": true,
-    "context7@claude-plugins-official": true,
-    "resyndeo@resyndeo": true
-  },
-  "extraKnownMarketplaces": {
-    "resyndeo": {
-      "source": {
-        "source": "github",
-        "repo": "Syndeo-AI/resyndeo-claude-plugin"
-      }
-    }
-  },
-  "alwaysThinkingEnabled": true,
-  "effortLevel": "xhigh",
-  "skipDangerousModePermissionPrompt": true,
-  "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true
+	"env": {
+		"ANTHROPIC_BASE_URL": "http://127.0.0.1:8787"
+	},
+	"permissions": {
+		"allow": [
+			"mcp__codegraph__codegraph_explore",
+			"mcp__codegraph__codegraph_search",
+			"mcp__codegraph__codegraph_node",
+			"mcp__codegraph__codegraph_callers",
+			"mcp__codegraph__codegraph_callees",
+			"mcp__codegraph__codegraph_impact",
+			"mcp__codegraph__codegraph_files",
+			"mcp__codegraph__codegraph_status"
+		],
+		"defaultMode": "auto"
+	},
+	"hooks": {
+		"Stop": [
+			{
+				"hooks": [
+					{
+						"type":          "command",
+						"command":       "echo '{\"systemMessage\": \"Run /experience to log session diagnostics to agent memory\"}'",
+						"statusMessage": "Agent memory reminder"
+					}
+				]
+			}
+		],
+		"PreToolUse": [
+			{
+				"matcher": "Bash",
+				"hooks": [
+					{
+						"type":    "command",
+						"command": "~/.claude/hooks/rtk-rewrite.sh"
+					}
+				]
+			},
+			{
+				"matcher": "Bash",
+				"hooks": [
+					{
+						"type":    "command",
+						"command": "~/.local/bin/headroom init hook ensure --profile init-user --marker headroom-init-claude",
+						"timeout": 15
+					}
+				]
+			}
+		],
+		"SessionStart": [
+			{
+				"matcher": "startup|resume",
+				"hooks": [
+					{
+						"type":    "command",
+						"command": "~/.local/bin/headroom init hook ensure --profile init-user --marker headroom-init-claude",
+						"timeout": 15
+					}
+				]
+			}
+		]
+	},
+	"enabledPlugins": {
+		"claude-md-management@claude-plugins-official": true,
+		"context7@claude-plugins-official":             true,
+		"frontend-design@claude-plugins-official":      true,
+		"gitkraken-hooks@gitkraken":                    true,
+		"gopls-lsp@claude-plugins-official":            true,
+		"headroom@headroom-marketplace":                true,
+		"resyndeo@resyndeo":                            true,
+		"superpowers@claude-plugins-official":          true,
+		"vercel-plugin@vercel":                         false
+	},
+	"extraKnownMarketplaces": {
+		"gitkraken": {
+			"source": {
+				"path":   "~/.claude/plugins/marketplaces/gitkraken",
+				"source": "directory"
+			}
+		},
+		"headroom-marketplace": {
+			"source": {
+				"repo":   "chopratejas/headroom",
+				"source": "github"
+			}
+		},
+		"resyndeo": {
+			"source": {
+				"repo":   "Syndeo-AI/resyndeo-claude-plugin",
+				"source": "github"
+			}
+		}
+	},
+	"alwaysThinkingEnabled":             true,
+	"effortLevel":                       "xhigh",
+	"skipDangerousModePermissionPrompt": true,
+	"skipAutoPermissionPrompt":          true,
+	"voiceEnabled":                      true,
+	"tui":                               "fullscreen"
 }

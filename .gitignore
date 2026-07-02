@@ -18,10 +18,13 @@
 !.claude-plugin/**
 !scripts/
 !scripts/**
+!rules/
+!rules/**
 !exams/
 !exams/**
 
 # Owned skills — category buckets only (flat symlinks at skills/<name> are local)
+!skills/
 !skills/learning/
 !skills/learning/**
 !skills/engineering/
@@ -71,6 +74,8 @@ skills/scale
 skills/system
 skills/interviewer
 skills/clarify
+skills/safeguard
+skills/pragmatic
 skills/experience
 skills/meeting-feedback
 skills/momtest

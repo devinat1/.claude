@@ -1,0 +1,4 @@
+interface:
+  display_name: "Coherent"
+  short_description: "Practice concise explanations"
+  default_prompt: "Use $coherent after /clarify to practice a concise 30-second explanation."

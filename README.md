@@ -44,7 +44,8 @@ Code review slash commands and repo tooling.
 - **[rate](./skills/engineering/rate/SKILL.md)** — Rate branch diff against multiple review principles.
 - **[scale](./skills/engineering/scale/SKILL.md)** — Analyze scale limits and upgrade paths.
 - **[graphite](./skills/engineering/graphite/SKILL.md)** — Split branch work into a Graphite PR stack.
-- **[thermo-nuclear-code-quality-review](./skills/engineering/thermo-nuclear-code-quality-review/SKILL.md)** — Extremely strict maintainability review.
+- **[thermo-nuclear-code-quality-review](./skills/engineering/thermo-nuclear-code-quality-review/SKILL.md)** — Greptile-gated pre-PR maintainability review.
+- **[webmcp-bridge](./skills/engineering/webmcp-bridge/SKILL.md)** — Use external browser harnesses with the generic WebMCP bridge and generated-tool cache.
 
 ### Interview
 
@@ -58,24 +59,30 @@ Mock interview practice.
 
 Workflow tools beyond code review.
 
+- **[safeguard](./skills/productivity/safeguard/SKILL.md)** — Interview before non-trivial builds; ends with Build Brief, then implement.
+- **[pragmatic](./skills/productivity/pragmatic/SKILL.md)** — Two-person founder reality check before implementation.
 - **[clarify](./skills/productivity/clarify/SKILL.md)** — Interview until purpose and constraints are clear.
+- **[coherent](./skills/productivity/coherent/SKILL.md)** — Practice concise, accurate explanations after clarification.
+- **[linear](./skills/productivity/linear/SKILL.md)** — Convert conversations into reviewed Linear tickets and updates.
 - **[meeting-feedback](./skills/productivity/meeting-feedback/SKILL.md)** — Evaluate meeting communication via Granola.
 - **[focus](./skills/productivity/focus/SKILL.md)** — ADHD work assistant: stuck sessions, Focusmate timeboxing, overcommitment guard via Todoist.
 - **[ramble](./skills/productivity/ramble/SKILL.md)** — Extract conversation items into Todoist tasks.
 - **[experience](./skills/productivity/experience/SKILL.md)** — Log session diagnostics to agent memory.
 - **[momtest](./skills/productivity/momtest/SKILL.md)** — Audit customer calls against The Mom Test.
-- **[research](./skills/productivity/research/SKILL.md)** — Prior-art literature review to compare an idea against existing papers and products.
+- **[literature-review](./skills/productivity/literature-review/SKILL.md)** — Prior work literature review to compare an idea against existing papers and products.
+- **[obsidian](./skills/productivity/obsidian/SKILL.md)** — State vault read/write via Obsidian CLI for Zettelkasten workflows.
 
 ### Writing
 
 Blog workflow.
 
 - **[blog](./skills/writing/blog/SKILL.md)** — Turn a conversation into a blog post.
+- **[post](./skills/writing/post/SKILL.md)** — Draft approved X and LinkedIn posts from current context and schedule them through Postiz.
 - **[update-blog-on-leetcode](./skills/writing/update-blog-on-leetcode/SKILL.md)** — Sync LeetCode notes from State vault to the public blog.
 - **[update-blog-refs](./skills/writing/update-blog-refs/SKILL.md)** — Suggest related links between blog posts.
 - **[youtube](./skills/writing/youtube/SKILL.md)** — Context → YouTube teleprompter script with hook, CTA, and paced line breaks.
+- **[apset](./skills/writing/apset/SKILL.md)** — Interview current work into APSET (Area, Problem, System, Evaluation, Takeaway).
 
 ### Setup
 
 - **[setup-devinat1-skills](./skills/setup/setup-devinat1-skills/SKILL.md)** — Scaffold per-repo config (`docs/agents/`) for agent memory project ID, blog directory, and MCP integrations. Run once per repo.
-

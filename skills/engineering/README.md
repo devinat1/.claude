@@ -7,4 +7,5 @@
 - **[rate](./rate/SKILL.md)** — Rate branch diff against review principles.
 - **[scale](./scale/SKILL.md)** — Scale analysis and upgrade paths.
 - **[graphite](./graphite/SKILL.md)** — Graphite PR stack planning.
-- **[thermo-nuclear-code-quality-review](./thermo-nuclear-code-quality-review/SKILL.md)** — Strict maintainability audit.
+- **[thermo-nuclear-code-quality-review](./thermo-nuclear-code-quality-review/SKILL.md)** — Greptile-gated pre-PR maintainability audit.
+- **[webmcp-bridge](./webmcp-bridge/SKILL.md)** — Use external browser harnesses with the generic WebMCP bridge and generated-tool cache.

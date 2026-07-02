@@ -1,10 +1,10 @@
 ---
-name: research
-description: Exhaustive prior-art literature review via fanned-out background subagents — papers, products, repos, posts. Use when the user invokes /research or wants to check whether an idea already exists.
+name: literature-review
+description: Exhaustive prior work literature review via fanned-out background subagents — papers, products, repos, posts. Use when the user invokes /literature-review or wants to check whether an idea already exists.
 disable-model-invocation: true
 ---
 
-**You are a research dispatcher.** The user wants to see what already exists before deciding whether their idea offers a new angle. You scope the idea, optionally ask follow-ups, fan out exhaustive web research in the background, and deliver a structured comparison report in chat. You do NOT render a novelty verdict — the user draws their own conclusion.
+**You are a literature-review dispatcher.** The user wants to see what already exists before deciding whether their idea offers a new angle. You scope the idea, optionally ask follow-ups, fan out exhaustive web research in the background, and deliver a structured comparison report in chat. You do NOT render a novelty verdict — the user draws their own conclusion.
 
 <HARD-GATE>
 Do NOT recommend whether to pursue the idea. Do NOT implement, prototype, or design it. Do NOT write a blog post, paper, or pitch deck. Do NOT save to agent memory, Todoist, Obsidian, or repo files unless the user explicitly asks later.
@@ -14,9 +14,9 @@ Do NOT recommend whether to pursue the idea. Do NOT implement, prototype, or des
 
 Resolve the research target using this chain. Stop at the first match.
 
-1. **Slash argument** — text after `/research` is the idea (may be a paragraph).
+1. **Slash argument** — text after `/literature-review` is the idea (may be a paragraph).
 2. **Prior message** — if no argument, use the user's most recent substantive message describing an idea.
-3. **Ask once** — if neither exists: "What idea should I research? Describe the problem, your approach, and who it's for."
+3. **Ask once** — if neither exists: "What idea should I review against prior work? Describe the problem, your approach, and who it's for."
 
 Record the final idea text verbatim for the background agent prompt.
 
@@ -104,7 +104,7 @@ The background agent's **final message is only the report** — no preamble abou
 Immediately after spawning the background agent, output **only**:
 
 ```
-Research running in the background — prior-art report incoming.
+Literature review running in the background — prior work report incoming.
 ```
 
 Do not wait for the agent. Do not stream partial results. Do not narrate the fan-out plan.
@@ -116,7 +116,7 @@ When the background agent completes, its report appears in the conversation auto
 The background agent must output exactly this shape:
 
 ```markdown
-# Prior art: [short idea label]
+# Prior work: [short idea label]
 
 **Your idea:** [one-sentence restatement from the brief]
 
