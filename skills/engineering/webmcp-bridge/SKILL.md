@@ -17,6 +17,7 @@ The extension requests broad `<all_urls>` host access and injects on every Chrom
 
 - `window.__WEBMCP_BRIDGE__` for `getDiagnostics()`, `listTools()`, and `executeTool({ name, input })`.
 - `window.__WEBMCP_TOOL_CACHE__` for `getSanitizedTrace()`, `importGeneratedTools({ tools })`, and generated-tool listing.
+- `window.__WEBMCP_PAGE_CLEANUP__` only when the popup page cleanup toggle is enabled and the page has been reloaded or reinjected.
 
 Generic pages start with zero tools. A `WebMCP tools loaded: 0` toast is expected unless a static adapter matches or generated tools were previously imported and rehydrated from `chrome.storage.local`. `window.__WEBMCP_SUPPORTED_SITE_TOOLS__` is only a legacy alias.
 
@@ -56,7 +57,9 @@ const trace = await page.evaluate(() =>
 );
 ```
 
-Generate the WebMCP tool JSON outside the extension from the trace and the user goal. Do not include cookies, auth headers, tokens, passwords, credentials, API keys, session values, or secret-shaped strings.
+If page cleanup is enabled, call `window.__WEBMCP_PAGE_CLEANUP__.getCleanupCandidates()` before trace capture, let the outside harness choose removable clutter ids, remove them with `removeCleanupCandidates({ candidateIds })`, then capture the trace from the cleaned live page. Restore removed elements with `restoreCleanupCandidates({ candidateIds })` or `restoreAllCleanedElements()` when needed.
+
+Generate the native WebMCP tool JSON outside the extension from the trace and the user goal. Prefer `trace.dom.interactiveElements` over raw HTML as the action source. Do not include cookies, auth headers, tokens, passwords, credentials, API keys, session values, or secret-shaped strings.
 
 Import generated tools back into the page runtime:
 
@@ -73,17 +76,29 @@ Then verify the import through the bridge:
 await page.evaluate(() => window.__WEBMCP_BRIDGE__.listTools());
 ```
 
-Imported generated tools are append-only and persisted in `chrome.storage.local`, so page reloads can hydrate them without rebuilding the extension.
+Imported generated tools require native `document.modelContext.registerTool(...)`. If native WebMCP is missing or rejects registration, import fails and no generated tool is appended. Imported generated tools are append-only and persisted in `chrome.storage.local`, so page reloads can hydrate them without rebuilding the extension.
 
 ## Tool Execution
 
-Execute static or generated tools through the same bridge:
+Execute listed static adapter tools through the bridge:
 
 ```js
 await page.evaluate(
   ({ name, input }) => window.__WEBMCP_BRIDGE__.executeTool({ name, input }),
   { name: "tool_name", input: {} },
 );
+```
+
+Invoke imported generated tools through the browser's native CDP WebMCP surface, not through the extension bridge:
+
+```js
+const cdpSession = await page.context().newCDPSession(page);
+await cdpSession.send("WebMCP.enable");
+await cdpSession.send("WebMCP.invokeTool", {
+  frameId,
+  toolName: generatedTools[0].name,
+  input: {},
+});
 ```
 
 Use tool input schemas and risk annotations from diagnostics to build arguments and decide whether approval is needed. After execution, verify the page state directly with the harness.
@@ -102,6 +117,7 @@ If asked to modify the extension, keep it bridge-only by default:
 - Do not override a native WebMCP provider; report native-provider state instead.
 - Expose a stable `window.__WEBMCP_BRIDGE__` with `getDiagnostics()`, `listTools()`, and `executeTool({ name, input })`.
 - Expose `window.__WEBMCP_TOOL_CACHE__` with sanitized trace capture and generated-tool import.
+- Expose `window.__WEBMCP_PAGE_CLEANUP__` only when page cleanup is enabled, and keep it separate because it mutates the live DOM.
 - Dispatch a page event such as `webmcp:ready` after bridge installation so late-connected pages can register tools.
 - Keep generic pages functional with an empty initial registry.
 - Keep the UI limited to connection status, page diagnostics, and registered tools.
