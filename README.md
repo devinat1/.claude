@@ -70,6 +70,7 @@ Workflow tools beyond code review.
 - **[experience](./skills/productivity/experience/SKILL.md)** — Log session diagnostics to agent memory.
 - **[momtest](./skills/productivity/momtest/SKILL.md)** — Audit customer calls against The Mom Test.
 - **[literature-review](./skills/productivity/literature-review/SKILL.md)** — Prior work literature review to compare an idea against existing papers and products.
+- **[research-gap](./skills/productivity/research-gap/SKILL.md)** — Assess a research question's novelty and direct adaptive, section-level reading.
 - **[obsidian](./skills/productivity/obsidian/SKILL.md)** — State vault read/write via Obsidian CLI for Zettelkasten workflows.
 
 ### Writing

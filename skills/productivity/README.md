@@ -11,4 +11,5 @@
 - **[experience](./experience/SKILL.md)** — Log session diagnostics to agent memory.
 - **[momtest](./momtest/SKILL.md)** — Mom Test transcript audit.
 - **[literature-review](./literature-review/SKILL.md)** — Exhaustive prior work review via fanned-out background subagents.
+- **[research-gap](./research-gap/SKILL.md)** — Novelty assessment plus adaptive, section-level literature reading.
 - **[obsidian](./obsidian/SKILL.md)** — State vault read/write via Obsidian CLI for Zettelkasten workflows.
