@@ -3,6 +3,7 @@
 - **[safeguard](./safeguard/SKILL.md)** — Four-pillar interview before non-trivial builds; ends with Build Brief.
 - **[pragmatic](./pragmatic/SKILL.md)** — Two-person founder reality check before implementation.
 - **[clarify](./clarify/SKILL.md)** — Clarify purpose and constraints before building.
+- **[dissenter](./dissenter/SKILL.md)** — Compare an original decision analysis with credible dissent.
 - **[coherent](./coherent/SKILL.md)** — Practice concise, accurate explanations after clarification.
 - **[linear](./linear/SKILL.md)** — Convert conversations into reviewed Linear tickets and updates.
 - **[meeting-feedback](./meeting-feedback/SKILL.md)** — Meeting communication coaching note via Granola.

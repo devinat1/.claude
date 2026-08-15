@@ -62,6 +62,7 @@ Workflow tools beyond code review.
 - **[safeguard](./skills/productivity/safeguard/SKILL.md)** — Interview before non-trivial builds; ends with Build Brief, then implement.
 - **[pragmatic](./skills/productivity/pragmatic/SKILL.md)** — Two-person founder reality check before implementation.
 - **[clarify](./skills/productivity/clarify/SKILL.md)** — Interview until purpose and constraints are clear.
+- **[dissenter](./skills/productivity/dissenter/SKILL.md)** — Compare an original decision analysis with credible dissent.
 - **[coherent](./skills/productivity/coherent/SKILL.md)** — Practice concise, accurate explanations after clarification.
 - **[linear](./skills/productivity/linear/SKILL.md)** — Convert conversations into reviewed Linear tickets and updates.
 - **[meeting-feedback](./skills/productivity/meeting-feedback/SKILL.md)** — Evaluate meeting communication via Granola.
