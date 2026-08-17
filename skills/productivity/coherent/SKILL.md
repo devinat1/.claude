@@ -1,69 +1,135 @@
 ---
 name: coherent
-description: Practice concise, accurate explanations after a clarify session. Use when the user invokes /coherent, especially after /clarify, to evaluate a messy spoken-style explanation for rambling, tangents, over-explaining, repetition, and fidelity to the clarified core idea.
+description: Use when the user wants to practice explaining a clarified idea, especially when the explanation assumes hidden context, mixes concepts, lacks a concrete example, or needs a concise research pitch for a skeptical audience.
 ---
 
 # Coherent
 
-Help the user turn a recently clarified idea into a clear 30-second spoken explanation. The user does the rewriting; you only point out what to cut or change.
+Make the idea understandable before making it short. Diagnose the explanation as a listener would: expose hidden assumptions, resolve missing links, require a concrete example, and test the claim before compressing it.
 
-## Source Material
+The user does the rewriting during the drill. Do not rescue an unclear idea with a polished rewrite.
 
-Reuse the conversation that just happened as the source of truth, especially the preceding `/clarify` session. Do not run a fresh clarifying interview by default.
+## Turn Contract
 
-Infer the core idea before asking for the user's attempt:
+During intake and sense-making:
 
-- the main point
-- why it matters
-- the audience or decision at stake, when obvious
-- the essential constraints, success criteria, or ask
+- Ask exactly one question per response.
+- Ask the question immediately. A short diagnosis may precede it when the source of confusion needs to be named.
+- Do not paraphrase the user's claim before asking the question.
+- Do not give multi-item feedback, numeric scores, or praise for effect.
+- Do not impose the 30-second limit yet.
 
-If the prior conversation is missing or too ambiguous to identify the core idea, ask one clarifying question at a time until there is enough context to evaluate an explanation. Keep this short; this skill is not a second `/clarify` run.
+## Source of Truth
 
-## Drill
+Use the preceding `/clarify` result and any context the user supplies. If they conflict, ask which one is authoritative before continuing.
 
-Ask for the user's raw attempt before giving any structure or coaching:
+Judge the explanation against that source while requiring it to stand on its own for the stated audience. This is not a second requirements interview.
 
-```markdown
-Paste the messy version you would actually say out loud. Aim for about 30 seconds.
-```
+## Intake
 
-Only evaluate after the user pastes the messy version. Do not provide a target structure before the first attempt.
+Ask these one at a time, even when the answer seems inferable:
 
-Evaluate for two things:
+1. Is this a research idea or system proposal?
+2. Who is the intended audience?
+3. What may that audience already be assumed to know?
 
-1. **Rambling:** side tangents, on-topic over-explaining, and repetition.
-2. **Accuracy:** whether the explanation still covers the core idea from the prior conversation.
-
-Do not use numeric scores. Do not provide a polished rewrite. Do not praise for effect.
-
-## Feedback
-
-Keep feedback brief: at most three bullets and only the highest-leverage fixes. Name what to remove or change, then immediately ask for another attempt.
-
-Use this shape:
+Then ask:
 
 ```markdown
-What to change:
-- [one brief issue]
-- [optional second brief issue]
-
-Try again, tighter.
+Give me the messy version you would actually say out loud. Do not shorten it yet.
 ```
 
-If the explanation is concise enough and accurately covers the core idea, stop with exactly:
+Do not provide a target structure before this first attempt.
+
+## Sense-Making Gate
+
+Complete these stages in order. Stay on a stage until it passes.
+
+### 1. Untangle the Main Claim
+
+If the explanation combines several ideas, identify the competing ideas and ask which connection between them is essential. The user must choose the through-line; do not choose it for them.
+
+### 2. Resolve Every Important Missing Link
+
+Compare the attempt with the audience's assumed knowledge. Find the first connection the listener would have to guess, then ask one pointed question about it.
+
+Continue one question per turn until no important causal step, term, or dependency needed for the main claim remains implicit. Do not replace this stage with editing advice.
+
+Example:
 
 ```markdown
-This is concise enough and still captures the core idea. Stop here.
+Turning page actions into tools gives you something structured, but the safety step is still missing. How does that structure prevent a failure that raw HTML permits?
 ```
 
-## Loop
+### 3. Require an End-to-End Example
 
-After every non-final attempt, ask the user to try again immediately. Continue until either:
+Always require one concrete example containing:
 
-- the explanation is concise enough and faithful to the core idea
-- the user explicitly says `done`
+- a specific actor
+- a starting situation
+- an action
+- an outcome
 
-If the user says `done`, stop briefly. Do not add a final rewrite.
+Ask for whichever of those pieces are missing. Do not accept a list of capabilities as an example.
 
-If the user asks you to write the better version for them, decline briefly and ask for their next attempt instead.
+### 4. Raise One Skeptical Challenge
+
+Ask the single question most likely to stop a skeptical listener from understanding or believing the claim. Choose it from the actual explanation, not a fixed checklist.
+
+The challenge passes only when the answer directly resolves the objection without introducing another important assumption or contradiction. If it does not pass, keep working on that same objection one question per turn.
+
+Only after this challenge passes may compression begin.
+
+## Research and System Proposals
+
+Activate this section only when the user answered yes during intake.
+
+Before compression, ensure the explanation contains:
+
+1. a running end-to-end example
+2. the state of the art
+3. the gap
+4. what the user proposes to do
+
+The example must appear, but it does not have to be the opening.
+
+Require these when they materially affect the claim:
+
+- system capabilities
+- use cases
+- threat model
+- evaluation
+
+A threat model is material for security or safety claims. An evaluation is material whenever the explanation claims an improvement.
+
+Verify important state-of-the-art, novelty, threat-model, and evaluation claims with authoritative sources when tools are available. Cite the supporting sources. Label anything that cannot be verified quickly as unverified and continue; do not turn the drill into a full literature review.
+
+## Compression
+
+After the sense-making gate passes, ask the user to produce a roughly 30-second version. Continue one revision at a time, naming only the highest-leverage problem and asking one question or requesting one new attempt.
+
+The user keeps rewriting. If further attempts are no longer useful, provide a model version only then. A model version may add verified material, but explicitly identify every addition.
+
+## General-Audience Report
+
+At the end of the drill, assess the user's final spoken version for **any adult listener** with no assumed field knowledge. Base the assessment only on the words the user has said, not on context from the preceding `/clarify` result.
+
+Report exactly one verdict:
+
+```markdown
+General audience: yes — [the plain-language wording and complete links that make it understandable]
+```
+
+or:
+
+```markdown
+General audience: no — [the first unexplained term or missing link that prevents understanding]
+```
+
+Do not issue this report during revisions. A `no` in the final report after the user says `done` names the remaining blocker; otherwise, use that blocker as the next one-question coaching prompt and continue the drill.
+
+## Stop Conditions
+
+When the final attempt is understandable, faithful to the source, and roughly 30 seconds, stop with a brief explanation of why it now works, followed by the General-Audience Report. Name the concrete improvements; do not use a generic success sentence.
+
+If the user says `done` before passing, stop immediately, name the single biggest unresolved coherence gap, then give the General-Audience Report. Do not add a rewrite.

@@ -1,88 +1,83 @@
 ---
 name: research-gap
-description: Evaluate a research question against prior work, make an evidence-backed novelty assessment, and adapt a section-level reading plan to the user's understanding. Use when the user asks whether a research question is novel, what papers or paper sections to read, or how to prioritize literature for a question.
+description: Evidence-backed opposing novelty views from a literature-review report (runs literature-review first if none exists in chat). Use when the user invokes /research-gap or asks whether a research question or idea is novel.
 disable-model-invocation: true
 ---
 
 # Research gap
 
-Assess a research question against prior work, then direct the user to the smallest set of paper sections that can change the novelty judgment or their next research decision.
+Surface opposing novelty views from prior work. **Do not recreate discovery** — reuse `literature-review` for search lanes, saturation, and entry depth. Own only the evidence packet and dissent.
 
-Reuse the discovery discipline in `literature-review` and the one-question diagnosis pattern in `learn`. Do not recreate either workflow or claim complete coverage.
+<HARD-GATE>
+Do NOT implement or design the idea. Do NOT build an adaptive reading loop or “read next” queue. Do NOT save to agent memory, Todoist, Obsidian, or repo files unless the user explicitly asks later. Do NOT claim complete coverage of the literature. Do NOT invent citations, paper content, or metadata.
+</HARD-GATE>
 
-## Phase 1: Resolve the question
+## Phase 1 — Resolve the question(s)
 
-Use the slash argument, then the latest substantive user message. If the question is still missing, ask only: "What research question should I assess?"
+Use the slash argument, then the latest substantive user message. If nothing usable exists, ask only: "What research question should I assess?"
 
-Ask at most one further question only when a domain, population, intervention/method, or outcome is essential to distinguish the question from prior work. Keep every question one at a time.
+Ask at most one further question only when a domain, population, intervention/method, or outcome is essential to distinguish the question from prior work. Keep questions one at a time.
 
-## Phase 2: Search prior work
+## Phase 2 — Obtain a literature-review report
 
-Search best-effort across peer-reviewed papers, preprints, review articles, theses, and influential technical reports. Emphasize peer-reviewed papers in the assessment. Use scholarly indexes and primary sources where possible; use citation chaining from the closest work until results repeat.
+Discovery contract lives in `literature-review`. Follow that skill’s phases when you must run discovery (briefs, four lanes to saturation, deep academic entries, collected multi-idea reports). Prefer invoking/running that skill over copying its search instructions here.
 
-Record:
+### 2a. Report already in chat
 
-- sources and query terms searched;
-- date or coverage limits that may hide work;
-- terms with ambiguous meanings; and
-- material unavailable in full text.
+If a `/literature-review` (or equivalent prior-work) report is already in this conversation:
 
-Never say that all relevant literature was found. Never invent a citation, paper content, access status, page, or section heading.
+1. Use it as the primary evidence base.
+2. If academic deep-treated entries look **sparse relative to the question**, or lack Consensus-backed paper searches for the question, fully re-run discovery via `literature-review`, wait for that denser report, then continue — do not novelty-judge on a thin academic set.
+3. Otherwise proceed to Phase 3 with the existing report (no extra discovery required).
 
-## Phase 3: Assess novelty
+### 2b. No report in chat
 
-Compare the research question with the closest work on population, setting, inputs, method, outcome, and claimed contribution. Give one evidence-backed assessment:
+Run `literature-review` to completion for the resolved question/idea(s) (**in-flow**: do the discovery work now, including waiting for saturation and the collected report). Then continue to Phase 3 in the **same flow** without requiring the user to re-invoke `/research-gap`.
 
-- **likely novel** — no close work answers the same question in the same setting;
-- **partially anticipated** — prior work covers meaningful parts but leaves a stated difference; or
-- **already addressed** — close prior work substantially answers it.
+When research-gap is driving discovery, background-notify behavior from `literature-review` may be skipped so the opposing views can follow immediately after the report is ready.
 
-For every conclusion, cite the supporting paper and state the uncertainty or search limitation that could change it. This is an evidence-based assessment, not a guarantee of novelty.
+## Phase 3 — Prepare the evidence packet
 
-## Phase 4: Build the reading queue
+If the report is a **collected multi-idea** review, prepare a **separate** evidence packet for **every** idea section.
 
-Rank papers by direct usefulness for answering the research question and changing the novelty assessment. Prefer a short queue. For each paper, include:
+For each question/idea, compare the closest work on population, setting, inputs, method, outcome, and claimed contribution. Include supporting citations and the search limits that bear on both views.
 
-| Priority | Paper | Read | Extract | Why now |
-|---|---|---|---|---|
-| 1 | citation and link | exact sections/pages/headings | result, method, limitation, or definition to learn | effect on the novelty assessment |
+Preserve uncertainty. Never claim complete literature coverage or a final novelty verdict.
 
-Only give section-level guidance when the full text is accessible and supports it. For a paywalled or inaccessible but important paper, label it **important—full text unavailable** and omit section guidance. Include a **Skip for now** list for relevant papers or sections unlikely to change the judgment or next decision.
+## Phase 4 — Two novelty views
 
-## Phase 5: Adaptive reading loop
-
-After the user reads a recommended item, ask one concise open-ended question about the specified extraction goal. Do not quiz broadly and do not expose a long dependency stack.
-
-Use the answer to revise the next item:
-
-- if their reading resolves the key comparison, move to the next uncertainty;
-- if they missed a prerequisite, recommend only the shortest relevant section that supplies it;
-- if new evidence changes the assessment, say what changed and rerank the queue.
-
-Continue whether the question appears novel or not. Stop when the user can explain the closest prior work, the remaining gap (if any), and the evidence supporting that view.
+Invoke `dissenter` once per evidence packet, with the resolved question, the collected literature-review report, and the closest-work comparison. Return its **Original view** and **Credible dissent** as two evidence-backed positions on whether the idea is novel. Preserve disagreement; do not choose a winner or combine the views into a verdict.
 
 ## Output format
 
-Use this compact structure after research:
-
 ```markdown
-# Research-gap review: [question]
+# Research-gap review
 
-## Novelty assessment
-[likely novel | partially anticipated | already addressed] — [one evidence-backed sentence].
+## [Idea / question label]
 
-## Closest prior work
+### Original view
+[Evidence-backed position on whether the idea is novel.]
+
+### Credible dissent
+[Evidence-backed counter-position on whether the idea is novel.]
+
+### Closest prior work
 - [citation](url) — [specific overlap and difference]
+- …
 
-## Read next
-| Priority | Paper | Read | Extract | Why now |
-|---|---|---|---|---|
+### Search limits
+- [sparsity judgment, re-run notes, coverage gaps from the literature-review, unavailable full text, blind spots]
 
-## Skip for now
-- [paper or section] — [why it is unlikely to change the decision]
+### Takeaways
+- [Meaningful agreement or decision-critical disagreement.]
 
-## Search limits
-- [sources, queries, dates, unavailable material, and blind spots]
+---
+
+## [Next idea / question label, if multi-idea]
+
+…
 ```
 
-End with one question only when a user response is needed to refine the queue.
+For a single idea, one section is enough (keep the same headings).
+
+No “Read next”, “Skip for now”, or adaptive quiz loop.

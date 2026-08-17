@@ -52,6 +52,7 @@ Code review slash commands and repo tooling.
 Mock interview practice.
 
 - **[system](./skills/interview/system/SKILL.md)** — System design interview simulator with Socratic probing.
+- **[leetcode-readiness](./skills/interview/leetcode-readiness/SKILL.md)** — Assess LeetCode progress and maintain a targeted weekly problem plan.
 - **[interviewer](./skills/interview/interviewer/SKILL.md)** — Brutal mock interviewer on any topic.
 - **[vc-pitch-drill](./skills/interview/vc-pitch-drill/SKILL.md)** — Pre-seed VC pitch practice with direct investor-style drills.
 
@@ -63,15 +64,19 @@ Workflow tools beyond code review.
 - **[pragmatic](./skills/productivity/pragmatic/SKILL.md)** — Two-person founder reality check before implementation.
 - **[clarify](./skills/productivity/clarify/SKILL.md)** — Interview until purpose and constraints are clear.
 - **[dissenter](./skills/productivity/dissenter/SKILL.md)** — Compare an original decision analysis with credible dissent.
-- **[coherent](./skills/productivity/coherent/SKILL.md)** — Practice concise, accurate explanations after clarification.
+- **[benchmark-coverage](./skills/productivity/benchmark-coverage/SKILL.md)** — Match prompts to source-backed benchmarks and assess recorded model results.
+- **[coherent](./skills/productivity/coherent/SKILL.md)** — Challenge hidden assumptions and missing links before compressing explanations.
+- **[confounding-variables](./skills/productivity/confounding-variables/SKILL.md)** — Identify themes and candidate confounders in pasted text.
 - **[linear](./skills/productivity/linear/SKILL.md)** — Convert conversations into reviewed Linear tickets and updates.
 - **[meeting-feedback](./skills/productivity/meeting-feedback/SKILL.md)** — Evaluate meeting communication via Granola.
 - **[focus](./skills/productivity/focus/SKILL.md)** — ADHD work assistant: stuck sessions, Focusmate timeboxing, overcommitment guard via Todoist.
+- **[todo-triage](./skills/productivity/todo-triage/SKILL.md)** — Review today’s Todoist work, choose focus, and triage the rest.
+- **[mentor](./skills/productivity/mentor/SKILL.md)** — Collaborate through one task with tiny next actions, adapting feedback and pace with memory.
 - **[ramble](./skills/productivity/ramble/SKILL.md)** — Extract conversation items into Todoist tasks.
 - **[experience](./skills/productivity/experience/SKILL.md)** — Log session diagnostics to agent memory.
 - **[momtest](./skills/productivity/momtest/SKILL.md)** — Audit customer calls against The Mom Test.
-- **[literature-review](./skills/productivity/literature-review/SKILL.md)** — Prior work literature review to compare an idea against existing papers and products.
-- **[research-gap](./skills/productivity/research-gap/SKILL.md)** — Assess a research question's novelty and direct adaptive, section-level reading.
+- **[literature-review](./skills/productivity/literature-review/SKILL.md)** — Exhaustive prior-work discovery (academic-heavy, four lanes to saturation); no novelty verdict.
+- **[research-gap](./skills/productivity/research-gap/SKILL.md)** — Novelty assessment from a literature-review report (runs discovery first if none in chat).
 - **[obsidian](./skills/productivity/obsidian/SKILL.md)** — State vault read/write via Obsidian CLI for Zettelkasten workflows.
 
 ### Writing

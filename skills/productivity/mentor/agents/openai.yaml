@@ -1,0 +1,4 @@
+interface:
+  display_name: "Mentor"
+  short_description: "Guided, one small step at a time"
+  default_prompt: "Use $mentor to work with me on one task, one small step at a time."

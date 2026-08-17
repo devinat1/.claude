@@ -1,0 +1,4 @@
+interface:
+  display_name: "LeetCode Readiness"
+  short_description: "Assess LeetCode progress and plan practice"
+  default_prompt: "Use $leetcode-readiness to assess my progress and update my weekly plan."

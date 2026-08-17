@@ -1,127 +1,54 @@
 ---
 name: webmcp-bridge
-description: Use when working with the generic WebMCP Chrome bridge extension, its generated-tool cache, or external browser harnesses like Playwright, Codex, Claude Code, or CodeHawke that should generate, import, and execute page-specific tools instead of implementing a chat UI.
+description: Use when an external Playwright, Codex, Claude Code, or browser harness must generate, import, and invoke page-specific tools through the generic WebMCP Chrome extension.
 ---
 
 # WebMCP Bridge
 
-Use this skill when the user wants an external agent or browser harness to work through the WebMCP Chrome extension. The supported product is a generic all-pages bridge and generated-tool runtime: the extension exposes page diagnostics, sanitized page evidence, a tool cache, and a stable execution surface; the harness owns reasoning, generation, navigation, approvals, and verification.
+The extension is only a page runtime and generated-tool cache. The active harness owns Chrome setup, navigation, reasoning, approvals, credentials, invocation, and verification.
 
-## Core Rule
+## Start Chrome Beta
 
-Do not design or add an extension-owned chat UI, OpenAI API key storage, LLM calls, generic browser automation tools, or extension-owned benchmark automation unless the user explicitly asks for that. The extension is the runtime and cache; Codex, Claude Code, Playwright, CodeHawke, or another harness generates tool JSON outside the extension and imports it back.
+From the WebMCP repository, install dependencies once when `extension/node_modules` is missing, then open the profile:
 
-## Supported Surface
-
-The extension requests broad `<all_urls>` host access and injects on every Chrome-allowed page when all-sites access is enabled. It exposes:
-
-- `window.__WEBMCP_BRIDGE__` for `getDiagnostics()`, `listTools()`, and `executeTool({ name, input })`.
-- `window.__WEBMCP_TOOL_CACHE__` for `getSanitizedTrace()`, `importGeneratedTools({ tools })`, and generated-tool listing.
-- `window.__WEBMCP_PAGE_CLEANUP__` only when the popup page cleanup toggle is enabled and the page has been reloaded or reinjected.
-
-Generic pages start with zero tools. A `WebMCP tools loaded: 0` toast is expected unless a static adapter matches or generated tools were previously imported and rehydrated from `chrome.storage.local`. `window.__WEBMCP_SUPPORTED_SITE_TOOLS__` is only a legacy alias.
-
-AWS IAM is currently the only built-in static adapter. It contributes `aws_iam_get_access_key_state`, `aws_iam_create_access_key`, and `aws_iam_deactivate_access_key` only on AWS Console pages.
-
-## Bridge Check
-
-When connected to a page, first wait for the active extension surface from the browser context:
-
-```js
-await page.waitForFunction(() =>
-  Boolean(window.__WEBMCP_BRIDGE__ && window.__WEBMCP_TOOL_CACHE__)
-);
+```bash
+test -d extension/node_modules || make install
+make chrome-beta-profile-open CHROME_BETA_START_URL=chrome://extensions/
 ```
 
-If the page was already open before loading the unpacked extension, reload it once. If the bridge is still missing, use the extension action as a retry or post `WEBMCP_EXTENSION_ENABLE` from the harness. The extension panel is for status and diagnostics, not chat.
+The helper reuses the existing Chrome Beta debugging endpoint and opens the dedicated profile only when that endpoint is unavailable. If the extension is not loaded, tell the user to enable Developer mode and load `extension/` unpacked, then wait. Never install it for them. Reload the target page after loading.
 
-## Diagnostics
+The caller supplies Playwright; this repository has no browser-client dependency or model key.
 
-Use bridge diagnostics before attempting execution:
+## Per-page loop
 
-```js
-const diagnostics = await page.evaluate(() =>
-  window.__WEBMCP_BRIDGE__.getDiagnostics()
-);
-```
+Repeat after every navigation:
 
-Confirm `supportedSite.siteId`, tool count, tool names, input schemas, and risk annotations. On generic pages, `supportedSite.siteId` is the current page origin. Empty `tools` means the bridge loaded but no tool is available yet.
-
-## Generated Tool Flow
-
-When no listed tool matches the user goal, the harness can generate one from sanitized evidence:
-
-```js
-const trace = await page.evaluate(() =>
-  window.__WEBMCP_TOOL_CACHE__.getSanitizedTrace()
-);
-```
-
-If page cleanup is enabled, call `window.__WEBMCP_PAGE_CLEANUP__.getCleanupCandidates()` before trace capture, let the outside harness choose removable clutter ids, remove them with `removeCleanupCandidates({ candidateIds })`, then capture the trace from the cleaned live page. Restore removed elements with `restoreCleanupCandidates({ candidateIds })` or `restoreAllCleanedElements()` when needed.
-
-Generate the native WebMCP tool JSON outside the extension from the trace and the user goal. Prefer `trace.dom.interactiveElements` over raw HTML as the action source. Do not include cookies, auth headers, tokens, passwords, credentials, API keys, session values, or secret-shaped strings.
-
-Import generated tools back into the page runtime:
-
-```js
-await page.evaluate(
-  ({ tools }) => window.__WEBMCP_TOOL_CACHE__.importGeneratedTools({ tools }),
-  { tools: generatedTools },
-);
-```
-
-Then verify the import through the bridge:
-
-```js
-await page.evaluate(() => window.__WEBMCP_BRIDGE__.listTools());
-```
-
-Imported generated tools require native `document.modelContext.registerTool(...)`. If native WebMCP is missing or rejects registration, import fails and no generated tool is appended. Imported generated tools are append-only and persisted in `chrome.storage.local`, so page reloads can hydrate them without rebuilding the extension.
-
-## Tool Execution
-
-Execute listed static adapter tools through the bridge:
-
-```js
-await page.evaluate(
-  ({ name, input }) => window.__WEBMCP_BRIDGE__.executeTool({ name, input }),
-  { name: "tool_name", input: {} },
-);
-```
-
-Invoke imported generated tools through the browser's native CDP WebMCP surface, not through the extension bridge:
+1. Wait for both `window.__WEBMCP_BRIDGE__` and `window.__WEBMCP_TOOL_CACHE__`. A generic page correctly starts with zero tools.
+2. Read `getDiagnostics()`, `listTools()`, and `getSanitizedTrace()`.
+3. Give the agent only `trace.page` and `trace.dom.interactiveElements`. Do not expose HTML, network history, cookies, auth headers, tokens, passwords, or other secret values.
+4. Choose one visible semantic action. Build one generated tool with one `dom.click`, `dom.fill`, or `dom.select` step. Its selector must occur in the trace; its origin, path, and URL must exactly match the current page; its object schema must reject extra properties; its name must be unique.
+5. Import it with `__WEBMCP_TOOL_CACHE__.importGeneratedTools({ tools: [tool] })`, require `ok: true`, then confirm it through `__WEBMCP_BRIDGE__.listTools()`.
+6. Invoke only through native CDP. After completion, verify the live page and repeat. Once a semantic action is chosen, never substitute a direct Playwright click or fill.
 
 ```js
 const cdpSession = await page.context().newCDPSession(page);
+const { frameTree } = await cdpSession.send("Page.getFrameTree");
 await cdpSession.send("WebMCP.enable");
-await cdpSession.send("WebMCP.invokeTool", {
-  frameId,
-  toolName: generatedTools[0].name,
-  input: {},
+const responsePromise = new Promise((resolve) => {
+  cdpSession.once("WebMCP.toolResponded", resolve);
 });
+const invocation = await cdpSession.send("WebMCP.invokeTool", {
+  frameId: frameTree.frame.id,
+  toolName: generatedTool.name,
+  input: generatedInput,
+});
+const response = await responsePromise;
+if (response.invocationId !== invocation.invocationId || response.status !== "Completed") {
+  throw new Error(response.errorText ?? "Native WebMCP invocation failed.");
+}
 ```
 
-Use tool input schemas and risk annotations from diagnostics to build arguments and decide whether approval is needed. After execution, verify the page state directly with the harness.
+## Failure handling
 
-## Harness Boundary
-
-Use Playwright or the active browser harness for generic browser work: navigation, clicking, filling fields, scrolling, screenshots, waiting, visual inspection, and fallback recovery. Use the bridge for static adapter tools and generated semantic tools that have been imported into the extension runtime.
-
-If no listed tool fits and generating a tool is not warranted, continue with normal harness automation rather than adding broad automation primitives to the extension.
-
-## Implementation Guidance
-
-If asked to modify the extension, keep it bridge-only by default:
-
-- Preserve `navigator.modelContext.registerTool(...)` and `document.modelContext` compatibility.
-- Do not override a native WebMCP provider; report native-provider state instead.
-- Expose a stable `window.__WEBMCP_BRIDGE__` with `getDiagnostics()`, `listTools()`, and `executeTool({ name, input })`.
-- Expose `window.__WEBMCP_TOOL_CACHE__` with sanitized trace capture and generated-tool import.
-- Expose `window.__WEBMCP_PAGE_CLEANUP__` only when page cleanup is enabled, and keep it separate because it mutates the live DOM.
-- Dispatch a page event such as `webmcp:ready` after bridge installation so late-connected pages can register tools.
-- Keep generic pages functional with an empty initial registry.
-- Keep the UI limited to connection status, page diagnostics, and registered tools.
-
-## Failure Handling
-
-Treat tool failures as tool-contract failures first. Inspect diagnostics, page console output, and the current page state before changing extension code. For AWS create/deactivate tools, require a disposable account or explicit user approval because they can change credentials and return a newly created secret access key once.
+Treat missing globals, unavailable native `document.modelContext.registerTool`, rejected scope/schema/selector, duplicate names, failed import, mismatched invocation ids, non-completed responses, and failed page verification as hard stops. Re-read the page after navigation or stale selectors, generate a fresh tool, and retry through WebMCP. Do not add site adapters, broad automation tools, an extension chat UI, LLM calls, or credential storage.

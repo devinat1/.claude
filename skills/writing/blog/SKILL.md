@@ -6,6 +6,13 @@ disable-model-invocation: true
 
 Turn this conversation into a blog post. Follow these steps exactly:
 
+## Blog location
+
+- Repository: `~/Desktop/blog`
+- Content: `~/Desktop/blog/content`
+
+Use these paths directly; do not require per-repo blog-directory setup.
+
 ## Step 1: Clarify post scope
 
 Read and follow [`skills/productivity/clarify/SKILL.md`](../productivity/clarify/SKILL.md) to interview the user before drafting.
@@ -36,7 +43,7 @@ Wait for explicit yes/no before proceeding. If the user says no, revise the summ
 
 ## Step 3: Study existing writing style
 
-Read 3-5 existing posts in the blog content directory from `docs/agents/blog-directory.md` in the current repo (or run `/setup-devinat1-skills` first) to learn the user's writing style. Pay attention to:
+Read 3-5 existing posts from the blog content directory above to learn the user's writing style. Pay attention to:
 - Tone (casual vs formal, use of humor, directness)
 - Sentence structure and length
 - How posts are structured (intro style, use of headings, how they conclude)
@@ -71,6 +78,10 @@ Structure comes from existing posts (style-adaptive), but length and completenes
 - Side threads and tangents
 - Step-by-step replay of how the chat unfolded
 
+### Ponytail review gate
+
+After drafting, invoke `$ponytail:ponytail-review` on the post. Apply valid `delete` and `shrink` findings, then review again until it reports `Lean already. Ship.` Do not show the draft, ask the user to act, save, or publish before this gate passes.
+
 ## Step 5: Show the draft for review
 
 Present the full draft to the user. Ask:
@@ -81,13 +92,13 @@ Incorporate all feedback. Repeat this step until the user approves.
 
 ## Step 6: Save the file
 
-Save the final post to `<blog-content-dir>/<title>.md` where `<blog-content-dir>` comes from `docs/agents/blog-directory.md` in the current repo (or run `/setup-devinat1-skills` first) and `<title>` is the approved post title.
+Save the final post to `~/Desktop/blog/content/<title>.md`, where `<title>` is the approved post title.
 
 ## Step 7: Update related links
 
 After saving the new post, suggest related links:
 
-1. Read all existing posts in the blog content directory from `docs/agents/blog-directory.md` (excluding `index.md` and `images/`).
+1. Read all existing posts in the blog content directory above (excluding `index.md` and `images/`).
 2. Identify which existing posts are meaningfully related to the new post. Two posts are related when they discuss the same tool/system/concept, one is a sequel or deep dive of another, they approach the same problem from different angles, or one describes building something the other uses. Do not link posts that only share a broad theme.
 3. Propose a `## Related` section for the new post listing related existing posts.
 4. Propose adding the new post to existing posts' `## Related` sections where it fits.
@@ -107,6 +118,6 @@ If an existing post already has a `## Related` section, add the new link to it r
 
 Ask the user: "Ready to publish with `npx quartz sync`?"
 
-Only if they confirm, run `npx quartz sync` from the blog repo root (parent of the content directory in `docs/agents/blog-directory.md`).
+Only if they confirm, run `npx quartz sync` from `~/Desktop/blog`.
 
 If they decline, let them know the file is saved and they can publish later.

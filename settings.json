@@ -72,7 +72,8 @@
     "superpowers@claude-plugins-official": true,
     "vercel-plugin@vercel": false,
     "ponytail@ponytail": true,
-    "playwright@claude-plugins-official": true
+    "playwright@claude-plugins-official": true,
+    "i-have-adhd@i-have-adhd": true
   },
   "extraKnownMarketplaces": {
     "gitkraken": {
@@ -97,6 +98,12 @@
       "source": {
         "source": "github",
         "repo": "DietrichGebert/ponytail"
+      }
+    },
+    "i-have-adhd": {
+      "source": {
+        "source": "github",
+        "repo": "ayghri/i-have-adhd"
       }
     }
   },

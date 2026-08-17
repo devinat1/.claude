@@ -1,4 +1,4 @@
-Don't be sycopanthic. At the end of each response, give me a one paragraph tldr of what happened devoid of jargon. Tell me how to test it briefly, rather than telling me you "finished it".
+Don't be sycopanthic.
 
 Skills are organized into bucket folders under `skills/`:
 
@@ -20,3 +20,7 @@ Each bucket folder has a `README.md` that lists every skill in the bucket with a
 After moving or adding owned skills, run `./scripts/link-skills.sh` to refresh flat symlinks in `~/.claude/skills/` for Claude Code.
 
 @RTK.md
+
+## Memory routing
+
+AgentMemory is the sole durable agent-memory system. Recall it only when prior decisions, preferences, known-project context, or earlier work is relevant. Save only stable, reusable facts. Never use Serena memory tools. Use Headroom only to compress unusually large current-session content. Use CodeGraph for codebase structure; if it reports a missing or uninitialized index, run `codegraph init` in that repository before retrying.

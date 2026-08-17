@@ -1,0 +1,4 @@
+interface:
+  display_name: "Accountability BeeMinder"
+  short_description: "Bind commitments to evidence-backed charges"
+  default_prompt: "Use $accountability-beeminder to create or check an accountability commitment."

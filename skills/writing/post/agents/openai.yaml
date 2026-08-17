@@ -1,4 +1,4 @@
 interface:
   display_name: "Post"
   short_description: "Draft and schedule social posts"
-  default_prompt: "Use $post to draft X and LinkedIn versions from this context and schedule them through Postiz."
+  default_prompt: "Use $post to draft X and LinkedIn versions from this context and schedule them through Postiz at https://post.liteagent.net."

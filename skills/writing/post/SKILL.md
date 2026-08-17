@@ -5,7 +5,9 @@ description: Use when the user asks to draft, make, schedule, queue, or publish 
 
 # Post
 
-Draft platform-specific social copy and schedule it through Postiz only after explicit approval.
+Draft platform-specific social copy and schedule it through Postiz at https://post.liteagent.net only after explicit approval.
+
+**Canonical service:** Use `https://post.liteagent.net` for all Postiz authentication, integration, scheduling, and verification actions. Do not use a different Postiz host or a local Postiz instance.
 
 **REQUIRED SUB-SKILL:** Use `postiz` before any Postiz CLI calls.
 
@@ -32,6 +34,7 @@ Draft platform-specific social copy and schedule it through Postiz only after ex
    Ask for explicit approval. Do not schedule on "looks okay" unless it clearly approves both copy and timing.
 
 4. **Schedule after approval**
+   - Use the Postiz service at `https://post.liteagent.net`.
    - Check `postiz auth:status`.
    - Run `postiz integrations:list` and select enabled `x` and `linkedin` integrations.
    - Use the user's requested date, resolving relative dates in the user's timezone.

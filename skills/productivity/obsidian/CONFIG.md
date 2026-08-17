@@ -31,4 +31,4 @@
 | `update-blog-on-leetcode` | Publishing CP notes to Quartz blog |
 | `focus` / `ramble` | Todoist tasks and planning |
 | `meeting-feedback` | Granola meeting analysis |
-| `literature-review` | Prior-art web search before deciding novelty |
+| `literature-review` | Prior-art discovery before `/research-gap` novelty |

@@ -9,24 +9,33 @@ AGENTS_SKILLS="$HOME/.agents/skills"
 CLAUDE_SKILLS="$HOME/.claude/skills"
 
 EXTERNAL_SKILLS=(
-  caveman
-  design-an-interface
-  diagnose
   find-skills
+  ask-matt
+  code-review
+  codebase-design
+  diagnosing-bugs
+  domain-modeling
   grill-me
   grill-with-docs
+  grilling
   handoff
+  implement
   improve-codebase-architecture
   postiz
   prototype
+  research
+  resolving-merge-conflicts
   setup-matt-pocock-skills
   tdd
   teach
-  to-issues
-  to-prd
+  to-questionnaire
+  to-spec
+  to-tickets
   triage
-  write-a-skill
-  zoom-out
+  wait-what
+  wayfinder
+  wizard
+  writing-for-agents
 )
 
 mkdir -p "$CLAUDE_SKILLS" "$REPO/skills"

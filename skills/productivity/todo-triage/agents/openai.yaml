@@ -1,0 +1,4 @@
+interface:
+  display_name: "Todo Triage"
+  short_description: "Daily Todoist focus and triage"
+  default_prompt: "Use $todo-triage to review today’s Todoist tasks and choose my focus."
