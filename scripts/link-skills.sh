@@ -2,27 +2,40 @@
 set -euo pipefail
 
 # Refreshes generated skill metadata, then links owned skills in this repository
-# to ~/.claude/skills for Claude Code. Only scans category buckets — does not
-# touch third-party symlinks at skills/<name>.
+# to Claude and Codex. Only scans category buckets and owned skill names.
 
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
-DEST="$HOME/.claude/skills"
+DESTS=("$HOME/.claude/skills" "$HOME/.codex/skills")
 BUCKETS=(learning engineering interview productivity writing setup)
 
 "$REPO/scripts/generate-skill-metadata.py"
 
-if [ -L "$DEST" ]; then
-  resolved="$(readlink -f "$DEST")"
-  case "$resolved" in
-    "$REPO"|"$REPO"/*)
-      echo "error: $DEST is a symlink into this repo ($resolved)." >&2
-      echo "Remove it (rm \"$DEST\") and re-run; the script will recreate it as a real dir." >&2
-      exit 1
-      ;;
-  esac
-fi
+for dest in "${DESTS[@]}"; do
+  if [ -L "$dest" ]; then
+    resolved="$(readlink -f "$dest")"
+    case "$resolved" in
+      "$REPO"|"$REPO"/*)
+        echo "error: $dest is a symlink into this repo ($resolved)." >&2
+        exit 1
+        ;;
+    esac
+  fi
+  mkdir -p "$dest"
+done
 
-mkdir -p "$DEST"
+# Refuse to replace real directories or files; they may be third-party installs.
+for bucket in "${BUCKETS[@]}"; do
+  for skill_md in "$REPO/skills/$bucket"/*/SKILL.md; do
+    name="$(basename "$(dirname "$skill_md")")"
+    for dest in "${DESTS[@]}"; do
+      target="$dest/$name"
+      if [ -e "$target" ] && [ ! -L "$target" ]; then
+        echo "error: refusing to replace $target; move it and re-run." >&2
+        exit 1
+      fi
+    done
+  done
+done
 
 for bucket in "${BUCKETS[@]}"; do
   bucket_dir="$REPO/skills/$bucket"
@@ -32,13 +45,10 @@ for bucket in "${BUCKETS[@]}"; do
   while IFS= read -r -d '' skill_md; do
     src="$(dirname "$skill_md")"
     name="$(basename "$src")"
-    target="$DEST/$name"
-
-    if [ -e "$target" ] && [ ! -L "$target" ]; then
-      rm -rf "$target"
-    fi
-
-    ln -sfn "$src" "$target"
-    echo "linked $name -> $src"
+    for dest in "${DESTS[@]}"; do
+      target="$dest/$name"
+      ln -sfn "$src" "$target"
+      echo "linked $target -> $src"
+    done
   done
 done
