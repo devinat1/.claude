@@ -1,0 +1,4 @@
+interface:
+  display_name: "Skill Radar"
+  short_description: "Suggest relevant skills before acting"
+  default_prompt: "Use $skill-radar to find relevant local skills and plugin options, then ask before invoking any."

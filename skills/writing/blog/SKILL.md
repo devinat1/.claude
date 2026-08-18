@@ -6,6 +6,11 @@ disable-model-invocation: true
 
 Turn this conversation into a blog post. Follow these steps exactly:
 
+## Consequential advice
+
+Before recommending editorial direction or related links as a consequential
+choice, follow the `Advice gate` in `dissenter`.
+
 ## Blog location
 
 - Repository: `~/Desktop/blog`

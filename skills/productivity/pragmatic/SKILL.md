@@ -8,6 +8,11 @@ description: >
 
 # Pragmatic
 
+## Consequential advice
+
+Before offering a cut, phase, or course of action, follow the `Advice gate` in
+`dissenter`. Do not select a winner; wait for the user's choice.
+
 Clarify a build until it is realistic for two people with limited bandwidth:
 `clarify`, constrained by scarce founder time.
 

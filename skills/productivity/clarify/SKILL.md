@@ -5,6 +5,12 @@ description: Explores purpose, constraints, and success criteria through extensi
 
 # Clarify
 
+## Consequential advice
+
+For a consequential recommendation, follow the `Advice gate` in `dissenter`.
+It overrides the local permission to recommend an answer when the user is
+stuck.
+
 Help turn a vague idea into clear requirements through natural collaborative dialogue.
 
 Start by understanding the current project context, then ask questions one at a time to refine the idea. Keep interviewing until purpose, constraints, and success criteria are thoroughly clear — then output a copy-paste prompt, remind the user to practice it with `/coherent`, and stop.

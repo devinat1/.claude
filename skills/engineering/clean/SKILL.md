@@ -4,6 +4,11 @@ description: Review code for clean naming conventions — descriptive, intention
 disable-model-invocation: true
 ---
 
+## Consequential advice
+
+Before recommending a consequential code change, follow the `Advice gate` in
+`dissenter`; report evidence-only findings directly.
+
 ## Naming
 
 - Use descriptive, intention-revealing names. A variable name should tell you why it exists, what it does, and how it's used.

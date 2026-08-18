@@ -54,6 +54,11 @@
         "hooks": [
           {
             "type": "command",
+            "command": "echo '{\"systemMessage\":\"Before answering the first substantive user request in this session, invoke /skill-radar. It must search local skills first, then available plugins/catalogs, ask only when a plausible match exists, and never invoke or install a candidate without explicit approval.\"}'",
+            "timeout": 15
+          },
+          {
+            "type": "command",
             "command": "~/.local/bin/headroom init hook ensure --profile init-user --marker headroom-init-claude",
             "timeout": 15
           }

@@ -5,6 +5,11 @@ description: Convert conversations, current chat context, transcripts, meeting n
 
 # Linear
 
+## Consequential advice
+
+Before proposing consequential follow-up work or acceptance criteria as advice
+to the user, follow the `Advice gate` in `dissenter`.
+
 Turn the current conversation or a supplied transcript into scoped Linear work, then create or update Linear only after explicit approval.
 
 ## Hard Rules

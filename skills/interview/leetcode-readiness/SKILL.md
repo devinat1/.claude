@@ -5,6 +5,12 @@ description: Use when the user invokes /leetcode-readiness or wants an evidence-
 
 # LeetCode Readiness
 
+## Consequential advice
+
+Before selecting the readiness date or next-week problem plan, follow the
+`Advice gate` in `dissenter`. Wait for the user's choice before updating the
+persistent weekly plan.
+
 Assess progress from observed work, choose the next problems, and update one persistent weekly plan. Keep the critique brief; this is not a mock interview or a generic curriculum.
 
 ## Hard boundaries

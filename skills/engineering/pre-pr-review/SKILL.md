@@ -31,6 +31,12 @@ were skipped.
 **Behavior:** report findings, do not auto-fix. List violations with
 file:line citations.
 
+## Consequential advice
+
+Before recommending a consequential remediation or human-review priority,
+follow the `Advice gate` in `dissenter`; report evidence-only findings
+directly.
+
 ## Repo-wide invariants
 
 These apply to any PR in any Syndeo-AI repo. Source of truth: top-level

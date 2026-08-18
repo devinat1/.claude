@@ -5,6 +5,11 @@ description: Organizes current work into APSET (Area, Problem, System, Evaluatio
 
 # APSET
 
+## Consequential advice
+
+When the user is stuck on a consequential decision, follow the `Advice gate`
+in `dissenter` before giving a recommendation.
+
 Help organize what the user is working on into the APSET format through natural collaborative dialogue.
 
 Start by understanding the current project context, then interview one APSET section at a time. Keep interviewing until each section is concrete enough to act on — then output a brief APSET document and stop.

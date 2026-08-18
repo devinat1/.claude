@@ -6,6 +6,11 @@ disable-model-invocation: true
 
 Scan blog posts and suggest related links between them. Follow these steps exactly:
 
+## Consequential advice
+
+Before recommending a consequential cross-link, follow the `Advice gate` in
+`dissenter`; routine relevance matches stay direct.
+
 ## Step 1: Read all posts
 
 Read every file in the blog content directory from `docs/agents/blog-directory.md` in the current repo (or run `/setup-devinat1-skills` first) except `index.md` and the `images/` directory. For each post, note its title (filename without `.md`) and core topic.

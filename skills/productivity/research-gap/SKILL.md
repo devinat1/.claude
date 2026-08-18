@@ -46,7 +46,7 @@ Preserve uncertainty. Never claim complete literature coverage or a final novelt
 
 ## Phase 4 — Two novelty views
 
-Invoke `dissenter` once per evidence packet, with the resolved question, the collected literature-review report, and the closest-work comparison. Return its **Original view** and **Credible dissent** as two evidence-backed positions on whether the idea is novel. Preserve disagreement; do not choose a winner or combine the views into a verdict.
+Invoke `dissenter` once per evidence packet, with the resolved question, the collected literature-review report, and the closest-work comparison. Return its **Original view** and **Opposing view** as two evidence-backed positions on whether the idea is novel. Preserve disagreement; do not choose a winner or combine the views into a verdict.
 
 ## Output format
 
@@ -58,7 +58,7 @@ Invoke `dissenter` once per evidence packet, with the resolved question, the col
 ### Original view
 [Evidence-backed position on whether the idea is novel.]
 
-### Credible dissent
+### Opposing view
 [Evidence-backed counter-position on whether the idea is novel.]
 
 ### Closest prior work

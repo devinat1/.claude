@@ -61,12 +61,14 @@ Mock interview practice.
 Workflow tools beyond code review.
 
 - **[safeguard](./skills/productivity/safeguard/SKILL.md)** — Interview before non-trivial builds; ends with Build Brief, then implement.
+- **[skill-radar](./skills/productivity/skill-radar/SKILL.md)** — Suggest relevant local skills, then plugins, and ask before using either.
 - **[pragmatic](./skills/productivity/pragmatic/SKILL.md)** — Two-person founder reality check before implementation.
 - **[clarify](./skills/productivity/clarify/SKILL.md)** — Interview until purpose and constraints are clear.
 - **[dissenter](./skills/productivity/dissenter/SKILL.md)** — Compare an original decision analysis with credible dissent.
 - **[benchmark-coverage](./skills/productivity/benchmark-coverage/SKILL.md)** — Match prompts to source-backed benchmarks and assess recorded model results.
 - **[coherent](./skills/productivity/coherent/SKILL.md)** — Challenge hidden assumptions and missing links before compressing explanations.
 - **[confounding-variables](./skills/productivity/confounding-variables/SKILL.md)** — Identify themes and candidate confounders in pasted text.
+- **[confounding-audit](./skills/productivity/confounding-audit/SKILL.md)** — Separate tangled claims and conceptual connections without a verdict.
 - **[linear](./skills/productivity/linear/SKILL.md)** — Convert conversations into reviewed Linear tickets and updates.
 - **[meeting-feedback](./skills/productivity/meeting-feedback/SKILL.md)** — Evaluate meeting communication via Granola.
 - **[focus](./skills/productivity/focus/SKILL.md)** — ADHD work assistant: stuck sessions, Focusmate timeboxing, overcommitment guard via Todoist.
@@ -77,6 +79,7 @@ Workflow tools beyond code review.
 - **[momtest](./skills/productivity/momtest/SKILL.md)** — Audit customer calls against The Mom Test.
 - **[literature-review](./skills/productivity/literature-review/SKILL.md)** — Exhaustive prior-work discovery (academic-heavy, four lanes to saturation); no novelty verdict.
 - **[research-gap](./skills/productivity/research-gap/SKILL.md)** — Novelty assessment from a literature-review report (runs discovery first if none in chat).
+- **[research-advisor](./skills/productivity/research-advisor/SKILL.md)** — Direct PhD-advisor-style drill that sharpens research questions and claims.
 - **[obsidian](./skills/productivity/obsidian/SKILL.md)** — State vault read/write via Obsidian CLI for Zettelkasten workflows.
 
 ### Writing

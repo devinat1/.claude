@@ -1,0 +1,7 @@
+interface:
+  display_name: "Research Advisor"
+  short_description: "Stress-test research ideas with advisor rigor."
+  default_prompt: "Use $research-advisor to challenge my research idea."
+
+policy:
+  allow_implicit_invocation: false

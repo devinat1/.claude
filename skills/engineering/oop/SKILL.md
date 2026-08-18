@@ -6,6 +6,11 @@ disable-model-invocation: true
 
 Based on the principles from _Elegant Objects_ by Yegor Bugayenko.
 
+## Consequential advice
+
+Before recommending a consequential design change, follow the `Advice gate`
+in `dissenter`; report evidence-only findings directly.
+
 ## Objects
 
 - **Do** treat objects as living organisms with behavior.

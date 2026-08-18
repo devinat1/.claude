@@ -12,6 +12,11 @@ description: >
 
 # Safeguard
 
+## Consequential advice
+
+When the interview needs a recommended answer, follow the `Advice gate` in
+`dissenter` first. Do not choose on the user's behalf.
+
 Interview before implementation so the user understands how the work fits
 the company and the codebase. One question at a time. Exit when all four
 pillars are concrete enough to build safely — or when the user opts out.

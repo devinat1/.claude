@@ -4,6 +4,11 @@ description: Review code against Domain-Driven Design aggregate rules. Use when 
 disable-model-invocation: true
 ---
 
+## Consequential advice
+
+Before recommending a consequential domain-model or aggregate change, follow
+the `Advice gate` in `dissenter`; report rule violations directly.
+
 ## Aggregate Rules
 
 - Reference other aggregates by identity only. Never hold direct object references to another aggregate; use its ID.

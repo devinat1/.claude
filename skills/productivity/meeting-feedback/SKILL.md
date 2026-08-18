@@ -5,6 +5,11 @@ description: Use when the user wants quick, direct feedback on their communicati
 
 # Meeting Feedback
 
+## Consequential advice
+
+Before recommending a behavior to practice, follow the `Advice gate` in
+`dissenter` when the choice is consequential for the user's next meeting.
+
 Review a meeting from Granola and give a short, calm coaching note. Be specific and evidence-based, but keep the output easy to act on.
 
 ## Fetch Meeting Data

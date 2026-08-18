@@ -4,6 +4,11 @@ description: Analyze branch code for scale limits, upgrade paths, system design 
 disable-model-invocation: true
 ---
 
+## Consequential advice
+
+Before recommending an upgrade path, technology choice, or learning plan,
+follow the `Advice gate` in `dissenter` and wait for the user's choice.
+
 For my code from /branch, tell me:
 - What is the scale that my code supports? (how many users), and exactly at which scale will the code break?
 - What are the ways I can support a higher scale? (order from low scale to highest (google level) scale).
