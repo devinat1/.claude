@@ -13,7 +13,9 @@ Before recommending a consequential cross-link, follow the `Advice gate` in
 
 ## Step 1: Read all posts
 
-Read every file in the blog content directory from `docs/agents/blog-directory.md` in the current repo (or run `/setup-devinat1-skills` first) except `index.md` and the `images/` directory. For each post, note its title (filename without `.md`) and core topic.
+Use a blog directory supplied by the calling skill when present. Otherwise, read it from `docs/agents/blog-directory.md` in the current repo (or run `/setup-devinat1-skills` first).
+
+Read every post except `index.md` and the `images/` directory. For each post, note its title (filename without `.md`) and core topic.
 
 ## Step 2: Identify related posts
 
@@ -24,6 +26,8 @@ For each post, identify which other posts are meaningfully related. Two posts ar
 - One describes building something the other uses
 
 Posts are NOT related just because they share a broad theme like "AI" or "coding." The connection should be specific enough that a reader of one would genuinely benefit from reading the other.
+
+When the calling skill supplies a focus post, consider every post but propose only links to or from the focus post. Otherwise, propose relevant changes across all posts.
 
 ## Step 3: Check existing related sections
 

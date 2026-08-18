@@ -101,23 +101,11 @@ Save the final post to `~/Desktop/blog/content/<title>.md`, where `<title>` is t
 
 ## Step 7: Update related links
 
-After saving the new post, suggest related links:
+Delegate related-link handling to [`update-blog-refs`](../update-blog-refs/SKILL.md). Follow it with:
 
-1. Read all existing posts in the blog content directory above (excluding `index.md` and `images/`).
-2. Identify which existing posts are meaningfully related to the new post. Two posts are related when they discuss the same tool/system/concept, one is a sequel or deep dive of another, they approach the same problem from different angles, or one describes building something the other uses. Do not link posts that only share a broad theme.
-3. Propose a `## Related` section for the new post listing related existing posts.
-4. Propose adding the new post to existing posts' `## Related` sections where it fits.
-5. Show all proposals to the user and wait for approval before writing.
-6. Apply approved changes. The `## Related` section goes at the very end of each file, preceded by `---`. Format:
-
-```
----
-
-## Related
-- [[Post Title]]
-```
-
-If an existing post already has a `## Related` section, add the new link to it rather than creating a duplicate section.
+- `~/Desktop/blog/content` as the supplied blog directory.
+- The newly saved post as the focus post, so proposals include only links to or from it.
+- Its approval gate before writing any related-link changes.
 
 ## Step 8: Publish (with confirmation)
 

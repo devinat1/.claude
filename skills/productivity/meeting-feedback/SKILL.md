@@ -14,12 +14,11 @@ Review a meeting from Granola and give a short, calm coaching note. Be specific 
 
 ## Fetch Meeting Data
 
-Use the Granola MCP tools to fetch meeting data.
+Read and follow [transcript resolution](../transcript-resolution.md) with these options:
 
-- **No argument provided:** Review the most recent meeting.
-- **Argument provided:** Search for the best matching meeting by title, attendee, or topic.
-
-Prefer the transcript when available because it shows what was actually said. Use the notes or summary to understand context and decisions. If the transcript is unavailable, evaluate from notes/summary only and say: "Transcript unavailable, so this is based on the meeting notes only."
+- Permit a named Granola meeting, attendee, or topic, and the most recent Granola meeting when no argument is supplied.
+- Use **Notes allowed** mode. Use the notes or summary for context and decisions.
+- When using notes, say: "Transcript unavailable, so this is based on the meeting notes only."
 
 ## Review Focus
 

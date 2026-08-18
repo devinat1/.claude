@@ -26,13 +26,13 @@ Run the four phases below in order.
 
 ## Phase 1 — Acquire the transcript
 
-Resolve the transcript using this fallback chain. Stop at the first source that yields a transcript.
+Read and follow [transcript resolution](../transcript-resolution.md) with these options:
 
-1. **Explicit file path argument.** If the user's argument starts with `/`, `~`, or `./`, or ends in `.md`/`.txt`/`.vtt`/`.srt`, treat it as a file path and read it with the Read tool.
-2. **Pasted prose argument.** If the user's argument is long-form text (more than ~200 characters and contains line breaks or speaker-like prefixes), treat it as the transcript directly.
-3. **Granola meeting-title search.** If the argument is a short string, call the Granola MCP tools to search for a meeting whose title matches.
-4. **Most recent Granola meeting.** If no argument was provided, call the Granola MCP tools to fetch the most recent meeting and use its transcript.
-5. **Ask the user.** If none of the above produces a transcript (Granola unavailable, no recent meeting, file unreadable), ask: "I couldn't find a transcript. Paste it here, or give me a file path or Granola meeting title."
+1. Permit an explicit file path when the argument starts with `/`, `~`, or `./`, or ends in `.md`, `.txt`, `.vtt`, or `.srt`.
+2. Permit pasted prose when the argument is longer than about 200 characters and contains line breaks or speaker-like prefixes.
+3. Treat any remaining short argument as a Granola meeting-title search; with no argument, use the most recent Granola meeting.
+4. Use **Transcript required** mode.
+5. If no transcript resolves, ask: "I couldn't find a transcript. Paste it here, or give me a file path or Granola meeting title."
 
 Once you have the transcript, identify which speaker is the interviewer (the user). If speaker labels are missing or ambiguous, ask once: "Which speaker is you?" before proceeding. Do not guess.
 

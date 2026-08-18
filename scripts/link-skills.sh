@@ -1,12 +1,15 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Links owned skills in this repository to ~/.claude/skills for Claude Code.
-# Only scans category buckets — does not touch third-party symlinks at skills/<name>.
+# Refreshes generated skill metadata, then links owned skills in this repository
+# to ~/.claude/skills for Claude Code. Only scans category buckets — does not
+# touch third-party symlinks at skills/<name>.
 
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
 DEST="$HOME/.claude/skills"
 BUCKETS=(learning engineering interview productivity writing setup)
+
+"$REPO/scripts/generate-skill-metadata.py"
 
 if [ -L "$DEST" ]; then
   resolved="$(readlink -f "$DEST")"

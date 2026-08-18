@@ -9,10 +9,11 @@ Turn an idea-rich source into a neutral review the user can evaluate before pres
 
 ## Collect the source
 
-- If the user supplies text, analyze that text.
-- If the user names a meeting or topic, find the best matching Granola meeting and retrieve its transcript. Ask for clarification only when several meetings are equally plausible.
-- If the user gives no source, retrieve the most recent Granola meeting transcript.
-- If a transcript is unavailable, use the available meeting notes and label the evidence as notes rather than quotes.
+Read and follow [transcript resolution](../transcript-resolution.md) with these options:
+
+- Permit pasted text, a named Granola meeting or topic, and the most recent Granola meeting when no source is supplied.
+- Use **Notes allowed** mode.
+- If no source resolves, ask the user for pasted text or a Granola meeting.
 
 ## Separate the ideas
 
