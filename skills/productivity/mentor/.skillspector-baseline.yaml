@@ -1,0 +1,10 @@
+# SkillSpector baseline — findings listed here are suppressed on future scans.
+# Edit 'reason' fields and add glob 'rules' as needed. See docs/SUPPRESSION.md.
+version: 2
+scanner_version: 2.9.5
+rules: []
+fingerprints:
+- hash: sha256:8ff628b8980db3bc582e64a800ceb49cfaa5efcaa064cbe5bae080d2b5450801
+  rule_id: RA2
+  file: SKILL.md
+  reason: Todoist mutation now occurs only after user acceptance

@@ -31,12 +31,14 @@ For each note with `platform: Leetcode`:
 Run from any directory:
 
 ```bash
-python3 ~/Desktop/blog/scripts/migrate-leetcode.py && cd ~/Desktop/blog && npx quartz sync
+python3 ~/Desktop/blog/scripts/migrate-leetcode.py
+cd ~/Desktop/blog
+node ./quartz/bootstrap-cli.mjs sync
 ```
 
 1. **Migrate** — run the script; note how many files copied and excalidraw lines removed
 2. **Review output** — if migration errors, fix source notes and retry
-3. **Sync** — `npx quartz sync` commits changes, builds, and pushes to `origin/v4`
+3. **Sync** — `node ./quartz/bootstrap-cli.mjs sync` commits changes, builds, and pushes to `origin/v4`
 4. **Report** — tell the user what changed (file count, notable updates) and the live URL pattern (`/coding/<Problem-Name>`)
 
 If migration produces no git changes, sync still runs but will report "Everything up-to-date."
@@ -50,5 +52,5 @@ If migration produces no git changes, sync still runs but will report "Everythin
 ## Troubleshooting
 
 - **Script fails on YAML:** fix frontmatter in the source note under `Notes/CP/`
-- **Sync conflicts:** resolve in `~/Desktop/blog`, then re-run `npx quartz sync`
+- **Sync conflicts:** resolve in `~/Desktop/blog`, then re-run `node ./quartz/bootstrap-cli.mjs sync`
 - **New note not appearing:** confirm `platform: Leetcode` in frontmatter and re-run migration

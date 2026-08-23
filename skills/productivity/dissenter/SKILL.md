@@ -1,27 +1,28 @@
 ---
 name: dissenter
 description: >
-  Run two independent perspectives for a meaningful decision, proposal,
-  recommendation, or plan: one analyzes the user's prompt as written and one
-  supplies the strongest credible dissent. Use when competing courses of action
-  or assumptions need stress-testing, including immediately before a skill gives
-  consequential user-facing advice; skip routine execution, factual lookups,
-  and status questions.
+  Run two independent perspectives before giving user-facing advice, making a
+  recommendation, or evaluating a choice: one analyzes the user's prompt as
+  written and one supplies the strongest credible dissent. Use whenever two
+  plausible answers or courses of action exist, including routine, low-stakes
+  personal choices; skip routine execution, factual lookups, and status questions.
 ---
 
 # Dissenter
 
-Stress-test a material choice without manufacturing a debate.
+Stress-test a choice without manufacturing a debate.
 
 ## Advice gate
 
-This is the authoritative gate for every owned skill that gives
-consequential user-facing advice.
+This is the authoritative gate for every owned skill that gives user-facing
+advice.
 
 Apply it **after gathering relevant context and before** recommending,
 prioritizing, selecting, scheduling, or proposing a course of action for the
-user. Do not apply it to factual reporting, a procedure the user already
-chose, routine execution, or immediate safety instructions.
+user. Low stakes do not bypass the gate: routine personal recommendations such
+as choosing a meal qualify when two credible answers exist. Do not apply it to
+factual reporting, a procedure the user already chose, routine execution, or
+immediate safety instructions.
 
 When the gate applies:
 
@@ -32,12 +33,12 @@ When the gate applies:
    different option.
 4. Wait for that answer before taking an action that depends on the choice.
 
-This gate overrides any local instruction to make a consequential
-recommendation, choose a priority, or advance automatically.
+This gate overrides any local instruction to make a recommendation, choose a
+priority, or advance automatically.
 
 ## Dispatch
 
-1. Confirm the request contains a meaningful choice, proposal, recommendation, or plan. If it does not, answer normally.
+1. Confirm the request asks for advice, a choice, a proposal, a recommendation, or a plan with at least two credible answers. If it does not, answer normally.
 2. Launch exactly two independent subagents in parallel. Do not give either agent the other's response.
    - **Original:** Send the user's request plus the gathered context. Ask it for one viable course of action, its assumptions, and tradeoffs. It must not claim to choose for the user.
    - **Dissent:** Send the same request and context. Ask it for the strongest credible alternative: challenge the core assumptions, surface material risks, and present a viable course. Do not use a literal inverse or a straw man.

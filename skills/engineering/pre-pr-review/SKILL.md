@@ -63,7 +63,7 @@ and inspect the path prefixes). Run the relevant sub-checklists:
 - `internal/logger` is the only sanctioned logger. No `fmt.Print*` or
   stdlib `log` for logging.
 - Any new file under `backend/migrations/` passes
-  `npx squawk-cli -c .squawk.toml migrations/<file>.sql`. CI enforces
+  `npx squawk-cli@2.51.0 -c .squawk.toml migrations/<file>.sql`. CI enforces
   this; a clean local run avoids surprises.
 
 ### frontend/

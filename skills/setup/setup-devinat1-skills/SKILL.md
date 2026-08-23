@@ -95,4 +95,4 @@ Substitute the user's chosen values into the written files.
 
 ### 5. Done
 
-Tell the user setup is complete and which skills now read from `docs/agents/*.md`. They can edit those files directly later. Remind them that agentmemory requires `npx @agentmemory/agentmemory` running at `AGENTMEMORY_URL`.
+Tell the user setup is complete and which skills now read from `docs/agents/*.md`. They can edit those files directly later. Remind them that agentmemory requires `npx @agentmemory/agentmemory@0.9.27` running at `AGENTMEMORY_URL`.

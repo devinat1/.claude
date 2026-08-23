@@ -1,0 +1,16 @@
+# SkillSpector baseline — findings listed here are suppressed on future scans.
+# Edit 'reason' fields and add glob 'rules' as needed. See docs/SUPPRESSION.md.
+version: 2
+scanner_version: 2.9.5
+rules: []
+fingerprints:
+- hash: sha256:68ca12092a2ae0a415c8314b982cda3aa2600e75a12b398a9da5084c234879c1
+  rule_id: AS3
+  file: SKILL.md
+  reason: Self-reference and repository inspection are required for the safety gate;
+    user input remains required for consequential actions
+- hash: sha256:9ac43686494f28d5aa7b48e303c25a4b3e1d79169d3228b1aa0d2198303db907
+  rule_id: EA2
+  file: SKILL.md
+  reason: Self-reference and repository inspection are required for the safety gate;
+    user input remains required for consequential actions

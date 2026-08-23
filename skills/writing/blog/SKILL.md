@@ -109,8 +109,8 @@ Delegate related-link handling to [`update-blog-refs`](../update-blog-refs/SKILL
 
 ## Step 8: Publish (with confirmation)
 
-Ask the user: "Ready to publish with `npx quartz sync`?"
+Ask the user: "Ready to publish with `node ./quartz/bootstrap-cli.mjs sync`?"
 
-Only if they confirm, run `npx quartz sync` from `~/Desktop/blog`.
+Only if they confirm, run `node ./quartz/bootstrap-cli.mjs sync` from `~/Desktop/blog`.
 
 If they decline, let them know the file is saved and they can publish later.

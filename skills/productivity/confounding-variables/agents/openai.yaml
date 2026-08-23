@@ -1,4 +1,0 @@
-interface:
-  display_name: "Confounding Variables"
-  short_description: "Map themes and hidden causal factors"
-  default_prompt: "Use $confounding-variables to identify themes and possible confounders in this text."

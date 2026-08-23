@@ -1,4 +1,0 @@
-interface:
-  display_name: "Confounding Audit"
-  short_description: "Separate tangled claims and connections"
-  default_prompt: "Use $confounding-audit to separate and audit the claims in this meeting transcript."

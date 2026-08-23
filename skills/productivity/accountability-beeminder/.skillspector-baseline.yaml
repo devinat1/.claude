@@ -1,0 +1,16 @@
+# SkillSpector baseline — findings listed here are suppressed on future scans.
+# Edit 'reason' fields and add glob 'rules' as needed. See docs/SUPPRESSION.md.
+version: 2
+scanner_version: 2.9.5
+rules: []
+fingerprints:
+- hash: sha256:d9618f28ec4bcd8bea3aad3c40a331e8d63f4ad9959c16ebfe9bc8328c9f1274
+  rule_id: LP3
+  file: SKILL.md
+  reason: Codex does not support SkillSpector permissions metadata; persistence is
+    limited to user-authorized accountability commitments
+- hash: sha256:ddf423141672b32a2c3ff66780c9067b2cdddaa1a38c3866c50ed0c05a2f8b53
+  rule_id: RA2
+  file: SKILL.md
+  reason: Codex does not support SkillSpector permissions metadata; persistence is
+    limited to user-authorized accountability commitments

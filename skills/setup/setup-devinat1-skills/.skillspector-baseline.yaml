@@ -1,0 +1,10 @@
+# SkillSpector baseline — findings listed here are suppressed on future scans.
+# Edit 'reason' fields and add glob 'rules' as needed. See docs/SUPPRESSION.md.
+version: 2
+scanner_version: 2.9.5
+rules: []
+fingerprints:
+- hash: sha256:1eca638e018b38c05c69226e5a05cd013ebf4d78e6247772316d8f18aee4cbd7
+  rule_id: RA2
+  file: skills-tracker.md
+  reason: Documentation says not to write the legacy tracker

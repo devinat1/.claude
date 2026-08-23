@@ -8,7 +8,7 @@ Optional MCP servers used by some skills in this catalog.
 
 Log blind spots, domain diagnostics, and session feedback to long-term memory via `memory_save` / `memory_recall`.
 
-**Requires:** agentmemory server running at `AGENTMEMORY_URL` (default `http://localhost:3111`). Start with `npx @agentmemory/agentmemory`.
+**Requires:** agentmemory server running at `AGENTMEMORY_URL` (default `http://localhost:3111`). Start with `npx @agentmemory/agentmemory@0.9.27`.
 
 **Status:** required for learning-loop logging — skills report failure if unavailable; no file fallback.
 

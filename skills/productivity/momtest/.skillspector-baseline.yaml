@@ -1,0 +1,10 @@
+# SkillSpector baseline — findings listed here are suppressed on future scans.
+# Edit 'reason' fields and add glob 'rules' as needed. See docs/SUPPRESSION.md.
+version: 2
+scanner_version: 2.9.5
+rules: []
+fingerprints:
+- hash: sha256:720bca05e9a2122493d2dd0aff92c75c8f51e6064ca3f14fc49502b7254e13f1
+  rule_id: RA2
+  file: SKILL.md
+  reason: Scorecard persistence now occurs only after user confirmation

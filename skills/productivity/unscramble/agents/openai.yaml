@@ -1,0 +1,4 @@
+interface:
+  display_name: "Unscramble"
+  short_description: "Separate discussion into topics and claims"
+  default_prompt: "Use $unscramble to organize what I discussed into concrete topics and exact claims."

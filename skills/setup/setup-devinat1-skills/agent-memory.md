@@ -12,7 +12,7 @@ Replace with a stable slug for this repo (e.g. `owner-repo` from `git remote get
 
 - **Server:** `user-agentmemory`
 - **URL:** `http://localhost:3111` (set via `AGENTMEMORY_URL` in MCP config)
-- **Start server:** `npx @agentmemory/agentmemory`
+- **Start server:** `npx @agentmemory/agentmemory@0.9.27`
 
 ## Reference
 

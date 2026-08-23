@@ -11,7 +11,7 @@ When recommending one skill, plugin, or workflow as the user's next move,
 follow the `Advice gate` in `dissenter`. Listing relevant candidates without a
 recommendation does not trigger the gate.
 
-1. Classify the request by primary intent, then inspect local skill descriptions from that bucket:
+1. Use the injected available-skills catalog as the local index, then classify the request by primary intent and inspect descriptions from that bucket. If filesystem search is needed, follow symlinks (`rg -L`) so linked skills are included:
 
    | Intent | Bucket |
    | --- | --- |
@@ -22,8 +22,8 @@ recommendation does not trigger the gate.
    | Draft, publish, or improve writing | `skills/writing` |
    | Configure a repository or agent setup | `skills/setup` |
 
-2. For mixed requests, inspect the primary bucket first, then the relevant secondary buckets. Choose the strongest cross-bucket matches.
-3. For advice, surface every directly relevant productivity skill within the three-candidate limit. Prefer `confounding-audit` for unpacking a source into claims and connections; prefer `confounding-variables` for causal or correlational claims and alternatives.
+2. For mixed requests, inspect the primary bucket first, then the relevant secondary buckets. Choose the strongest cross-bucket matches. Prefer `unscramble` when the user wants to organize what they discussed into topics and claims.
+3. For advice, surface every directly relevant productivity skill within the three-candidate limit. Treat `dissenter` as directly relevant whenever the user asks for advice, a recommendation, a choice, a proposal, or a plan with at least two credible answers, including low-stakes choices.
 4. Inspect available plugins and searchable catalogs after local skills. Do not install anything while searching.
 5. If matches exist, show at most three candidates, with local skills before plugins. Ask whether to invoke a local skill or install and use a plugin.
 6. Invoke or install a candidate only after an explicit yes. If the user declines, continue without it and do not re-suggest it for that request.
@@ -36,6 +36,6 @@ For an ambiguous approval with several choices, prefer the best local match and 
 | Request | Expected suggestion |
 | --- | --- |
 | “Teach me distributed systems” | A learning skill such as `learn` |
-| “Is this claim causal?” | `confounding-variables` |
-| “Untangle this meeting transcript” | `confounding-audit` |
+| “Untangle this meeting transcript” | `unscramble` |
 | “Advise on this architecture” | Relevant productivity and engineering skills |
+| “What food should I eat today?” | `dissenter` |

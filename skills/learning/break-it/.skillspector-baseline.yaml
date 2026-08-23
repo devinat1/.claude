@@ -1,0 +1,21 @@
+# SkillSpector baseline — findings listed here are suppressed on future scans.
+# Edit 'reason' fields and add glob 'rules' as needed. See docs/SUPPRESSION.md.
+version: 2
+scanner_version: 2.9.5
+rules: []
+fingerprints:
+- hash: sha256:4763c3ac31aa55e17ee9a532c592b2d9ef34212736ee8b5ad94ed23a09961aea
+  rule_id: LP3
+  file: SKILL.md
+  reason: Reviewed SkillSpector findings; Codex does not support SkillSpector permissions
+    metadata and this skill intentionally contains a vulnerable teaching lab
+- hash: sha256:5205cf01f50422318dbd5cf50eab2d6b1e71faf3a6bc5b19e38b517c95e8ac0e
+  rule_id: EA4
+  file: templates/connection-pool/main.go
+  reason: Reviewed SkillSpector findings; Codex does not support SkillSpector permissions
+    metadata and this skill intentionally contains a vulnerable teaching lab
+- hash: sha256:eea001c4b2fe5d2a2fb6e6a91c886a13e390e4b99c33e4d40e08de8ce49ed52c
+  rule_id: RA2
+  file: SKILL.md
+  reason: Reviewed SkillSpector findings; Codex does not support SkillSpector permissions
+    metadata and this skill intentionally contains a vulnerable teaching lab

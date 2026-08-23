@@ -49,7 +49,7 @@ When the user says to defer work:
 
 1. Ask for a new due date unless they already gave one.
 2. If they do not know, inspect Todoist workload and relevant `mentor-workload:` memories. Choose a realistic date that protects higher-ranked work and reflects the inferred difficulty; state the brief reason.
-3. Update Todoist immediately after a date is known: reschedule the linked task when it exists, otherwise create a task for the deferred item. Do not ask for confirmation.
+3. Propose the date and Todoist change. After the user accepts, reschedule the linked task when it exists; otherwise create a task for the deferred item.
 
 ## Difficulty memory
 

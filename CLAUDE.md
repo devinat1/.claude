@@ -23,4 +23,8 @@ After moving or adding owned skills, run `./scripts/link-skills.sh` to refresh f
 
 ## Memory routing
 
-AgentMemory is the sole durable agent-memory system. Recall it only when prior decisions, preferences, known-project context, or earlier work is relevant. Save only stable, reusable facts. Never use Serena memory tools. Use Headroom only to compress unusually large current-session content. Use CodeGraph for codebase structure; if it reports a missing or uninitialized index, run `codegraph init` in that repository before retrying.
+AgentMemory is the sole durable agent-memory system. Recall it only when prior decisions, preferences, known-project context, or earlier work is relevant. Propose saving any fact, decision, preference, or ongoing context that could help a later session; err on the side of proposing and let the user decline. Never use Serena memory tools. Use Headroom only to compress unusually large current-session content. Use CodeGraph for codebase structure; if it reports a missing or uninitialized index, run `codegraph init` in that repository before retrying.
+
+## Memory approval
+
+When a stable, reusable fact is worth saving, first show a `Proposed memory` with its type and concise content summary. Ask the user to choose: personal memory (`devinat1-personal`), current repository/project memory (show its stable ID), or do not save it. Call `memory_save` only after that explicit choice. Do not propose saves for transient details.

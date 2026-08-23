@@ -142,7 +142,7 @@ Choose the violations whose fix would have most changed what was learned. A PITC
 
 ### File save
 
-After emitting the scorecard inline, save the same content to:
+After emitting the scorecard inline, ask whether to save the same content to:
 
 ```
 ~/.claude/momtest-scorecards/<YYYY-MM-DD>-<slug>.md
@@ -156,7 +156,7 @@ After emitting the scorecard inline, save the same content to:
 
 **Filename collision:** if the target path already exists, append `-2`, then `-3`, etc., until a free filename is found.
 
-Use the Write tool. Confirm the save in chat with the line: `Saved scorecard to <full path>.`
+After the user confirms, use the Write tool. Confirm the save in chat with the line: `Saved scorecard to <full path>.`
 
 ## Edge cases
 
