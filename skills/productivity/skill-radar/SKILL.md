@@ -10,6 +10,7 @@ description: Search relevant locally installed skills first, then available plug
 When recommending one skill, plugin, or workflow as the user's next move,
 follow the `Advice gate` in `dissenter`. Listing relevant candidates without a
 recommendation does not trigger the gate.
+When the gate applies, first say that you are using `/dissenter` and why.
 
 1. Use the injected available-skills catalog as the local index, then classify the request by primary intent and inspect descriptions from that bucket. If filesystem search is needed, follow symlinks (`rg -L`) so linked skills are included:
 
@@ -26,7 +27,7 @@ recommendation does not trigger the gate.
 3. For advice, surface every directly relevant productivity skill within the three-candidate limit. Treat `dissenter` as directly relevant whenever the user asks for advice, a recommendation, a choice, a proposal, or a plan with at least two credible answers, including low-stakes choices.
 4. Inspect available plugins and searchable catalogs after local skills. Do not install anything while searching.
 5. If matches exist, show at most three candidates, with local skills before plugins. Ask whether to invoke a local skill or install and use a plugin.
-6. Invoke or install a candidate only after an explicit yes. If the user declines, continue without it and do not re-suggest it for that request.
+6. Invoke or install a candidate only after an explicit yes. Immediately before invoking an approved skill, say which skill you are using and why it matched. If the user declines, continue without it and do not re-suggest it for that request.
 7. If there is no plausible match, continue normally without mentioning this search.
 
 For an ambiguous approval with several choices, prefer the best local match and state that choice before invoking it.

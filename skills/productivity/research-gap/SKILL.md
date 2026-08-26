@@ -22,6 +22,10 @@ Ask at most one further question only when a domain, population, intervention/me
 
 Discovery contract lives in `literature-review`. Follow that skill’s phases when you must run discovery (briefs, four lanes to saturation, deep academic entries, collected multi-idea reports). Prefer invoking/running that skill over copying its search instructions here.
 
+Immediately before running or re-running discovery, say that you are using
+`/literature-review` to build the prior-work evidence base. Do not announce it
+when an existing report is sufficient.
+
 ### 2a. Report already in chat
 
 If a `/literature-review` (or equivalent prior-work) report is already in this conversation:
@@ -46,7 +50,12 @@ Preserve uncertainty. Never claim complete literature coverage or a final novelt
 
 ## Phase 4 — Two novelty views
 
-Invoke `dissenter` once per evidence packet, with the resolved question, the collected literature-review report, and the closest-work comparison. Return its **Original view** and **Opposing view** as two evidence-backed positions on whether the idea is novel. Preserve disagreement; do not choose a winner or combine the views into a verdict.
+Say that you are using `/dissenter` to produce opposing novelty views, then
+invoke it once per evidence packet, with the resolved question, the collected
+literature-review report, and the closest-work comparison. Return its
+**Original view** and **Opposing view** as two evidence-backed positions on
+whether the idea is novel. Preserve disagreement; do not choose a winner or
+combine the views into a verdict.
 
 ## Output format
 

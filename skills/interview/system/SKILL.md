@@ -260,6 +260,10 @@ ALWAYS use this exact structure for the scorecard:
 
 Be honest in the scorecard. Don't inflate scores. "Needs Work" is not an insult — it's useful information. Specific observations are far more valuable than generic praise or criticism.
 
+After any completed scorecard, including one requested early, append the
+`system` completion suggestions from
+[skill connections](../../../docs/skill-connections.md).
+
 ### Behavioral Guidelines
 
 **Pacing** — Use the time guidelines loosely. If the candidate is having a productive discussion in requirements, don't cut them off at exactly 5 minutes. But if they've been on one phase for a disproportionate time, nudge them: "We're spending a lot of time here — want to move to [next phase] and come back if we have time?"

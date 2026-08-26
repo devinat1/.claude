@@ -11,7 +11,8 @@ than the idea's overall quality or factual accuracy.
 ## Resolve the claims
 
 Use the latest `unscramble` output that covers the requested source. If none
-exists, invoke `unscramble` first. Support every source that skill resolves,
+exists, say that you are using `/unscramble` to extract the source's atomic
+claims, then invoke it. Support every source that skill resolves,
 including the current conversation, pasted text, readable files, and Granola
 meetings.
 

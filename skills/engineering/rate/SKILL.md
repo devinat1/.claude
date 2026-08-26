@@ -4,6 +4,9 @@ description: Rate the current branch diff (1-5) against clean code, DDD, OOP, an
 disable-model-invocation: true
 ---
 
+Before scoring, say that you are using `/clean`, `/ddd`, and `/oop` as review
+criteria. These are borrowed criteria, not child-skill invocations.
+
 According to /branch, rate from 1 to 5 (5 means perfect, 1 means terrible) how much my code follows principles for each principle shown in:
 ## Bob Martin guidelines
 /bob

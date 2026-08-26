@@ -10,6 +10,7 @@ Scan blog posts and suggest related links between them. Follow these steps exact
 
 Before recommending a consequential cross-link, follow the `Advice gate` in
 `dissenter`; routine relevance matches stay direct.
+When the gate applies, first say that you are using `/dissenter` and why.
 
 ## Step 1: Read all posts
 

@@ -9,6 +9,7 @@ description: PhD-advisor-style research brainstorming that bluntly stress-tests 
 
 Before presenting next steps that select a research direction, follow the
 `Advice gate` in `dissenter` and wait for the user's choice.
+When the gate applies, first say that you are using `/dissenter` and why.
 
 ## Start
 
@@ -63,3 +64,8 @@ For each substantive response, give only the diagnosis needed to justify the nex
 ```
 
 If the user has not provided enough information, state that directly and use the next steps to name the missing evidence rather than inventing it.
+
+When the drill reaches an intentional final assessment, including a
+user-requested early assessment, append the `research-advisor` completion
+suggestions from [skill connections](../../../docs/skill-connections.md). A response
+that asks the next drill question is not a final assessment.

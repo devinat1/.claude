@@ -36,7 +36,8 @@ using the current conversation.
 
 ## Output
 
-Return only this Markdown structure:
+Return this Markdown structure, then append the `unscramble` completion
+suggestions from [skill connections](../../../docs/skill-connections.md):
 
 ```markdown
 ## [Concrete claim group]

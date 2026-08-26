@@ -9,6 +9,7 @@ description: Organizes current work into APSET (Area, Problem, System, Evaluatio
 
 When the user is stuck on a consequential decision, follow the `Advice gate`
 in `dissenter` before giving a recommendation.
+When the gate applies, first say that you are using `/dissenter` and why.
 
 Help organize what the user is working on into the APSET format through natural collaborative dialogue.
 
@@ -31,7 +32,10 @@ Complete these in order:
 
 ## Question discipline
 
-Follow the same interview style as [`skills/productivity/clarify/SKILL.md`](../productivity/clarify/SKILL.md):
+Before the first interview question, say that you are using `/clarify`'s
+interview style to structure the APSET questions.
+
+Follow the same interview style as [`skills/productivity/clarify/SKILL.md`](../../productivity/clarify/SKILL.md):
 
 - **One question per message** — break multi-part topics across turns
 - **Multiple choice preferred** when it speeds answers; open-ended when needed
@@ -115,6 +119,8 @@ When all sections are thorough, deliver the APSET document in this shape:
 ```
 
 No file write. No git commit. No copy-paste handoff prompt for a new session.
+After the APSET document, append the `apset` completion suggestions from
+[skill connections](../../../docs/skill-connections.md).
 
 ## Non-goals
 

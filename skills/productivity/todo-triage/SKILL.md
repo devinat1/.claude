@@ -11,7 +11,8 @@ Turn today's dated commitments into an intentional focus list without changing T
 
 1. Use Todoist to fetch every incomplete task due today or overdue that is assigned to the user. Paginate until complete.
 2. Fetch every incomplete task assigned to the user with the `triage` label. Paginate until complete.
-3. If both lists are empty, say so and stop without changing anything.
+3. If both lists are empty, say so, append the configured completion suggestions,
+   and stop without changing anything.
 4. Infer a few plain-language themes for the dated tasks. Show every task once beneath its theme, including its task number, project, due date, priority, and labels.
 5. Show the labeled tasks as a separate **Triage backlog** step, grouped into a few plain-language themes with unique task numbers and the same details. Do not merge them into the dated-task themes.
 6. Ask the user to select one or more task numbers from either list as today's focus. Do not make Todoist changes yet.
@@ -31,3 +32,7 @@ Turn today's dated commitments into an intentional focus list without changing T
 - Keep the review conversational: wait for the focus selection, then wait for confirmation.
 - If Todoist is unavailable, say so plainly and make no changes.
 - Do not use the `focus` skill; this is a daily review, not a timeboxing workflow.
+- After an intentional final result, including an empty task list or a decision
+  to make no changes, append the `todo-triage` completion suggestions from
+  [skill connections](../../../docs/skill-connections.md). Todoist being unavailable is
+  a blocked run and gets no suggestions.

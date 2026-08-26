@@ -10,13 +10,14 @@ description: Explores purpose, constraints, and success criteria through extensi
 For a consequential recommendation, follow the `Advice gate` in `dissenter`.
 It overrides the local permission to recommend an answer when the user is
 stuck.
+When the gate applies, first say that you are using `/dissenter` and why.
 
 Help turn a vague idea into clear requirements through natural collaborative dialogue.
 
-Start by understanding the current project context, then ask questions one at a time to refine the idea. Keep interviewing until purpose, constraints, and success criteria are thoroughly clear — then output a copy-paste prompt, remind the user to practice it with `/coherent`, and stop.
+Start by understanding the current project context, then ask questions one at a time to refine the idea. Keep interviewing until purpose, constraints, and success criteria are thoroughly clear — then output a copy-paste prompt, append the configured completion suggestions, and stop.
 
 <HARD-GATE>
-Do NOT write code, scaffold projects, propose implementation plans, write design docs, commit specs, or invoke writing-plans. This skill ends with a single copy-pasteable prompt plus one `/coherent` reminder line.
+Do NOT write code, scaffold projects, propose implementation plans, write design docs, commit specs, or invoke writing-plans. This skill ends with a single copy-pasteable prompt plus its configured completion suggestions.
 </HARD-GATE>
 
 ## Checklist
@@ -27,7 +28,7 @@ Complete these in order:
 2. **Scope check** — if the request spans multiple independent subsystems, flag it and interview one slice at a time
 3. **Ask clarifying questions — extensively, one at a time** — purpose, constraints, success criteria, non-goals, priorities, edge cases, users/audience, what "done" looks like
 4. **Stop when thorough** — all three pillars are specific enough to act on, not just stated once
-5. **Deliver copy-paste prompt** — one self-contained prompt in a fenced code block, followed by exactly one `/coherent` reminder line; stop
+5. **Deliver copy-paste prompt** — one self-contained prompt in a fenced code block, followed by the `clarify` completion suggestions from [skill connections](../../../docs/skill-connections.md); stop
 
 ## Question discipline
 
@@ -50,13 +51,9 @@ Unlike `grill-me`, do not lead with recommended answers. Draw the user's thinkin
 
 ## End artifact
 
-When purpose, constraints, and success criteria are thoroughly clear, your **final message contains only a fenced code block** with a self-contained prompt the user can copy-paste into a new session, followed by this exact line:
+When purpose, constraints, and success criteria are thoroughly clear, your **final message contains only a fenced code block** with a self-contained prompt the user can copy-paste into a new session, followed by the `clarify` completion suggestion block from [skill connections](../../../docs/skill-connections.md).
 
-```text
-Next: run /coherent to practice explaining this clearly.
-```
-
-No preamble, no recap, and no other text outside the block.
+No preamble, no recap, and no other text outside the prompt and suggestion block.
 
 Weave into the prompt: what to build, why, constraints, success criteria, non-goals, and any unresolved open questions. Write it as instructions to a fresh agent — imperative, specific, complete enough to act on without this conversation's history.
 

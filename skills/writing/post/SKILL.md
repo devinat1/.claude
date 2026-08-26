@@ -34,6 +34,7 @@ Draft platform-specific social copy and schedule it through Postiz at https://po
    Ask for explicit approval. Do not schedule on "looks okay" unless it clearly approves both copy and timing.
 
 4. **Schedule after approval**
+   - Say that you are using `postiz` to schedule and verify the approved posts.
    - Use the Postiz service at `https://post.liteagent.net`.
    - Check `postiz auth:status`.
    - Run `postiz integrations:list` and select enabled `x` and `linkedin` integrations.

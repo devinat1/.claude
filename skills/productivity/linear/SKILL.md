@@ -9,6 +9,7 @@ description: Convert conversations, current chat context, transcripts, meeting n
 
 Before proposing consequential follow-up work or acceptance criteria as advice
 to the user, follow the `Advice gate` in `dissenter`.
+When the gate applies, first say that you are using `/dissenter` and why.
 
 Turn the current conversation or a supplied transcript into scoped Linear work, then create or update Linear only after explicit approval.
 
@@ -161,6 +162,9 @@ Open questions
 ## Clarify Section
 
 If the transcript is too vague to scope safely, include a `Clarify` section in the review batch. Use the clarify skill's style:
+
+Before the first clarification question, say that you are using `/clarify`'s
+question style to resolve the ticket's missing decisions.
 
 - Ask concise, decision-shaping questions.
 - Prefer one question per unresolved decision.

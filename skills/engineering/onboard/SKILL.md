@@ -138,6 +138,9 @@ One short confirmation message listing:
 4. Whether `CLAUDE.md` was updated.
 
 Do not print the full doc in the final message; the user can open the file.
+Append the `onboard` completion suggestions from
+[skill connections](../../../docs/skill-connections.md). Abort conditions and write
+failures are blocked runs and get no suggestions.
 
 ## Rules
 

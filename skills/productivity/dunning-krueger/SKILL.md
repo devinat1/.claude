@@ -33,7 +33,11 @@ Use a substantive transcript or explanation already supplied in the current conv
 
 For a broad grill, follow `grilling`'s design-tree method with the smallest useful numbered batches. Omit recommended answers and stop as soon as the distinct topics are clear.
 
-Invoke `unscramble` on the source or broad-grill answers. Retain only its topic
+Before the first broad-grill question, say that you are using `/grilling` to
+surface the knowledge topics without supplying answers.
+
+Say that you are using `/unscramble` to separate the source into knowledge
+topics, then invoke it on the source or broad-grill answers. Retain only its topic
 headings for this workflow. Show those topics and ask the user to confirm one,
 even when there is only one.
 
@@ -45,6 +49,9 @@ Before the focused grill, verify the selected topic's material factual claims ag
 
 Continue `grilling` on the confirmed topic, again omitting recommended answers. Ask the smallest useful numbered batch at each turn and test:
 
+If `/grilling` was not already disclosed during a broad grill, say now that you
+are using it to probe the confirmed topic without revealing answers.
+
 - factual accuracy
 - the underlying mechanism
 - limits, follow-up questions, and counterexamples
@@ -53,7 +60,9 @@ Keep the exchange short. Stop when the answers support a stable strongest case a
 
 ## Return the assessment
 
-Invoke `dissenter` with the transcript or answers, verified sources, and the three dimensions. Frame its independent views as:
+Say that you are using `/dissenter` to produce independent opposing
+assessments, then invoke it with the transcript or answers, verified sources,
+and the three dimensions. Frame its independent views as:
 
 - **Original:** the strongest evidence that the user demonstrated knowledge
 - **Opposing:** the strongest credible evidence that important knowledge was not demonstrated

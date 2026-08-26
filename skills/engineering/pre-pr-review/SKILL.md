@@ -36,6 +36,7 @@ file:line citations.
 Before recommending a consequential remediation or human-review priority,
 follow the `Advice gate` in `dissenter`; report evidence-only findings
 directly.
+When the gate applies, first say that you are using `/dissenter` and why.
 
 ## Repo-wide invariants
 
@@ -120,6 +121,8 @@ Before reporting clean:
 
 ## Run the complexity review
 
+Say that you are using `ponytail-review` to inspect the branch for unnecessary
+complexity.
 Once the pre-PR checklist passes, invoke `ponytail-review` on the same
 branch diff and print its normal output unchanged. This pass is report-only:
 do not auto-fix its findings here, and do not block the
@@ -131,6 +134,8 @@ loop, then still print the final `Human attention map`.
 
 ## Loop the maintainability audit until clean
 
+Say that you are using `loop` to repeat
+`/thermo-nuclear-code-quality-review` until the maintainability gate is clean.
 `thermo-nuclear-code-quality-review` is not a one-shot. Once the pre-PR
 checklist and `ponytail-review` pass have run, drive the audit with the
 `loop` skill in self-paced mode (`/loop` with no interval) so that each

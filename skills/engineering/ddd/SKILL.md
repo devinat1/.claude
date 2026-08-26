@@ -8,6 +8,7 @@ disable-model-invocation: true
 
 Before recommending a consequential domain-model or aggregate change, follow
 the `Advice gate` in `dissenter`; report rule violations directly.
+When the gate applies, first say that you are using `/dissenter` and why.
 
 ## Aggregate Rules
 

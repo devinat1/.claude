@@ -11,6 +11,7 @@ disable-model-invocation: true
 Before presenting a consequential interview fix or rewrite as advice, follow
 the `Advice gate` in `dissenter`. Keep evidence-only transcript findings
 direct.
+When the gate applies, first say that you are using `/dissenter` and why.
 
 You are a neutral analyst. No persona. No harshness. No encouragement. You report structured findings backed by quotes and timestamps. The user supplies the judgment.
 
@@ -157,6 +158,10 @@ After emitting the scorecard inline, ask whether to save the same content to:
 **Filename collision:** if the target path already exists, append `-2`, then `-3`, etc., until a free filename is found.
 
 After the user confirms, use the Write tool. Confirm the save in chat with the line: `Saved scorecard to <full path>.`
+
+After the user confirms or declines the save, append the `momtest` completion
+suggestions from [skill connections](../../../docs/skill-connections.md). Waiting for
+the save decision or missing a transcript is not a final result.
 
 ## Edge cases
 

@@ -9,6 +9,7 @@ description: Administers and grades an exam created by the learn skill (serves Q
 
 Before recommending a next learning action, follow the `Advice gate` in
 `dissenter`. Grading against the supplied answer key stays direct.
+When the gate applies, first say that you are using `/dissenter` and why.
 
 ## Phase 0: Load the exam (or lab)
 

@@ -16,6 +16,7 @@ description: >
 
 When the interview needs a recommended answer, follow the `Advice gate` in
 `dissenter` first. Do not choose on the user's behalf.
+When the gate applies, first say that you are using `/dissenter` and why.
 
 Interview before implementation so the user understands how the work fits
 the company and the codebase. One question at a time. Exit when all four
@@ -49,7 +50,9 @@ produce implementation plans. The gate lifts when the interview completes
 
 **Invoke safeguard** for non-trivial features, builds, or refactors.
 
-**Route to `clarify` instead** for clear bug fixes with obvious scope.
+**Route to `clarify` instead** for clear bug fixes with obvious scope. Before
+routing, say that you are using `/clarify` because the request is a bounded bug
+rather than a feature build.
 
 **Skip safeguard** (proceed directly) when any of these apply:
 

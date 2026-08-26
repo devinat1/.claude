@@ -10,6 +10,7 @@ description: Guide an overwhelmed user through one task with one tiny, collabora
 For a consequential choice of task, next action, batch, or due date, follow
 the `Advice gate` in `dissenter`. Routine steps within a task the user already
 chose stay direct.
+When the gate applies, first say that you are using `/dissenter` and why.
 
 Keep the user moving on one chosen task without making the rest of their workload visible.
 

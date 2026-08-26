@@ -12,9 +12,13 @@ description: >
 
 Before offering a cut, phase, or course of action, follow the `Advice gate` in
 `dissenter`. Do not select a winner; wait for the user's choice.
+When the gate applies, first say that you are using `/dissenter` and why.
 
 Clarify a build until it is realistic for two people with limited bandwidth:
 `clarify`, constrained by scarce founder time.
+
+Before the interview begins, say that you are using `/clarify`'s interview
+discipline with a founder-bandwidth constraint.
 
 <HARD-GATE>
 Do NOT change files, scaffold, commit, or produce an implementation plan. Stop
@@ -85,6 +89,8 @@ success criteria, non-goals, risks, and unresolved questions.]
 ````
 
 Stop after the brief and prompt unless the user explicitly asks to implement.
+Then append the `pragmatic` completion suggestions from
+[skill connections](../../../docs/skill-connections.md).
 
 ## Common Mistakes
 

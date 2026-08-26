@@ -9,6 +9,7 @@ description: Run a required Greptile CLI first-pass gate followed by an extremel
 
 Before recommending a consequential remediation, follow the `Advice gate` in
 `dissenter`; report evidence-only findings directly.
+When the gate applies, first say that you are using `/dissenter` and why.
 
 Use this skill for an unusually strict review focused on implementation quality, maintainability, abstraction quality, and codebase health.
 

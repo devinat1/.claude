@@ -10,6 +10,7 @@ Turn this conversation into a blog post. Follow these steps exactly:
 
 Before recommending editorial direction or related links as a consequential
 choice, follow the `Advice gate` in `dissenter`.
+When the gate applies, first say that you are using `/dissenter` and why.
 
 ## Blog location
 
@@ -20,7 +21,10 @@ Use these paths directly; do not require per-repo blog-directory setup.
 
 ## Step 1: Clarify post scope
 
-Read and follow [`skills/productivity/clarify/SKILL.md`](../productivity/clarify/SKILL.md) to interview the user before drafting.
+Say that you are using `/clarify`'s interview discipline to narrow the post's
+topic, audience, and boundaries.
+
+Read and follow [`skills/productivity/clarify/SKILL.md`](../../productivity/clarify/SKILL.md) to interview the user before drafting.
 
 ### Clarify adaptation
 
@@ -85,6 +89,7 @@ Structure comes from existing posts (style-adaptive), but length and completenes
 
 ### Ponytail review gate
 
+Say that you are using `ponytail-review` to remove over-engineered writing.
 After drafting, invoke `$ponytail:ponytail-review` on the post. Apply valid `delete` and `shrink` findings, then review again until it reports `Lean already. Ship.` Do not show the draft, ask the user to act, save, or publish before this gate passes.
 
 ## Step 5: Show the draft for review
@@ -101,6 +106,8 @@ Save the final post to `~/Desktop/blog/content/<title>.md`, where `<title>` is t
 
 ## Step 7: Update related links
 
+Say that you are using `/update-blog-refs` to review cross-links for the saved
+post.
 Delegate related-link handling to [`update-blog-refs`](../update-blog-refs/SKILL.md). Follow it with:
 
 - `~/Desktop/blog/content` as the supplied blog directory.
@@ -114,3 +121,7 @@ Ask the user: "Ready to publish with `node ./quartz/bootstrap-cli.mjs sync`?"
 Only if they confirm, run `node ./quartz/bootstrap-cli.mjs sync` from `~/Desktop/blog`.
 
 If they decline, let them know the file is saved and they can publish later.
+
+After a successful publish or an intentional decision not to publish, append
+the `blog` completion suggestions from
+[skill connections](../../../docs/skill-connections.md).

@@ -64,6 +64,10 @@ Then for each question:
 
 End with a **Summary** section: 2-3 sentences on the user's overall performance, biggest weakness patterns, and one concrete thing to work on. Do not sugarcoat. If the performance was bad, say it was bad.
 
+After the scorecard, including a scorecard requested early, append the
+`interviewer` completion suggestions from
+[skill connections](../../../docs/skill-connections.md).
+
 ## Calibration Notes
 
 - Adapt question difficulty to the topic. If the user says "system design for L5 at Google", ask L5-caliber questions. If they say "intro to Python", ask intro-level questions — but still be harsh about answer quality.

@@ -10,6 +10,7 @@ Based on the principles from _Elegant Objects_ by Yegor Bugayenko.
 
 Before recommending a consequential design change, follow the `Advice gate`
 in `dissenter`; report evidence-only findings directly.
+When the gate applies, first say that you are using `/dissenter` and why.
 
 ## Objects
 
