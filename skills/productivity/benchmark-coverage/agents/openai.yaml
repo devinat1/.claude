@@ -1,4 +1,0 @@
-interface:
-  display_name: "Benchmark Coverage"
-  short_description: "Match prompts to public LLM benchmarks"
-  default_prompt: "Use $benchmark-coverage to find benchmarks covering this prompt and assess my model against recorded results."

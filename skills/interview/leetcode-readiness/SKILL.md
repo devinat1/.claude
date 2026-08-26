@@ -17,6 +17,7 @@ Assess progress from observed work, choose the next problems, and update one per
 
 - Use the installed `obsidian` CLI directly for every vault read and write. Do not use MCP or raw filesystem access to the vault.
 - Target `vault=State` and `Notes/CP/LeetCode Weekly Plan.md`.
+- Some agent-managed notes live under `Agentic/` in both the State and Church vaults. This workflow remains State-only: check `vault=State path=Agentic` before treating a named note as missing, update an existing moved match in place, and never recreate it at an old path or create a duplicate.
 - Do not ask for a company, target date, role, or readiness standard.
 - Do not emit a pass/fail band, detailed daily schedule, or per-activity time budget.
 - Treat the readiness date as a ballpark estimate, not a validated prediction.
@@ -42,7 +43,7 @@ Use `https://leetcode-api-pied.vercel.app` and fetch what is available from:
 
 Use `/problem/{slug}` and `/problem/{slug}/similar` when selecting problems. Ignore company tags. Cross-check inconsistent totals instead of treating every endpoint as complete.
 
-Use direct CLI commands such as `obsidian files vault=State folder=Notes/CP`, `obsidian search ...`, and `obsidian read ...`. Ignore Obsidian startup-banner lines. Inspect relevant problem notes for `minutes_taken`, difficulty, topics, `last_attempted`, rating/status, repeated attempts, hints, mistakes, and prose describing confusion. Missing fields are unknown, not poor performance.
+Use direct CLI commands such as `obsidian files vault=State folder=Agentic`, `obsidian files vault=State folder=Notes/CP`, `obsidian search ...`, and `obsidian read ...`. Search `Agentic/` first for named notes, then the workflow's normal `Notes/CP/` location. Ignore Obsidian startup-banner lines. Inspect relevant problem notes for `minutes_taken`, difficulty, topics, `last_attempted`, rating/status, repeated attempts, hints, mistakes, and prose describing confusion. Missing fields are unknown, not poor performance.
 
 Read the existing weekly plan before analysis so its previous estimate and history can be retained.
 

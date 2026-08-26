@@ -1,11 +1,11 @@
 ---
 name: obsidian
-description: Navigate and write to the State Obsidian vault via CLI for Zettelkasten workflows. Use when the user wants to capture ideas, find notes, read vault context, or mentions Obsidian, State vault, zettels, or MOCs.
+description: Navigate and write to the State and Church Obsidian vaults via CLI, including agent-managed notes under Agentic/. Use when the user wants to capture ideas, find notes, read vault context, or mentions Obsidian, either vault, zettels, or MOCs.
 ---
 
 # Obsidian
 
-Teach agents **when** and **how** to work with the State vault through the Obsidian CLI — not the filesystem.
+Teach agents **when** and **how** to work with the State and Church vaults through the Obsidian CLI — not the filesystem.
 
 ## Bootstrap
 
@@ -13,9 +13,16 @@ On every session involving vault work:
 
 1. Read [CONFIG.md](CONFIG.md).
 2. Use MCP `user-obsidian` → `obsidian_cli` for all vault reads/writes.
-3. If CLI calls fail, tell the user Obsidian may not be open with the State vault — do not silently fall back to `Read`/`Write`/`Grep` on `~/Documents/State/`.
+3. If CLI calls fail, tell the user Obsidian or the requested vault may be unavailable — do not silently fall back to raw filesystem access under `~/Documents/State/` or `~/Documents/Church/`.
 
 CLI syntax and navigation patterns: [REFERENCE.md](REFERENCE.md).
+
+## Vault and folder routing
+
+- Always pass `vault=State` or `vault=Church`; preserve any vault boundary in the user's request or calling workflow.
+- Some agent-managed notes live under `Agentic/` in both vaults. For every named-note lookup, search the relevant vault's `Agentic/` folder before treating the note as missing. If no vault is specified, search `Agentic/` in both vaults.
+- Read or update an existing match in place. Never recreate a moved note at its former path or create a duplicate. If the same named note exists in both vaults and the requested write is not explicitly for both, ask which vault to update.
+- Create new agent-authored zettels under `Agentic/` in the selected vault unless the workflow explicitly requires another folder.
 
 <HARD-GATE>
 **Out of scope — use other skills instead:**
@@ -39,7 +46,7 @@ CLI syntax and navigation patterns: [REFERENCE.md](REFERENCE.md).
 | Find what's already written before building | Prior-art search → `literature-review` |
 | Persist knowledge that should live in the graph | Session diagnostics → `experience` |
 
-Trigger when the user mentions Obsidian, State vault, zettels, MOCs, or asks to save/find notes.
+Trigger when the user mentions Obsidian, the State or Church vault, zettels, MOCs, or asks to save/find notes.
 
 ## Note-type judgment
 
@@ -47,7 +54,7 @@ No folder-level rules — decide by note type:
 
 | Type | Tag | Agent behavior |
 |------|-----|----------------|
-| Atomic zettel | `idea` | Create/edit in `Notes/` with full frontmatter |
+| Atomic zettel | `idea` | Create/edit in `Agentic/` with full frontmatter |
 | Map of Content | `MOC` | Read and navigate; link **to** it from new zettels; don't edit MOC for listing |
 | Literature | `literature` | Out of scope |
 | Periodic | `periodic` | Out of scope |
@@ -59,7 +66,7 @@ No folder-level rules — decide by note type:
 
 Before answering or building on a topic:
 
-1. `search query="<topic>" path=Notes limit=20`
+1. `search query="<topic>" vault=<State-or-Church> path=Agentic limit=20`; then search `path=Notes` when needed
 2. Read promising hits with `read file=<name>`
 3. If a MOC exists, `read file=<MOC>` then `backlinks file=<MOC> counts` to find linked zettels
 4. Summarize what the vault already says; cite note titles
@@ -82,7 +89,7 @@ See [REFERENCE.md](REFERENCE.md) for full command cheat sheet.
 Strict template match ([CONFIG.md](CONFIG.md), [REFERENCE.md](REFERENCE.md)):
 
 1. Confirm topic and target MOC (search if unclear; ask one question if ambiguous)
-2. `create name="<Title>" path=Notes/ content=<full note with frontmatter>`
+2. `create name="<Title>" vault=<State-or-Church> path=Agentic/ content=<full note with frontmatter>`
 3. Set `tags: [idea]`, today's date, `related:` with wikilink to MOC
 4. Body content, then `---` and `## References` section
 5. **Do not edit the MOC** — linking from the zettel's `related:` is enough; Dataview lists it in Obsidian

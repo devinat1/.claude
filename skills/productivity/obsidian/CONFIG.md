@@ -1,11 +1,11 @@
-# Obsidian — State vault configuration
+# Obsidian — State and Church vault configuration
 
-| | Value |
+| Vault | Path |
 |---|---|
-| Vault path | `~/Documents/State/` |
-| Vault name | `State` (use `vault=State` if CLI targets wrong vault) |
-| Default note folder | `Notes/` |
-| MCP tool | `user-obsidian` → `obsidian_cli` |
+| `State` | `~/Documents/State/` |
+| `Church` | `~/Documents/Church/` |
+
+Use `vault=State` or `vault=Church` on every command. Agent-managed notes may live under `Agentic/` in either vault: search that folder first for named notes, update matches in place, and never recreate moved notes at their former paths. New agent-authored zettels default to `Agentic/` unless a workflow explicitly requires another folder. The MCP tool is `user-obsidian` → `obsidian_cli`.
 
 ## Tags (Zettelkasten)
 

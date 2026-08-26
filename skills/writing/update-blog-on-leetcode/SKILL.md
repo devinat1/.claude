@@ -5,6 +5,8 @@ description: Sync LeetCode notes from the State Obsidian vault to the public Qua
 
 Publish LeetCode problem writeups from the State vault to the Quartz blog.
 
+Some agent-managed notes live under `Agentic/` in both the State and Church vaults. This publishing workflow remains State-only: check `~/Documents/State/Agentic/` before treating a named source note as missing, use any existing moved match in place, and never recreate it under `Notes/CP/` or create a duplicate. Do not publish from the Church vault unless the user explicitly expands the scope.
+
 ## Paths
 
 | | Path |

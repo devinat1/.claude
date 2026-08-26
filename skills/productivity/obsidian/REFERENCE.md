@@ -1,19 +1,23 @@
-# Obsidian CLI reference — State vault
+# Obsidian CLI reference — State and Church vaults
 
 All commands go through MCP `obsidian_cli` with the command string **without** the `obsidian` prefix.
 
-**Prerequisite:** Obsidian must be running with the State vault open.
+**Prerequisite:** Obsidian must be running and able to access the requested vault. Pass `vault=State` or `vault=Church` explicitly.
+
+## Agentic folder rule
+
+Some agent-managed notes live under `Agentic/` in both vaults. Search `path=Agentic` in the relevant vault before treating a named note as missing. If no vault is specified, search both vaults. Update existing matches in place and never recreate a moved note at its former path or create a duplicate.
 
 ## Core commands
 
 | Action | Command | Notes |
 |--------|---------|-------|
 | Read note | `read file=<name>` | Resolves by wikilink-style name |
-| Read by path | `read path=Notes/My Note.md` | Exact path |
-| Search text | `search query=<text> path=Notes limit=20` | Full-text; no tag operator syntax |
-| Search with context | `search:context query=<text> path=Notes limit=10` | Matching lines |
-| List folder | `files folder=Notes` | All files in folder |
-| Create note | `create name=<title> path=Notes/ content=<text>` | Use `\n` for newlines in content |
+| Read by path | `read vault=<State-or-Church> path=Agentic/My Note.md` | Exact Agentic path |
+| Search text | `search query=<text> vault=<State-or-Church> path=Agentic limit=20` | Search Agentic first; then other folders as needed |
+| Search with context | `search:context query=<text> vault=<State-or-Church> path=Agentic limit=10` | Matching lines |
+| List folder | `files vault=<State-or-Church> folder=Agentic` | Agent-managed files in the folder |
+| Create note | `create name=<title> vault=<State-or-Church> path=Agentic/ content=<text>` | Use `\n` for newlines in content |
 | Append | `append file=<name> content=<text>` | Add to end |
 | Prepend | `prepend file=<name> content=<text>` | Add to start |
 | Set property | `property:set name=related value="[[MOC Name]]" type=list file=<name>` | YAML frontmatter |
@@ -35,8 +39,8 @@ Dataview blocks in MOCs are **human/Obsidian-UI only**. Approximate them with CL
 ### Find MOCs on a topic
 
 ```
-search query="#MOC" path=Notes limit=20
-search query="<topic keyword>" path=Notes limit=20
+search query="#MOC" vault=<State-or-Church> path=Agentic limit=20
+search query="<topic keyword>" vault=<State-or-Church> path=Agentic limit=20
 ```
 
 Then `read file=<name>` and check `property:read name=tags` confirms `MOC`.
@@ -54,11 +58,11 @@ Each backlink is a note that wikilinks to the MOC (usually via `related:` frontm
 ### Find zettels by tag
 
 ```
-search query="#idea" path=Notes limit=30
+search query="#idea" vault=<State-or-Church> path=Agentic limit=30
 tags name=idea counts sort=count
 ```
 
-Combine with topic keyword in `search query="<keyword>" path=Notes`.
+Combine with a topic keyword in `search query="<keyword>" vault=<State-or-Church> path=Agentic`; search `path=Notes` afterward only for legacy or explicitly non-Agentic notes.
 
 ### Explore a note's graph
 
@@ -100,7 +104,7 @@ Body, then:
 ## Create example (single MCP call)
 
 ```
-create name="My New Idea" path=Notes/ content="---\ntags:\n  - idea\naliases:\ndate: 2026-06-21\nstatus:\npublish:\nrelated:\n  - \"[[Topic MOC]]\"\n---\n\nNote body here.\n\n---\n## References\n- "
+create name="My New Idea" vault=State path=Agentic/ content="---\ntags:\n  - idea\naliases:\ndate: 2026-06-21\nstatus:\npublish:\nrelated:\n  - \"[[Topic MOC]]\"\n---\n\nNote body here.\n\n---\n## References\n- "
 ```
 
 Prefer `property:set` to patch frontmatter on existing notes instead of rewriting whole files.

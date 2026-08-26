@@ -64,17 +64,13 @@ SEARCH NOTES:
 [any synonyms, adjacent terms, or exclusions inferred from context]
 ```
 
-## Phase 3 — Dispatch background research
+## Phase 3 — Run research and collect results
 
 Spawn **one** background coordinator Agent (`run_in_background: true`). Give it **every** research brief from Phase 2. The coordinator runs a full review per target (four lanes to saturation), then returns **one collected report**.
 
-Immediately after spawning, output **only**:
+Wait for the coordinator to finish. Do not send an interim user-facing reply or ask the user to request the results. If the harness supports background-task waiting, use it; otherwise wait in bounded intervals while preserving the active task.
 
-```
-Literature review running in the background — prior work report incoming.
-```
-
-Do not wait. Do not stream partial results. Do not narrate the fan-out plan. NEVER block the main conversation.
+Deliver the collected report as this skill run final response, unchanged except for necessary rendering. Do not add a progress notice, preamble, recap, or follow-up prompt.
 
 ### Coordinator duties (per target, then collect)
 
@@ -141,9 +137,9 @@ When all four lanes return:
 
 After all targets are done, the coordinator's **final message is only the collected report** (template below) — no preamble about how it searched.
 
-## Phase 4 — Confirm to user (dispatcher)
+## Phase 4 — Deliver the report (dispatcher)
 
-Immediate background notice after spawn (Phase 3). When the coordinator completes, its report appears in the conversation. Do not re-summarize unless the user asks.
+The run is complete only after the collected report has been delivered to the user. Do not rely on a coordinator message merely appearing in conversation history; actively collect it and send it as the final response.
 
 ## Phase 5 — Report template
 
@@ -210,7 +206,8 @@ No section titled "Verdict", "Recommendation", or "Novelty assessment".
 
 ## Rules
 
-- NEVER block the main conversation waiting for research — background only.
+- NEVER end the skill run after dispatching research. Wait for the coordinator and deliver its collected report in the final response.
+- Do not send an interim notice that requires the user to ask for the results.
 - NEVER include research briefs or subagent prompts in user-facing output (except the final report).
 - Include **every** research brief in the coordinator agent prompt.
 - If the user refines ideas mid-flight, wait for current runs to finish or ask whether to restart.

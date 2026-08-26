@@ -78,7 +78,8 @@
     "vercel-plugin@vercel": false,
     "ponytail@ponytail": true,
     "playwright@claude-plugins-official": true,
-    "i-have-adhd@i-have-adhd": true
+    "i-have-adhd@i-have-adhd": true,
+    "desquirrel@desquirrel-local": true
   },
   "extraKnownMarketplaces": {
     "gitkraken": {
@@ -109,6 +110,12 @@
       "source": {
         "source": "github",
         "repo": "ayghri/i-have-adhd"
+      }
+    },
+    "desquirrel-local": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/devinat1/plugins/desquirrel"
       }
     }
   },

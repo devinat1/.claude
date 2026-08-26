@@ -1,0 +1,4 @@
+interface:
+  display_name: "Confounder"
+  short_description: "Find concepts mixed together in an idea"
+  default_prompt: "Use $confounder to find conflated concepts, missing bridges, and contradictions in my idea."

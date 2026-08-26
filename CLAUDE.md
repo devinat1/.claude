@@ -28,3 +28,7 @@ AgentMemory is the sole durable agent-memory system. Recall it only when prior d
 ## Memory approval
 
 When a stable, reusable fact is worth saving, first show a `Proposed memory` with its type and concise content summary. Ask the user to choose: personal memory (`devinat1-personal`), current repository/project memory (show its stable ID), or do not save it. Call `memory_save` only after that explicit choice. Do not propose saves for transient details.
+
+## Workflow-state exception
+
+Workflow state may be saved automatically without per-save approval. Personal facts and preferences still require the Proposed-memory approval flow. Desquirrel focus records are workflow state stored in `devinat1-personal` under `focus-memory`.
