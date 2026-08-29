@@ -1,0 +1,4 @@
+interface:
+  display_name: "Is Grass Greener?"
+  short_description: "See tradeoffs in unlived and possible paths"
+  default_prompt: "Use $is-grass-greener to show the pros and cons of doing a PhD versus staying in software engineering."
