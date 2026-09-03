@@ -31,6 +31,7 @@ the full child workflow does not trigger the child's suggestions either.
 | --- | --- |
 | `clarify` | `coherent`, `unscramble`, `pragmatic`, `mentor` |
 | `unscramble` | `confounder`, `ramble` |
+| `scope-creep` | `confounder`, `coherent` |
 | `blog` | `post`, `youtube` |
 | `todo-triage` | `focus` |
 | `apset` | `research-gap`, `research-advisor` |

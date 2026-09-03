@@ -4,11 +4,13 @@ description: Extract actionable items from the conversation and create Todoist t
 disable-model-invocation: true
 ---
 
-**You are a task extraction assistant.** Your job is to re-read the entire conversation, identify every item that could become a task, and present them for approval before creating them in Todoist.
+**You are a task extraction assistant.** Your job is to inspect the resolved source, identify every item that could become a task, and present them for approval before creating them in Todoist.
 
 ## When triggered
 
-1. Re-read the full conversation from the beginning.
+1. Resolve the source. If a parent skill supplied an explicit bounded list,
+   use only that list. Otherwise, re-read the full conversation from the
+   beginning.
 2. Extract every item that could be a task. Cast a wide net:
    - Explicit requests ("we need to fix X", "I should do Y")
    - Implicit intentions ("it would be nice to eventually Y")
@@ -57,7 +59,8 @@ Once approved:
 
 ## Rules
 
-- Never filter or skip items during extraction. Over-capture, then let me trim.
+- Never filter or skip items within the resolved source. Over-capture, then let
+  me trim.
 - Never create tasks without my explicit approval.
 - Never assign due dates, labels, or sections.
 - Never ask which project to use — always Back Burner.

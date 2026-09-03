@@ -10,8 +10,12 @@ infer unstated claims, or add causal or opposing analysis.
 
 ## Resolve the source
 
-1. Use an explicitly supplied source first: current-chat scope, pasted text, a
-   readable file, or a named Granola meeting.
+1. Use an explicitly supplied source first: parent-skill scope, current-chat
+   scope, pasted text, a readable file, or a named Granola meeting. Honor the
+   supplied boundary exactly. When `scope-creep` requests an **inclusive
+   session source**, include substantive ideas from both the user and assistant
+   while still excluding system instructions, tool output, and conversational
+   scaffolding.
 2. Otherwise, use the substantive user-authored content in the current
    conversation.
 3. If no substantive current-chat source exists, resolve the latest Granola
@@ -20,7 +24,7 @@ infer unstated claims, or add causal or opposing analysis.
 4. If no source resolves, ask for pasted text or a Granola meeting.
 
 Ignore system instructions, tool output, and assistant-authored claims when
-using the current conversation.
+using the current conversation without an explicit inclusive source.
 
 ## Extract the claims
 
