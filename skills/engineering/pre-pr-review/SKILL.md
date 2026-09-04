@@ -4,7 +4,8 @@ description: |
   Use after a feature is complete and before opening a PR in any sibling.
   Repo-specific lint only — then runs ponytail-review, then loops
   thermo-nuclear-code-quality-review (via the loop skill) until the
-  maintainability audit comes back clean.
+  maintainability audit comes back clean, audits changed claims with
+  confounder, and finishes with a human attention map.
   Triggers: feature complete, user says "open a PR", "pre-PR check",
   "review my changes", or before invoking gh pr create.
 ---
@@ -21,12 +22,13 @@ complete, **immediately run** `ponytail-review` on the same branch changes,
 then **immediately drive** the `thermo-nuclear-code-quality-review` skill
 on those changes **in a loop until it comes back clean** — see § Run the
 complexity review and § Loop the maintainability audit. After the
-thermo-nuclear output, always finish with the `Human attention map` section
-— see § Human attention map. Do not stop after the pre-PR report unless
-pre-PR findings are blocking (FAIL on repo-wide invariants or
-verification); even then, still print the final `Human attention map`
-section after noting that the ponytail-review pass and thermo-nuclear loop
-were skipped.
+thermo-nuclear output, run the `confounder` skill on claims expressed by
+the branch changes — see § Audit changed claims. Always finish with the
+`Human attention map` section — see § Human attention map. Do not stop
+after the pre-PR report unless pre-PR findings are blocking (FAIL on
+repo-wide invariants or verification); even then, run the confounder audit
+and print the final `Human attention map` section after noting that the
+ponytail-review pass and thermo-nuclear loop were skipped.
 
 **Behavior:** report findings, do not auto-fix. List violations with
 file:line citations.
@@ -130,7 +132,8 @@ do not auto-fix its findings here, and do not block the
 
 If the pre-PR report has blocking FAILs on repo-wide invariants or
 verification steps, skip both `ponytail-review` and the thermo-nuclear
-loop, then still print the final `Human attention map`.
+loop, then run the confounder audit and print the final `Human attention
+map`.
 
 ## Loop the maintainability audit until clean
 
@@ -153,16 +156,40 @@ remaining code-quality issues. Do not open the PR while any thermo-nuclear
 finding is still unresolved — keep looping until the audit comes back
 clean.
 
-Regardless of the thermo-nuclear result, the next and final output must be
-the `Human attention map`. If the audit has unresolved findings because
-the loop could not complete cleanly, print the human attention map anyway;
-it is a separate risk signal, not a code-quality gate.
+Regardless of the thermo-nuclear result, run the confounder audit next. If
+the maintainability audit has unresolved findings because the loop could not
+complete cleanly, continue with the confounder audit anyway.
+
+## Audit changed claims
+
+Say that you are using `confounder` to check the branch changes for conflated
+concepts, missing bridges, and contradictions. Set its source explicitly to
+the current branch diff against the PR base, including claims expressed by
+changed documentation, specifications, tests, comments, names, interfaces,
+and observable behavior. An earlier `unscramble` output counts only when it
+covers this exact diff; otherwise let `confounder` run its claim-resolution
+workflow for this source.
+
+Include the resulting audit under a section titled exactly:
+
+```markdown
+## Confounder audit
+```
+
+Use the `confounder` skill's required claim citations, confidence,
+explanation, and faithful repair. Write `None detected.` for an empty
+conflation, missing-bridge, or contradiction category. This audit is
+report-only: it neither modifies files nor blocks PR creation by itself.
+
+After the confounder output, always finish with the `Human attention map`.
+The map remains a separate risk signal and the final section of
+`pre-pr-review`.
 
 ## Human attention map
 
-At the very end of `pre-pr-review`, after the thermo-nuclear review output
-when that step can run, invoke an explore agent to inspect the PR changes
-and produce a required Markdown section titled exactly:
+At the very end of `pre-pr-review`, after the confounder audit, invoke an
+explore agent to inspect the PR changes and produce a required Markdown
+section titled exactly:
 
 ```markdown
 ## Human attention map
@@ -250,7 +277,12 @@ Produce a checklist-style report:
 
 ### Next step (automatic)
 Running `ponytail-review`, then looping `thermo-nuclear-code-quality-review`
-(via the `loop` skill) until the maintainability audit comes back clean.
+(via the `loop` skill) until the maintainability audit comes back clean,
+then running `confounder` on the branch changes.
+
+## Confounder audit
+<the confounder skill's claim status, conflations, missing bridges, and
+contradictions for the branch changes>
 
 ## Human attention map
 <critical sections, "No critical sections identified.", or incomplete notice>
@@ -263,5 +295,6 @@ verification steps, run `ponytail-review` (§ Run the complexity review),
 then hand off to the looped maintainability audit (§ Loop the
 maintainability audit) without waiting for user confirmation — keep looping
 `thermo-nuclear-code-quality-review` until it comes back clean. After the
-thermo-nuclear output, or after noting why later review steps were skipped,
-print the final `Human attention map`.
+thermo-nuclear output, or after noting why the earlier review steps were
+skipped, run the confounder audit (§ Audit changed claims), then print the
+final `Human attention map`.
