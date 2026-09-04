@@ -36,10 +36,6 @@ the full child workflow does not trigger the child's suggestions either.
 | `todo-triage` | `focus` |
 | `apset` | `research-gap`, `research-advisor` |
 | `research-advisor` | `dunning-krueger` |
-| `onboard` | `scale` |
-| `system` | `dunning-krueger` |
-| `interviewer` | `dunning-krueger` |
-| `scale` | `break-it`, `learn` |
 | `momtest` | `ramble`, `linear` |
 | `pragmatic` | `linear` |
 

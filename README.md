@@ -1,24 +1,27 @@
 # Skills
 
-Original agent skills for learning loops, code review, interview practice, and productivity workflows.
+Agent skills for learning, productivity, and writing workflows.
+
+Engineering and interview-practice skills live in
+[`devinat1/engineering-skills`](https://github.com/devinat1/engineering-skills).
 
 ## Quickstart (30-second setup)
 
 1. Run the skills.sh installer:
 
 ```bash
-npx skills@latest add devinat1/.claude
+npx skills@latest add devinat1/skills
 ```
 
-1. Pick the skills you want and which coding agents to install them on. **Include `setup-devinat1-skills`.**
-2. Run `/setup-devinat1-skills` in your agent. It will ask for:
+2. Pick the skills you want and which coding agents to install them on. **Include `setup-devinat1-skills`.**
+3. Run `/setup-devinat1-skills` in your agent. It will ask for:
   - Agent memory project ID (for the learning loop)
   - Blog content directory (for `/blog` and `/update-blog-refs`)
   - MCP integrations (agentmemory, Granola, Todoist)
-3. For Claude Code users who clone this repo directly:
+4. For Claude Code users who clone this repo directly:
 
 ```bash
-git clone git@github.com:devinat1/.claude.git ~/.claude
+git clone git@github.com:devinat1/skills.git ~/.claude
 ./scripts/link-skills.sh
 ```
 
@@ -32,26 +35,6 @@ git clone git@github.com:devinat1/.claude.git ~/.claude
 - **[grader](./skills/learning/grader/SKILL.md)** — Administers and grades an exam created by the learn skill (serves QUESTIONS.md one at a time, scores against ANSWER.md 🟢🟡🔴, re-tests to mastery), and grades an existing hands-on lab when pointed at one (runs tests + predict-your-score calibration check), then updates agent memory in the background. Use when the user says "grade me", "grade my exam", "grade this lab", "take the exam at &lt;path&gt;", or invokes /grader &lt;exam-dir|QUESTIONS.md|lab-dir&gt;. Does NOT create labs — the learn skill does that.
 - **[lab-creator](./skills/learning/lab-creator/SKILL.md)** — Scaffolds a single hands-on lab (runnable unit tests for code, graded scenarios for concepts) targeting one concept. Use when the user says "create a lab on x", "give me an exercise on x", "make me a hands-on exercise", and when the learn skill requests a gap-targeted lab. Scaffolds files only — it does NOT grade or run the calibration check.
 - **[learn](./skills/learning/learn/SKILL.md)** — Use when you're confused by code (often vibe-coded) and want to act on what you don't understand — "understand x", "what is this code doing", "help me learn x", "process x", "quiz me on x", "make me an exam on x", or /learn &lt;path|url|topic&gt;. Diagnoses where your understanding bottoms out, then fans out to walkthroughs, labs, exams, and agent memory logging. Every turn is brief — one setup line, one focused block, one question at a time.
-
-### Engineering
-
-- **[clean](./skills/engineering/clean/SKILL.md)** — Review code for clean naming conventions — descriptive, intention-revealing names. Use when the user invokes /clean or asks for a clean code naming review.
-- **[ddd](./skills/engineering/ddd/SKILL.md)** — Review code against Domain-Driven Design aggregate rules. Use when the user invokes /ddd or asks for a DDD aggregate review.
-- **[graphite](./skills/engineering/graphite/SKILL.md)** — Split branch work into a logical Graphite PR stack. Use when the user invokes /graphite.
-- **[onboard](./skills/engineering/onboard/SKILL.md)** — Produce a concise onboarding doc for the current codebase. Use when the user invokes /onboard or says "onboard me to this codebase".
-- **[oop](./skills/engineering/oop/SKILL.md)** — Review code against principles from Elegant Objects by Yegor Bugayenko. Use when the user invokes /oop or asks for an elegant objects review.
-- **[pre-pr-review](./skills/engineering/pre-pr-review/SKILL.md)** — Use after a feature is complete and before opening a PR in any sibling. Repo-specific lint only — then runs ponytail-review, then loops thermo-nuclear-code-quality-review (via the loop skill) until the maintainability audit comes back clean. Triggers: feature complete, user says "open a PR", "pre-PR check", "review my changes", or before invoking gh pr create.
-- **[rate](./skills/engineering/rate/SKILL.md)** — Rate the current branch diff (1-5) against clean code, DDD, OOP, and idiomatic principles. Use when the user invokes /rate.
-- **[scale](./skills/engineering/scale/SKILL.md)** — Analyze branch code for scale limits, upgrade paths, system design diagrams, and learning resources. Use when the user invokes /scale.
-- **[thermo-nuclear-code-quality-review](./skills/engineering/thermo-nuclear-code-quality-review/SKILL.md)** — Run a required Greptile CLI first-pass gate followed by an extremely strict maintainability review for abstraction quality, giant files, and spaghetti-condition growth. Use for a pre-PR review, thermo-nuclear code quality review, thermonuclear review, deep code quality audit, or especially harsh maintainability review.
-- **[webmcp-bridge](./skills/engineering/webmcp-bridge/SKILL.md)** — Use when an external Playwright, Codex, Claude Code, or browser harness must generate, import, and invoke page-specific tools through the generic WebMCP Chrome extension.
-
-### Interview
-
-- **[interviewer](./skills/interview/interviewer/SKILL.md)** — Simulates a brutal mock interviewer on any topic. Use when the user invokes /interviewer or wants harsh interview practice.
-- **[leetcode-readiness](./skills/interview/leetcode-readiness/SKILL.md)** — Use when the user invokes /leetcode-readiness or wants an evidence-based LeetCode progress assessment, interview-readiness date, or next-week problem plan from LeetCode and Obsidian history.
-- **[system](./skills/interview/system/SKILL.md)** — Conducts realistic system design interview practice sessions using the Socratic method. Use when the user invokes /system or wants mock system design interview practice.
-- **[vc-pitch-drill](./skills/interview/vc-pitch-drill/SKILL.md)** — Run direct, focused pre-seed VC pitch practice drills. Use when the user wants mock investor questions, fundraising pitch practice, pressure-testing of investor answers, or help translating rough startup answers into stronger VC-style language.
 
 ### Productivity
 

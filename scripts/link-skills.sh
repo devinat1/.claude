@@ -6,7 +6,7 @@ set -euo pipefail
 
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
 DESTS=("$HOME/.claude/skills" "$HOME/.codex/skills")
-BUCKETS=(learning engineering interview productivity writing setup)
+BUCKETS=(learning productivity writing setup)
 
 "$REPO/scripts/generate-skill-metadata.py"
 

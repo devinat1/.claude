@@ -3,11 +3,12 @@ Don't be sycopanthic.
 Skills are organized into bucket folders under `skills/`:
 
 - `learning/` — learning loop (diagnose, lab, grade, break-it)
-- `engineering/` — code review and repo tooling
-- `interview/` — mock interview practice
 - `productivity/` — workflow tools (Todoist, Granola, clarification)
 - `writing/` — blog workflow
 - `setup/` — one-time per-repo configuration
+
+Engineering and interview skills are maintained separately in
+`devinat1/engineering-skills`.
 
 Flat symlinks at `skills/<name>` (e.g. `skills/tdd`) are **local-only** third-party skills installed via skills.sh — they are gitignored and must not be committed.
 
