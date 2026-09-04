@@ -17,8 +17,8 @@ When the gate applies, first say that you are using `/dissenter` and why.
    | Intent | Bucket |
    | --- | --- |
    | Learn or practice a concept | `skills/learning` |
-   | Build, debug, review, or improve code | `skills/engineering` |
-   | Practice an interview | `skills/interview` |
+   | Build, debug, review, or improve code | installed skills from `devinat1/engineering-skills` |
+   | Practice an interview | installed skills from `devinat1/engineering-skills` |
    | Seek advice, reflect, decide, or evaluate a claim | `skills/productivity` |
    | Draft, publish, or improve writing | `skills/writing` |
    | Configure a repository or agent setup | `skills/setup` |
