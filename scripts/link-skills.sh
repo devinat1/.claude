@@ -32,7 +32,7 @@ for dest in "${DESTS[@]}"; do
     if [ -L "$target" ]; then
       source="$(readlink "$target")"
       case "$source" in
-        "$REPO"|"$REPO"/*)
+        "$REPO/skills/"*)
           unlink "$target"
           echo "unlinked stale $target"
           ;;

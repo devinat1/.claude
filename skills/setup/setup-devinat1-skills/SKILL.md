@@ -1,6 +1,6 @@
 ---
 name: setup-devinat1-skills
-description: Sets up an `## Agent skills` block in AGENTS.md/CLAUDE.md and `docs/agents/` so devinat1's skills know the agent memory project ID, blog directory, and MCP integrations. Run before first use of `learn`, `grader`, `break-it`, `experience`, `blog`, or `update-blog-refs`.
+description: Sets up an `## Agent skills` block in AGENTS.md/CLAUDE.md and `docs/agents/` so devinat1's skills know the agent memory project ID, blog directory, and MCP integrations. Run before first use of the learning skills, `experience`, `blog`, or `update-blog-refs`.
 disable-model-invocation: true
 ---
 
@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Scaffold the per-repo configuration that these skills assume:
 
-- **Agent memory** — stable project ID for learning-loop skills to scope MCP memories
+- **Agent memory** — stable project ID for learning skills to scope MCP memories
 - **Blog directory** — where `/blog` and `/update-blog-refs` read existing posts
 - **MCP integrations** — which optional MCP servers you use (agentmemory, Granola, Todoist)
 
@@ -30,7 +30,7 @@ Summarise what's present and what's missing. Walk the user through three decisio
 
 **Section A — Agent memory project ID.**
 
-> Explainer: The learning loop skills (`learn`, `grader`, `break-it`, `experience`) log blind spots and diagnostics to agent memory via the `user-agentmemory` MCP server. They need a stable project slug to scope memories.
+> Explainer: The learning skills recall prior knowledge for routing and personalization. `/dunning-krueger`, `/break-it`, and `/experience` also write learning evidence to the `user-agentmemory` MCP server. They need a stable project slug to scope memories.
 
 Default: `owner-repo` from `git remote get-url origin` (e.g. `devinat1-claude`).
 
@@ -46,7 +46,7 @@ Default: ask the user for their blog content directory (no default assumed).
 
 > Explainer: Some skills use MCP servers. Record which you have so skills know what's available.
 
-Ask about agentmemory (learn, grader, break-it, experience), Granola (meeting-feedback, momtest), and Todoist (focus, ramble). Options: configured / not configured / not needed.
+Ask about agentmemory (learning skills and experience), Granola (meeting-feedback, momtest), and Todoist (focus, ramble). Options: configured / not configured / not needed.
 
 ### 3. Confirm and edit
 

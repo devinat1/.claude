@@ -1,6 +1,6 @@
 # Skills tracker (deprecated)
 
-> **Deprecated:** Learning-loop skills (`learn`, `grader`, `break-it`, `experience`) no longer write to a markdown skills tracker. They log to agent memory via the `user-agentmemory` MCP server instead. See [`agent-memory.md`](./agent-memory.md) and [`agent-memory-logging.md`](../../learning/agent-memory-logging.md).
+> **Deprecated:** Learning skills no longer write to a markdown skills tracker. They use agent memory for prior context, while `/dunning-krueger`, `/break-it`, and `/experience` persist learning evidence there. See [`agent-memory.md`](./agent-memory.md) and [`agent-memory-logging.md`](../../learning/agent-memory-logging.md).
 
 This file is kept for reference if you maintain a manual tracker outside the learning loop.
 

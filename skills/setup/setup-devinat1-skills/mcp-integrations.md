@@ -4,13 +4,13 @@ Optional MCP servers used by some skills in this catalog.
 
 ## Agentmemory
 
-**Used by:** `learn`, `grader`, `break-it`, `experience`
+**Used by:** `learn`, `socratic-teacher`, `illustrate`, `lab`, `exam`, `dunning-krueger`, `break-it`, `experience`
 
-Log blind spots, domain diagnostics, and session feedback to long-term memory via `memory_save` / `memory_recall`.
+Recall prior learning context for routing and personalization. Persist evidence-based assessments, load thresholds, and requested session diagnostics via `memory_save` / `memory_recall`.
 
 **Requires:** agentmemory server running at `AGENTMEMORY_URL` (default `http://localhost:3111`). Start with `npx @agentmemory/agentmemory@0.9.27`.
 
-**Status:** required for learning-loop logging — skills report failure if unavailable; no file fallback.
+**Status:** optional for learning flow completion — skills report recall or saving failures and continue without a file fallback.
 
 ## Granola
 

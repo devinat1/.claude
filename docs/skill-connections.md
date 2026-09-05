@@ -27,9 +27,17 @@ standalone suggestion block internal; the parent owns the visible completion
 output and its own suggestions. Borrowing selected instructions without invoking
 the full child workflow does not trigger the child's suggestions either.
 
+**Router handoff:** `/learn` transfers workflow ownership to the selected
+learning modality. That modality emits its configured completion suggestions;
+`/learn` emits none and does not duplicate them.
+
 | Source | Suggest |
 | --- | --- |
 | `clarify` | `coherent`, `unscramble`, `pragmatic`, `mentor` |
+| `socratic-teacher` | `dunning-krueger` |
+| `illustrate` | `coherent`, `socratic-teacher`, `lab`, `exam`, `dunning-krueger` |
+| `lab` | `dunning-krueger` |
+| `exam` | `dunning-krueger` |
 | `unscramble` | `confounder`, `ramble` |
 | `scope-creep` | `confounder`, `coherent` |
 | `blog` | `post`, `youtube` |
@@ -38,6 +46,12 @@ the full child workflow does not trigger the child's suggestions either.
 | `research-advisor` | `dunning-krueger` |
 | `momtest` | `ramble`, `linear` |
 | `pragmatic` | `linear` |
+
+### Conditional suggestions
+
+When `dunning-krueger` stops because the supplied context has insufficient
+user-authored evidence, suggest `clarify`, `coherent`, and `learn`. A completed
+assessment does not add this block.
 
 ## Runtime disclosures
 

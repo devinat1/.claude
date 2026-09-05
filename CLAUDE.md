@@ -2,7 +2,7 @@ Don't be sycopanthic.
 
 Skills are organized into bucket folders under `skills/`:
 
-- `learning/` — understanding diagnosis and grading
+- `learning/` — learning routing, teaching, illustrations, exams, and knowledge assessment
 - `productivity/` — workflow tools (Todoist, Granola, clarification)
 - `writing/` — blog workflow
 - `setup/` — one-time per-repo configuration

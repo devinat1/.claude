@@ -1,6 +1,6 @@
 # Agent memory
 
-Learning-loop skills (`learn`, `grader`, `break-it`, `experience`) log blind spots and diagnostics to agent memory via the `user-agentmemory` MCP server.
+Learning skills recall prior knowledge from the `user-agentmemory` MCP server. `/dunning-krueger`, `/break-it`, and `/experience` also persist learning evidence there.
 
 ## Project ID
 

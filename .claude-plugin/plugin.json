@@ -1,8 +1,10 @@
 {
   "name": "devinat1-skills",
   "skills": [
-    "./skills/learning/grader",
+    "./skills/learning/exam",
+    "./skills/learning/illustrate",
     "./skills/learning/learn",
+    "./skills/learning/socratic-teacher",
     "./skills/productivity/accountability-beeminder",
     "./skills/productivity/clarify",
     "./skills/productivity/coherent",

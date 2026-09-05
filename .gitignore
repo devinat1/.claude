@@ -59,9 +59,11 @@ skills/zoom-out
 
 # Flat symlinks created by scripts/link-skills.sh (repo is live ~/.claude)
 skills/break-it
-skills/grader
+skills/exam
+skills/illustrate
+skills/lab
 skills/learn
-skills/lab-creator
+skills/socratic-teacher
 skills/clean
 skills/ddd
 skills/graphite
