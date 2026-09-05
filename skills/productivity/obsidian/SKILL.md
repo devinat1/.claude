@@ -27,7 +27,7 @@ CLI syntax and navigation patterns: [REFERENCE.md](REFERENCE.md).
 <HARD-GATE>
 **Out of scope — use other skills instead:**
 
-- Blog publishing / Quartz sync → `update-blog-on-leetcode`
+- Blog publishing / Quartz sync
 - Periodic/daily/weekly/monthly notes (`#periodic`, `Periodic/`)
 - Literature / Zotero notes (`#literature`, `Literature/`)
 - Excalidraw embeds (`![[...excalidraw]]`)

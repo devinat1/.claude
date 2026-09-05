@@ -28,7 +28,6 @@ Use `vault=State` or `vault=Church` on every command. Agent-managed notes may li
 
 | Skill | When instead of Obsidian |
 |-------|--------------------------|
-| `update-blog-on-leetcode` | Publishing CP notes to Quartz blog |
 | `focus` / `ramble` | Todoist tasks and planning |
 | `meeting-feedback` | Granola meeting analysis |
 | `literature-review` | Prior-art discovery before `/research-gap` novelty |

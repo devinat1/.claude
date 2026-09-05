@@ -5,6 +5,5 @@
 - **[apset](./apset/SKILL.md)** — Organizes current work into APSET (Area, Problem, System, Evaluation, Takeaway) through a clarify-style interview. Use when the user explicitly asks for an APSET, says "/apset", or says "organize this with APSET".
 - **[blog](./blog/SKILL.md)** — Convert the current conversation into a focused blog post (clarify scope first, then distill). Use when the user invokes /blog.
 - **[post](./post/SKILL.md)** — Use when the user asks to draft, make, schedule, queue, or publish social posts from the current conversation, blog post, article, launch note, or existing post context, especially for X/Twitter and LinkedIn through Postiz.
-- **[update-blog-on-leetcode](./update-blog-on-leetcode/SKILL.md)** — Sync LeetCode notes from the State Obsidian vault to the public Quartz blog and deploy. Use when the user says "update blog on leetcode", "publish leetcode notes", or wants coding writeups from Notes/CP live on mydevin.com/blog/coding/.
 - **[update-blog-refs](./update-blog-refs/SKILL.md)** — Scan blog posts and suggest related cross-links. Use when the user invokes /update-blog-refs.
 - **[youtube](./youtube/SKILL.md)** — Writes YouTube-style teleprompter scripts from user-provided context — markdown, line-broken for spoken pacing, with hook and CTA. Use when the user invokes /youtube.

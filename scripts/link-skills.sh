@@ -7,6 +7,7 @@ set -euo pipefail
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
 DESTS=("$HOME/.claude/skills" "$HOME/.codex/skills")
 BUCKETS=(learning productivity writing setup)
+MOVED_OR_REMOVED=(break-it lab-creator update-blog-on-leetcode)
 
 "$REPO/scripts/generate-skill-metadata.py"
 
@@ -21,6 +22,23 @@ for dest in "${DESTS[@]}"; do
     esac
   fi
   mkdir -p "$dest"
+done
+
+# Remove only stale links previously created from this repository. Links to
+# the engineering repository remain intact.
+for dest in "${DESTS[@]}"; do
+  for name in "${MOVED_OR_REMOVED[@]}"; do
+    target="$dest/$name"
+    if [ -L "$target" ]; then
+      source="$(readlink "$target")"
+      case "$source" in
+        "$REPO"|"$REPO"/*)
+          unlink "$target"
+          echo "unlinked stale $target"
+          ;;
+      esac
+    fi
+  done
 done
 
 # Refuse to replace real directories or files; they may be third-party installs.
