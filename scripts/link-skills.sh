@@ -2,10 +2,10 @@
 set -euo pipefail
 
 # Refreshes generated skill metadata, then links owned skills in this repository
-# to Claude and Codex. Only scans category buckets and owned skill names.
+# to Claude, Codex, and Cursor. Only scans category buckets and owned skill names.
 
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
-DESTS=("$HOME/.claude/skills" "$HOME/.codex/skills")
+DESTS=("$HOME/.claude/skills" "$HOME/.codex/skills" "$HOME/.cursor/skills")
 BUCKETS=(learning productivity writing setup)
 MOVED_OR_REMOVED=(break-it lab-creator update-blog-on-leetcode)
 

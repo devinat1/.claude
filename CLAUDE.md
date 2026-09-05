@@ -18,7 +18,9 @@ Every skill in the bucket folders above must have a reference in the top-level `
 
 Each bucket folder has a `README.md` that lists every skill in the bucket with a one-line description, with the skill name linked to its `SKILL.md`.
 
-After moving or adding owned skills, run `./scripts/link-skills.sh` to refresh flat symlinks in `~/.claude/skills/` for Claude Code.
+After moving or adding owned skills, run `./scripts/link-skills.sh` to refresh
+flat symlinks in `~/.claude/skills/`, `~/.codex/skills/`, and
+`~/.cursor/skills/`.
 
 @RTK.md
 
