@@ -31,3 +31,5 @@ Use `vault=State` or `vault=Church` on every command. Agent-managed notes may li
 | `focus` / `ramble` | Todoist tasks and planning |
 | `meeting-feedback` | Granola meeting analysis |
 | `literature-review` | Prior-art discovery before `/research-gap` novelty |
+| `obsidian-markdown` | OFM syntax (callouts, embeds) — not vault routing |
+| `obsidian-bases` / `json-canvas` | `.base` / `.canvas` files |

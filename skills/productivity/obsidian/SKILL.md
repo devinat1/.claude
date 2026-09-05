@@ -1,6 +1,6 @@
 ---
 name: obsidian
-description: Navigate and write to the State and Church Obsidian vaults via CLI, including agent-managed notes under Agentic/. Use when the user wants to capture ideas, find notes, read vault context, or mentions Obsidian, either vault, zettels, or MOCs.
+description: Navigate and write to the State and Church Obsidian vaults via CLI, including agent-managed notes under Agentic/. Use when the user wants to capture ideas, find notes, read vault context, or mentions Obsidian, either vault, zettels, or MOCs. Also covers Obsidian CLI syntax and plugin/theme development (reload, eval, screenshots, DOM).
 ---
 
 # Obsidian
@@ -16,6 +16,8 @@ On every session involving vault work:
 3. If CLI calls fail, tell the user Obsidian or the requested vault may be unavailable — do not silently fall back to raw filesystem access under `~/Documents/State/` or `~/Documents/Church/`.
 
 CLI syntax and navigation patterns: [REFERENCE.md](REFERENCE.md).
+
+MCP `obsidian_cli` takes the command string **without** the `obsidian` prefix. Shell form is `obsidian <command>`. Parameters use `=`; flags (`silent`, `overwrite`) take no value. Always pass `vault=State` or `vault=Church` — do not rely on last-focused vault. Plugin/theme reload and debug: [REFERENCE.md](REFERENCE.md).
 
 ## Vault and folder routing
 

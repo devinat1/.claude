@@ -108,3 +108,29 @@ create name="My New Idea" vault=State path=Agentic/ content="---\ntags:\n  - ide
 ```
 
 Prefer `property:set` to patch frontmatter on existing notes instead of rewriting whole files.
+
+## Generic CLI syntax
+
+Same command strings as above. MCP omits the `obsidian` prefix; shell uses `obsidian <command>`. Docs: `help` and https://help.obsidian.md/cli
+
+- Parameters take `=`. Quote values with spaces: `file="My Note Title"`.
+- Flags are boolean (no value): `silent`, `overwrite`.
+- Multiline content: `\n` newline, `\t` tab.
+- `file=<name>` — wikilink-style (name only, no path or extension).
+- `path=<path>` — exact path from vault root, e.g. `Agentic/My Note.md`.
+- Without `file` or `path`, commands use the active file. Still pass `vault=`.
+- `silent` — don't open the file. `--copy` — copy output to clipboard. `total` — count on list commands.
+- Create from template: `create name="New Note" vault=State path=Agentic/ template="Template" silent`
+
+Periodic `daily:*` and `tasks` commands exist but daily/weekly notes are out of scope for this skill.
+
+## Plugin and theme development
+
+After code changes:
+
+1. `plugin:reload id=<plugin-id>`
+2. `dev:errors` — fix and repeat
+3. `dev:screenshot path=screenshot.png` or `dev:dom selector=".workspace-leaf" text`
+4. `dev:console level=error`
+
+Also: `eval code="..."`, `dev:css selector="..." prop=background-color`, `dev:mobile on`. `help` lists CDP/debugger commands.
