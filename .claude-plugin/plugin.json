@@ -1,9 +1,7 @@
 {
   "name": "devinat1-skills",
   "skills": [
-    "./skills/learning/break-it",
     "./skills/learning/grader",
-    "./skills/learning/lab-creator",
     "./skills/learning/learn",
     "./skills/productivity/accountability-beeminder",
     "./skills/productivity/clarify",
@@ -32,7 +30,6 @@
     "./skills/writing/apset",
     "./skills/writing/blog",
     "./skills/writing/post",
-    "./skills/writing/update-blog-on-leetcode",
     "./skills/writing/update-blog-refs",
     "./skills/writing/youtube",
     "./skills/setup/setup-devinat1-skills"

@@ -2,7 +2,7 @@
 
 Agent skills for learning, productivity, and writing workflows.
 
-Engineering and interview-practice skills live in
+Engineering, hands-on lab, and interview-practice skills live in
 [`devinat1/engineering-skills`](https://github.com/devinat1/engineering-skills).
 
 ## Quickstart (30-second setup)
@@ -31,9 +31,7 @@ git clone git@github.com:devinat1/skills.git ~/.claude
 
 ### Learning
 
-- **[break-it](./skills/learning/break-it/SKILL.md)** — Use to learn a system-design or performance concept by watching the naive version break under load and the pattern hold — "break it", "load test this", "where does this fall over", "/break-it &lt;concept&gt;". Builds a disposable Go+k6 lab; the user predicts the breaking point, runs it, sees the wall, applies the fix, re-runs. Load-measurable concepts only (pool exhaustion, missing cache, N+1, no rate limiting, no backpressure, no circuit breaker). NOT for refactoring or terminology — those are untangle / name-it.
 - **[grader](./skills/learning/grader/SKILL.md)** — Administers and grades an exam created by the learn skill (serves QUESTIONS.md one at a time, scores against ANSWER.md 🟢🟡🔴, re-tests to mastery), and grades an existing hands-on lab when pointed at one (runs tests + predict-your-score calibration check), then updates agent memory in the background. Use when the user says "grade me", "grade my exam", "grade this lab", "take the exam at &lt;path&gt;", or invokes /grader &lt;exam-dir|QUESTIONS.md|lab-dir&gt;. Does NOT create labs — the learn skill does that.
-- **[lab-creator](./skills/learning/lab-creator/SKILL.md)** — Scaffolds a single hands-on lab (runnable unit tests for code, graded scenarios for concepts) targeting one concept. Use when the user says "create a lab on x", "give me an exercise on x", "make me a hands-on exercise", and when the learn skill requests a gap-targeted lab. Scaffolds files only — it does NOT grade or run the calibration check.
 - **[learn](./skills/learning/learn/SKILL.md)** — Use when you're confused by code (often vibe-coded) and want to act on what you don't understand — "understand x", "what is this code doing", "help me learn x", "process x", "quiz me on x", "make me an exam on x", or /learn &lt;path|url|topic&gt;. Diagnoses where your understanding bottoms out, then fans out to walkthroughs, labs, exams, and agent memory logging. Every turn is brief — one setup line, one focused block, one question at a time.
 
 ### Productivity
@@ -68,7 +66,6 @@ git clone git@github.com:devinat1/skills.git ~/.claude
 - **[apset](./skills/writing/apset/SKILL.md)** — Organizes current work into APSET (Area, Problem, System, Evaluation, Takeaway) through a clarify-style interview. Use when the user explicitly asks for an APSET, says "/apset", or says "organize this with APSET".
 - **[blog](./skills/writing/blog/SKILL.md)** — Convert the current conversation into a focused blog post (clarify scope first, then distill). Use when the user invokes /blog.
 - **[post](./skills/writing/post/SKILL.md)** — Use when the user asks to draft, make, schedule, queue, or publish social posts from the current conversation, blog post, article, launch note, or existing post context, especially for X/Twitter and LinkedIn through Postiz.
-- **[update-blog-on-leetcode](./skills/writing/update-blog-on-leetcode/SKILL.md)** — Sync LeetCode notes from the State Obsidian vault to the public Quartz blog and deploy. Use when the user says "update blog on leetcode", "publish leetcode notes", or wants coding writeups from Notes/CP live on mydevin.com/blog/coding/.
 - **[update-blog-refs](./skills/writing/update-blog-refs/SKILL.md)** — Scan blog posts and suggest related cross-links. Use when the user invokes /update-blog-refs.
 - **[youtube](./skills/writing/youtube/SKILL.md)** — Writes YouTube-style teleprompter scripts from user-provided context — markdown, line-broken for spoken pacing, with hook and CTA. Use when the user invokes /youtube.
 
