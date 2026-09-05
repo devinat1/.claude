@@ -159,7 +159,7 @@ implement without compacting).
 
 When exploring impact, check gate and project docs first:
 
-- **User gate** — `~/.claude/rules/safeguard-gate.md` (always loaded in Claude Code)
+- **User gate** — `~/.agentic/AGENTS.md` (shared through each harness's instruction discovery entrypoint)
 - **Project gates** — `.claude/rules/safeguard-gate.md`, `.cursor/rules/safeguard-gate.mdc`
 - **Project guidance** — `AGENTS.md`, `CLAUDE.md`, hard rules, promotion flow, architecture notes
 - **Monorepos / multi-repo** — which nested repos are touched; separate PRs per repo?

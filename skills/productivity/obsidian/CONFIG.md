@@ -2,8 +2,8 @@
 
 | Vault | Path |
 |---|---|
-| `State` | `~/Documents/State/` |
-| `Church` | `~/Documents/Church/` |
+| `State` | `external_resources.obsidian_state` in `~/.agentic/index.json` |
+| `Church` | `external_resources.obsidian_church` in `~/.agentic/index.json` |
 
 Use `vault=State` or `vault=Church` on every command. Agent-managed notes may live under `Agentic/` in either vault: search that folder first for named notes, update matches in place, and never recreate moved notes at their former paths. New agent-authored zettels default to `Agentic/` unless a workflow explicitly requires another folder. The MCP tool is `user-obsidian` → `obsidian_cli`.
 

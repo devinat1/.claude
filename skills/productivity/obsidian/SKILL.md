@@ -13,7 +13,7 @@ On every session involving vault work:
 
 1. Read [CONFIG.md](CONFIG.md).
 2. Use MCP `user-obsidian` → `obsidian_cli` for all vault reads/writes.
-3. If CLI calls fail, tell the user Obsidian or the requested vault may be unavailable — do not silently fall back to raw filesystem access under `~/Documents/State/` or `~/Documents/Church/`.
+3. If CLI calls fail, tell the user Obsidian or the requested vault may be unavailable — do not silently fall back to raw filesystem access. Vault locations are indexed in `~/.agentic/index.json` under `external_resources.obsidian_state` and `external_resources.obsidian_church`.
 
 CLI syntax and navigation patterns: [REFERENCE.md](REFERENCE.md).
 

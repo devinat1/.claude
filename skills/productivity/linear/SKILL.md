@@ -18,7 +18,7 @@ Turn the current conversation or a supplied transcript into scoped Linear work, 
 - Require Linear tools. If Linear tools are unavailable, stop and say what is missing.
 - Never create, update, comment on, or link Linear issues before the user approves the proposed batch.
 - If no transcript is supplied, use the current chat conversation as the source.
-- Use `~/.agents` only as installed context if it appears; do not treat it as a source repo.
+- Use `~/.agentic/skills` as installed context. Resolve an owned skill link to its source repository under `~/.agentic/repos` when modifying that skill.
 - Paraphrase transcript context. Do not paste raw transcript excerpts or long quotes into Linear.
 - Keep tickets brief and actionable.
 - Leave priority, labels, assignee, cycle, estimate, due date, state/status, milestone, and delegate unset unless the user or transcript explicitly provides them.

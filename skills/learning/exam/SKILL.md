@@ -29,7 +29,7 @@ reporting a recall failure.
 Resolve the destination as:
 
 ```text
-~/.claude/exams/<repo>/YYYY-MM-DD-<topic-slug>/
+~/.agentic/artifacts/exams/<repo>/YYYY-MM-DD-<topic-slug>/
 ```
 
 Append `-2`, `-3`, and so on when needed. Resolve `<repo>` from the git root

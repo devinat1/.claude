@@ -1,4 +1,10 @@
-# Safeguard gate
+# Safeguard gate (installation reference)
+
+The active global gate is maintained in `~/.agentic/AGENTS.md`. This repository's
+historical gate is superseded by that shared source; install the harness adapters
+under `config/agentic/harnesses/` when configuring a harness.
+
+<!-- Historical gate follows for project-level installation reference. -->
 
 Before any **non-trivial feature, build, or refactor**, invoke the
 `safeguard` skill via the **Skill tool** as your **first action**. Do not

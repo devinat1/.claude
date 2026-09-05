@@ -21,9 +21,48 @@ npx skills@latest add devinat1/skills
 4. For Claude Code users who clone this repo directly:
 
 ```bash
-git clone git@github.com:devinat1/skills.git ~/.claude
+git clone git@github.com:devinat1/skills.git ~/.agentic/repos/skills
 ./scripts/link-skills.sh
 ```
+
+## Shared agent home
+
+The local checkouts live at `~/.agentic/repos/skills` and the sibling
+`engineering-skills`. Harness skill directories are symlinks to the union catalog
+at `~/.agentic/skills`. Owned catalog entries link to their repository sources.
+
+Global instructions are maintained in `config/agentic/AGENTS.md`, exposed through
+`~/.agentic/AGENTS.md`. Project maintenance instructions live in each repository's
+`AGENTS.md`; `CLAUDE.md` links to it. Native credentials, sessions, caches, and
+plugin installations remain harness-owned. The root `settings.json` is an
+installation example, not the live Claude configuration.
+
+Run `agentic upkeep --dry-run` to preview new skills from any harness and
+`agentic upkeep --apply` to adopt them and restore discovery symlinks. Daily upkeep
+uses this command, preserves conflicts without changes, and retains rollback
+snapshots for each changed run. Skills installed through an intact discovery link
+already live centrally; upkeep registers them in the index.
+
+Run `agentic doctor` to check links, indexed paths, and repository integrity;
+run `python3 scripts/audit-agentic-paths.py` to audit skill storage references.
+Use `agentic path blog_content` (or another index key) to resolve external data.
+Shell/Python/JavaScript helpers honor `AGENTIC_HOME` (default `$HOME/.agentic`).
+After skill source edits, run `./scripts/link-skills.sh`. Legacy synchronization
+entrypoints now call doctor without copying or deleting catalogs.
+
+For an existing checkout in the old Claude directory, first pause the obsolete
+catalog-sync automation, then run `python3 scripts/migrate-agentic-home.py --dry-run`.
+Resolve reported conflicts with an explicit `--prefer NAME=SOURCE`; run the same
+command with `--apply` when the inventory is correct. `--verify` checks the result.
+`--rollback MIGRATION_ID` restores original files and retains newer generated
+files under the transaction's `reverted-content/` directory. Never delete the
+rollback snapshot without the user's explicit request. App project registrations
+and automation settings must be restored through the app separately on rollback.
+
+State, memory, artifacts, and the private root `index.json` are outside these
+Git repositories. `config/agentic/index.schema.json` defines the index structure.
+Historical design documents retain historical paths. Managed `.system` installer
+and configuration integrations are exempt from the shared-state path audit.
 
 ## Skills
 

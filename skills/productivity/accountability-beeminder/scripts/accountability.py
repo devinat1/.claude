@@ -13,7 +13,7 @@ from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
 
-DEFAULT_LEDGER = Path.home() / ".codex" / "accountability-beeminder.json"
+DEFAULT_LEDGER = Path(os.environ.get("AGENTIC_HOME", Path.home() / ".agentic")).expanduser() / "state" / "accountability-beeminder.json"
 
 
 class AccountabilityError(Exception):

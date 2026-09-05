@@ -14,10 +14,9 @@ When the gate applies, first say that you are using `/dissenter` and why.
 
 ## Blog location
 
-- Repository: `~/Desktop/blog`
-- Content: `~/Desktop/blog/content`
-
-Use these paths directly; do not require per-repo blog-directory setup.
+Read `external_resources.blog` and `external_resources.blog_content` from
+`~/.agentic/index.json` for the repository and content directory. Use those paths
+throughout this workflow; do not require per-repo blog-directory setup.
 
 ## Step 1: Clarify post scope
 
@@ -102,7 +101,7 @@ Incorporate all feedback. Repeat this step until the user approves.
 
 ## Step 6: Save the file
 
-Save the final post to `~/Desktop/blog/content/<title>.md`, where `<title>` is the approved post title.
+Save the final post to `<blog_content>/<title>.md`, using the indexed content directory and approved post title.
 
 ## Step 7: Update related links
 
@@ -110,7 +109,7 @@ Say that you are using `/update-blog-refs` to review cross-links for the saved
 post.
 Delegate related-link handling to [`update-blog-refs`](../update-blog-refs/SKILL.md). Follow it with:
 
-- `~/Desktop/blog/content` as the supplied blog directory.
+- The indexed `blog_content` path as the supplied blog directory.
 - The newly saved post as the focus post, so proposals include only links to or from it.
 - Its approval gate before writing any related-link changes.
 
@@ -118,7 +117,7 @@ Delegate related-link handling to [`update-blog-refs`](../update-blog-refs/SKILL
 
 Ask the user: "Ready to publish with `node ./quartz/bootstrap-cli.mjs sync`?"
 
-Only if they confirm, run `node ./quartz/bootstrap-cli.mjs sync` from `~/Desktop/blog`.
+Only if they confirm, run `node ./quartz/bootstrap-cli.mjs sync` from the indexed `blog` repository.
 
 If they decline, let them know the file is saved and they can publish later.
 

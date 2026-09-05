@@ -1,72 +1,36 @@
 #!/usr/bin/env bash
 set -euo pipefail
-
-# Refreshes generated skill metadata, then links owned skills in this repository
-# to Claude, Codex, and Cursor. Only scans category buckets and owned skill names.
-
-REPO="$(cd "$(dirname "$0")/.." && pwd)"
-DESTS=("$HOME/.claude/skills" "$HOME/.codex/skills" "$HOME/.cursor/skills")
-BUCKETS=(learning productivity writing setup)
-MOVED_OR_REMOVED=(break-it lab-creator update-blog-on-leetcode)
-
-"$REPO/scripts/generate-skill-metadata.py"
-
-for dest in "${DESTS[@]}"; do
-  if [ -L "$dest" ]; then
-    resolved="$(readlink -f "$dest")"
-    case "$resolved" in
-      "$REPO"|"$REPO"/*)
-        echo "error: $dest is a symlink into this repo ($resolved)." >&2
-        exit 1
-        ;;
-    esac
-  fi
-  mkdir -p "$dest"
-done
-
-# Remove only stale links previously created from this repository. Links to
-# the engineering repository remain intact.
-for dest in "${DESTS[@]}"; do
-  for name in "${MOVED_OR_REMOVED[@]}"; do
-    target="$dest/$name"
-    if [ -L "$target" ]; then
-      source="$(readlink "$target")"
-      case "$source" in
-        "$REPO/skills/"*)
-          unlink "$target"
-          echo "unlinked stale $target"
-          ;;
-      esac
-    fi
-  done
-done
-
-# Refuse to replace real directories or files; they may be third-party installs.
-for bucket in "${BUCKETS[@]}"; do
-  for skill_md in "$REPO/skills/$bucket"/*/SKILL.md; do
-    name="$(basename "$(dirname "$skill_md")")"
-    for dest in "${DESTS[@]}"; do
-      target="$dest/$name"
-      if [ -e "$target" ] && [ ! -L "$target" ]; then
-        echo "error: refusing to replace $target; move it and re-run." >&2
-        exit 1
-      fi
-    done
-  done
-done
-
-for bucket in "${BUCKETS[@]}"; do
-  bucket_dir="$REPO/skills/$bucket"
-  [ -d "$bucket_dir" ] || continue
-
-  find "$bucket_dir" -name SKILL.md -print0 |
-  while IFS= read -r -d '' skill_md; do
-    src="$(dirname "$skill_md")"
-    name="$(basename "$src")"
-    for dest in "${DESTS[@]}"; do
-      target="$dest/$name"
-      ln -sfn "$src" "$target"
-      echo "linked $target -> $src"
-    done
-  done
-done
+REPO="$(cd "$(dirname "$0")/.." && pwd -P)"
+AGENTIC_ROOT="${AGENTIC_HOME:-$HOME/.agentic}"
+python3 "$REPO/scripts/generate-skill-metadata.py"
+python3 - "$REPO" "$AGENTIC_ROOT" <<'PY'
+import json
+import os
+from pathlib import Path
+import sys
+repo, root = map(Path, sys.argv[1:])
+catalog = root / 'skills'
+if not (root / 'index.json').is_file():
+    raise SystemExit('Initialize the shared home with migrate-agentic-home.py first.')
+candidates = []
+for bucket in ('learning', 'productivity', 'writing', 'setup', 'engineering', 'interview'):
+    for skill in sorted((repo / 'skills' / bucket).glob('*/SKILL.md')):
+        source = skill.parent.resolve()
+        target = catalog / source.name
+        if target.exists() and not target.is_symlink():
+            raise SystemExit(f'Refusing to replace a real catalog directory: {target}')
+        if target.is_symlink() and target.resolve() != source and not target.resolve().is_relative_to(repo):
+            raise SystemExit(f'Conflicting skill source: {target}')
+        candidates.append((source, target))
+index = json.loads((root / 'index.json').read_text())
+for source, target in candidates:
+    if not target.is_symlink() or target.resolve() != source:
+        if target.is_symlink():
+            target.unlink()
+        target.symlink_to(os.path.relpath(source, target.parent))
+    index['skills'][source.name] = 'skills/' + source.name
+temporary = root / 'index.json.tmp'
+temporary.write_text(json.dumps(index, indent=2) + '\n')
+os.replace(temporary, root / 'index.json')
+print(f'{len(candidates)} owned skills linked to {catalog}')
+PY

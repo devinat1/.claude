@@ -4,11 +4,11 @@
 
 This file is kept for reference if you maintain a manual tracker outside the learning loop.
 
-## Legacy path
+## Archived evidence
 
-`~/.claude/projects/<project-slug>/memory/skills_tracker.md`
-
-Replace `<project-slug>` with the slug for the current workspace (e.g. `-Users-you--Projects-myapp`).
+Pre-migration files are under `~/.agentic/memory/legacy/claude-auto/`.
+They are historical evidence only. Importing facts into AgentMemory requires
+the user's memory-storage choice under `~/.agentic/AGENTS.md`.
 
 ## Legacy template
 

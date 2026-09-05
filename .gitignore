@@ -5,6 +5,7 @@
 !.gitignore
 !README.md
 !CLAUDE.md
+!AGENTS.md
 !thinking-check-rubric.md
 !settings.json
 
@@ -22,8 +23,16 @@
 !rules/**
 !docs/
 !docs/skill-connections.md
-!exams/
-!exams/**
+!config/
+!config/agentic/
+!config/agentic/**
+!tests/
+!tests/**
+
+# Runtime files never belong in this repository.
+**/__pycache__/
+config/agentic/**/.env*
+config/agentic/**/secrets*
 
 # Owned skills — category buckets only (flat symlinks at skills/<name> are local)
 !skills/
@@ -57,7 +66,7 @@ skills/triage
 skills/write-a-skill
 skills/zoom-out
 
-# Flat symlinks created by scripts/link-skills.sh (repo is live ~/.claude)
+# Flat catalog entries are local discovery links, never repository sources.
 skills/break-it
 skills/exam
 skills/illustrate

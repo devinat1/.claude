@@ -4,9 +4,8 @@ The `/blog` and `/update-blog-refs` skills read existing posts from this directo
 
 ## Path
 
-`~/Desktop/blog/content/`
-
-Adjust to wherever your blog markdown posts live.
+Read `external_resources.blog_content` from `~/.agentic/index.json`.
+Update that index entry when the blog moves.
 
 ## Notes
 

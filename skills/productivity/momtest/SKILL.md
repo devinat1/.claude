@@ -146,7 +146,7 @@ Choose the violations whose fix would have most changed what was learned. A PITC
 After emitting the scorecard inline, ask whether to save the same content to:
 
 ```
-~/.claude/momtest-scorecards/<YYYY-MM-DD>-<slug>.md
+~/.agentic/artifacts/momtest-scorecards/<YYYY-MM-DD>-<slug>.md
 ```
 
 **Slug rules:**

@@ -2,7 +2,7 @@
 # Shared Claude/Codex SessionEnd worker.
 set -u
 
-STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/dunning-krueger-analysis"
+STATE_DIR="${AGENTIC_HOME:-$HOME/.agentic}/state/dunning-krueger-analysis"
 LOG="$STATE_DIR/hook.log"
 CODEX_BIN="${CODEX_BIN:-$HOME/.local/bin/codex}"
 CLAUDE_BIN="${CLAUDE_BIN:-$HOME/.local/bin/claude}"
@@ -84,8 +84,8 @@ self_test() {
   mock="$test_root/codex"
   trace="$test_root/trace"
   state="$test_root/state"
-  mkdir -p "$state/dunning-krueger-analysis"
-  printf '%s\n' target >"$state/dunning-krueger-analysis/codex-session-id"
+  mkdir -p "$state/state/dunning-krueger-analysis"
+  printf '%s\n' target >"$state/state/dunning-krueger-analysis/codex-session-id"
   cat >"$mock" <<'EOF'
 #!/usr/bin/env bash
 printf '%s %s\n' "$1" "${2:-}" >>"$TEST_TRACE"
@@ -97,11 +97,11 @@ cat >/dev/null
 EOF
   chmod +x "$mock"
   transcript="$(mktemp "$test_root/transcript.XXXXXX")"
-  TEST_ROOT="$test_root" TEST_TRACE="$trace" XDG_STATE_HOME="$state" CODEX_BIN="$mock" \
+  TEST_ROOT="$test_root" TEST_TRACE="$trace" AGENTIC_HOME="$state" CODEX_BIN="$mock" \
     "$0" --worker codex "$transcript" source /tmp
   actual="$(cat "$trace")"
   transcript="$(mktemp "$test_root/transcript.XXXXXX")"
-  TEST_ROOT="$test_root" TEST_TRACE="$trace" XDG_STATE_HOME="$state" CODEX_BIN="$mock" \
+  TEST_ROOT="$test_root" TEST_TRACE="$trace" AGENTIC_HOME="$state" CODEX_BIN="$mock" \
     "$0" --worker codex "$transcript" source /tmp
   [ "$actual" = "$(cat "$trace")" ] || return
   rm -r "$test_root"
@@ -145,7 +145,9 @@ mkdir -p "$STATE_DIR"
 target="$(cat "$STATE_DIR/$platform-session-id" 2>/dev/null || true)"
 [ "$session_id" = "$target" ] && exit
 
-snapshot="$(mktemp "${TMPDIR:-/tmp}/dunning-krueger-analysis.XXXXXX")" || exit
+RUNS_DIR="${AGENTIC_HOME:-$HOME/.agentic}/state/runs/dunning-krueger-analysis"
+mkdir -p "$RUNS_DIR"
+snapshot="$(mktemp "$RUNS_DIR/transcript.XXXXXX")" || exit
 cp "$transcript" "$snapshot" || { rm -f "$snapshot"; exit; }
 label="com.devinat1.dunning-krueger.$platform.$session_id"
 if command -v launchctl >/dev/null; then

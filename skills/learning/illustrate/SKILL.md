@@ -23,7 +23,7 @@ failure.
 Create a self-contained HTML artifact under:
 
 ```text
-~/.claude/illustrations/<repo>/YYYY-MM-DD-<topic-slug>.html
+~/.agentic/artifacts/illustrations/<repo>/YYYY-MM-DD-<topic-slug>.html
 ```
 
 Append `-2`, `-3`, and so on when the name already exists. Resolve `<repo>` from

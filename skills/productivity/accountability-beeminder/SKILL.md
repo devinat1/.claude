@@ -7,7 +7,7 @@ description: Create and settle evidence-backed accountability commitments with u
 
 Keep the workflow generic. Domain-specific tasks supply their own evidence source and verification rule; this skill owns commitment intake, the JSON ledger, fairness confirmation, and charging.
 
-Use `scripts/accountability.py` for every ledger transition. Its default ledger is `~/.codex/accountability-beeminder.json`, a standard JSON file.
+Use `scripts/accountability.py` for every ledger transition. Its default ledger is `~/.agentic/state/accountability-beeminder.json`, a standard JSON file. Executable helpers honor `AGENTIC_HOME` when set.
 
 ## Create a commitment
 

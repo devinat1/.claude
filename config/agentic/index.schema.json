@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Agentic home index",
+  "type": "object",
+  "required": ["schema_version", "root", "paths", "harnesses", "repositories", "skills", "external_resources", "migration"],
+  "additionalProperties": false,
+  "$defs": {
+    "relative": {"type": "string", "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+"},
+    "absolute": {"type": "string", "pattern": "^/"}
+  },
+  "properties": {
+    "schema_version": {"const": 1},
+    "root": {"$ref": "#/$defs/absolute"},
+    "paths": {"type": "object", "additionalProperties": {"$ref": "#/$defs/relative"}},
+    "harnesses": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object", "required": ["skills", "instructions"], "additionalProperties": false,
+        "properties": {"skills": {"$ref": "#/$defs/relative"}, "instructions": {"anyOf": [{"$ref": "#/$defs/relative"}, {"type": "null"}]}}
+      }
+    },
+    "repositories": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object", "required": ["path", "origin"], "additionalProperties": false,
+        "properties": {"path": {"$ref": "#/$defs/relative"}, "origin": {"type": "string", "pattern": "^(git@github.com:|https://github.com/)"}}
+      }
+    },
+    "skills": {"type": "object", "additionalProperties": {"$ref": "#/$defs/relative"}},
+    "external_resources": {"type": "object", "additionalProperties": {"$ref": "#/$defs/absolute"}},
+    "migration": {
+      "type": "object", "required": ["id", "manifest"], "additionalProperties": false,
+      "properties": {"id": {"type": "string"}, "manifest": {"$ref": "#/$defs/relative"}}
+    }
+  }
+}
