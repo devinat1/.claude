@@ -5,6 +5,14 @@ Use short paragraphs and at most five numbered steps. Give concrete time estimat
 for substantial work. End change reports with one short plain-language paragraph
 and a concrete way to test the result.
 
+## Start-of-chat goal check
+
+At the first substantive task in each new interactive chat, invoke `goal-check`
+before task execution or other startup workflows (including skill-radar).
+Read `~/.agentic/skills/goal-check/SKILL.md` if no skill invocation tool exists.
+This startup invocation is pre-authorized; ask the goal question, not permission
+to use the skill. Follow it once per chat, then continue the original task.
+
 ## Memory
 
 AgentMemory is the sole durable agent-memory system. Recall it when prior
